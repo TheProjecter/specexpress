@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />
+    <Compile Include="DSLTests\StructureTests.cs" />
     <Compile Include="Entities\EntityBuilders\CustomerBuilder.cs" />
     <Compile Include="CustomerSpecification.cs" />
     <Compile Include="Entities\Customer.cs" />

@@ -12,6 +12,11 @@ namespace SpecExpress.Rules.StringValidators
             _set = set;
         }
 
+        public override object[] Parameters
+        {
+            get { return new object[] { _set }; }
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
         {
             if (!_set.Contains(context.PropertyValue))

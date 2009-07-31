@@ -11,6 +11,11 @@ namespace SpecExpress.Rules.DateValidators
             AfterDate = afterDate;
         }
 
+        public override object[] Parameters
+        {
+            get { return new object[] { AfterDate }; }
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)
         {
             if (context.PropertyValue <= AfterDate)

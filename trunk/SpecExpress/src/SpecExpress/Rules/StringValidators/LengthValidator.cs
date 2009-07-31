@@ -18,17 +18,21 @@ namespace SpecExpress.Rules.StringValidators
             }
         }
 
+        public override object[] Parameters
+        {
+            get { return new object[] { Min, Max }; }
+        }
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
-        {
+        {   
             int length = context.PropertyValue == null ? 0 : context.PropertyValue.Length;
 
             if (length < Min || length > Max)
             {
-                string message =
-                    String.Format("'{0}' must be between {1} and {2} characters. You entered {3} characters.",
-                                  context.PropertyName, Min, Max, length);
-                return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);
+                RuleValidatorContext<T, string> contextWithLength = new RuleValidatorContext<T, string>(
+               context.PropertyName, length.ToString(), context.PropertyInfo);
+
+                return CreateValidationResult(contextWithLength);
             }
 
             return null;

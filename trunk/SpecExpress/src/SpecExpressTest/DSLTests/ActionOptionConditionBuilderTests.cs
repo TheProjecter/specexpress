@@ -1,10 +1,11 @@
+using System;
 using NUnit.Framework;
 using Rhino.Mocks;
 using SpecExpress.Test.Entities;
 using SpecExpress.Test.Factories;
 using SpecUnit;
 
-namespace SpecExpress.Test.DSLTests
+namespace SpecExpress.Test.DSLTests.Functional
 {
     /// <summary>
     /// Test Fixture for the ActionOptionConditionBuilder which confirms that it modifies the PropertyValidator appropriatly and
@@ -13,14 +14,6 @@ namespace SpecExpress.Test.DSLTests
     [TestFixture]
     public class ActionOptionConditionBuilderTests
     {
-        private MockRepository _mocks;
-
-        [TestFixtureSetUp]
-        public void FixtureSetup()
-        {
-            _mocks = new MockRepository();
-        }
-
         [Test]
         public void If_NameLengtGreaterThan10_SetsPropertyValidatorCondition_ReturnsActionOptionConditionSatisfiedBuilder()
         {
@@ -30,6 +23,7 @@ namespace SpecExpress.Test.DSLTests
             // Test
             var actionOptionConditionBuilder = new ActionOptionConditionBuilder<Customer, string>(validator);
             var ifResult = actionOptionConditionBuilder.If(c => c.Name.Length > 10);
+
 
             // Assert
             validator.Condition.ShouldNotBeNull();

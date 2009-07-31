@@ -24,8 +24,17 @@ namespace SpecExpress.Rules
 
         }
 
-        public string PropertyName { get; private set; }
+        public RuleValidatorContext(string propertyName, TProperty propertyValue, PropertyInfo propertyInfo)
+        {
+            // Set PropertyName
+            PropertyName = propertyName;
+            // Set PropertyValue
+            PropertyValue = propertyValue;
+            PropertyInfo = propertyInfo;
+        }
 
+
+        public string PropertyName { get; private set; }
         public TProperty PropertyValue { get; private set; }
         public PropertyInfo PropertyInfo { get; set; }
 

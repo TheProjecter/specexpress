@@ -53,6 +53,7 @@
     <Compile Include="ActionOptionConditionBuilder.cs" />
     <Compile Include="ActionOptionConditionSatisfiedBuilder.cs" />
     <Compile Include="ActionOptionBuilder.cs" />
+    <Compile Include="IValidatable.cs" />
     <Compile Include="MessageStore\IMessageStore.cs" />
     <Compile Include="MessageStore\ResourceMessageStore.cs" />
     <Compile Include="MessageStore\RuleErrorMessages.Designer.cs">
@@ -62,6 +63,9 @@
     </Compile>
     <Compile Include="RuleBuilder.cs" />
     <Compile Include="Rules\General\Required.cs" />
+    <Compile Include="SpecificationExpression.cs" />
+    <Compile Include="SpecificationRegistry.cs" />
+    <Compile Include="ValidationContainer.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="WithBuilder.cs" />
     <Compile Include="Enums\ValidationLevelType.cs" />

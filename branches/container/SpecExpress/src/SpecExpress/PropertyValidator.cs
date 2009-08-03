@@ -10,9 +10,14 @@ using SpecExpress.Util;
 
 namespace SpecExpress
 {
-    public abstract class PropertyValidator<T>
+    public abstract class PropertyValidator<T> : IValidatable
     {
         public abstract List<ValidationResult> Validate(T instance);
+
+        public List<ValidationResult> Validate(object instance)
+        {
+            return Validate((T)instance);
+        }
     }
 
     public class PropertyValidator<T, TProperty> : PropertyValidator<T>

@@ -15,7 +15,7 @@ namespace SpecExpress.Test.DSLTests
         [SetUp]
         public void Setup()
         {
-            _propertyValidators.Clear();
+            PropertyValidators.Clear();
         }
 
         [Test]
@@ -23,9 +23,9 @@ namespace SpecExpress.Test.DSLTests
         {
             var checkReturnObj = Check(C => C.Name);
 
-            _propertyValidators.ShouldNotBeEmpty();
-            _propertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
+            PropertyValidators.ShouldNotBeEmpty();
+            PropertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
             checkReturnObj.ShouldBe(typeof(ActionOptionBuilder<Customer,string>));
         }
 
@@ -34,10 +34,10 @@ namespace SpecExpress.Test.DSLTests
         {
             var checkReturnObj = Check(C => C.Name,"Formal Name");
 
-            _propertyValidators.ShouldNotBeEmpty();
-            _propertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
+            PropertyValidators.ShouldNotBeEmpty();
+            PropertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
             checkReturnObj.ShouldBe(typeof(ActionOptionBuilder<Customer, string>));
         }
 
@@ -47,9 +47,9 @@ namespace SpecExpress.Test.DSLTests
         {
             var checkReturnObj = Warn(C => C.Name);
 
-            _propertyValidators.ShouldNotBeEmpty();
-            _propertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
+            PropertyValidators.ShouldNotBeEmpty();
+            PropertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
             checkReturnObj.ShouldBe(typeof(ActionOptionBuilder<Customer, string>));
         }
 
@@ -58,10 +58,10 @@ namespace SpecExpress.Test.DSLTests
         {
             var checkReturnObj = Warn(C => C.Name, "Formal Name");
 
-            _propertyValidators.ShouldNotBeEmpty();
-            _propertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
-            ((PropertyValidator<Customer, string>)_propertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
+            PropertyValidators.ShouldNotBeEmpty();
+            PropertyValidators[0].ShouldBeOfType(typeof(PropertyValidator<Customer, string>));
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
+            ((PropertyValidator<Customer, string>)PropertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
             checkReturnObj.ShouldBe(typeof(ActionOptionBuilder<Customer, string>));
         }
 

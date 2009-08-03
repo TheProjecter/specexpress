@@ -63,6 +63,7 @@
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />
     <Compile Include="DSLTests\StructureTests.cs" />
+    <Compile Include="Entities\ContactWithIsValid.cs" />
     <Compile Include="Entities\EntityBuilders\CustomerBuilder.cs" />
     <Compile Include="CustomerSpecification.cs" />
     <Compile Include="Entities\Customer.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyValidatorTests.cs" />
     <Compile Include="ResourceMessageStoreTests.cs" />
+    <Compile Include="ValidationContainerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecExpress\SpecExpress.csproj">

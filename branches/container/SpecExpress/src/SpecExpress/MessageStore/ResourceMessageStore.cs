@@ -7,14 +7,14 @@ using SpecExpress.Rules;
 
 namespace SpecExpress.MessageStore
 {
-    public class ResourceMessageStore<T, TProperty> : IMessageStore<T, TProperty>
+    public class ResourceMessageStore : IMessageStore
     {
-        private RuleValidator<T, TProperty> _ruleValidator;
-        private RuleValidatorContext<T, TProperty> _ruleValidatorContext;
+        private RuleValidator _ruleValidator;
+        private RuleValidatorContext _ruleValidatorContext;
 
-        #region IMessageStore<T,TProperty> Members
+        #region IMessageStore Members
 
-        public string GetFormattedErrorMessage(RuleValidator<T, TProperty> ruleValidator, RuleValidatorContext<T, TProperty> ruleValidatorContext)
+        public string GetFormattedErrorMessage(RuleValidator ruleValidator, RuleValidatorContext ruleValidatorContext)
         {
             _ruleValidator = ruleValidator;
             _ruleValidatorContext = ruleValidatorContext;

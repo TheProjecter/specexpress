@@ -7,9 +7,9 @@ using System.Text;
 
 namespace SpecExpress
 {
-    public class SpecificationRegistry
+    public class SpecificationScanner
     {
-        private static IDictionary<Type, IValidatable> _registry = new Dictionary<Type, IValidatable>();
+        private static IList<Specification> _specifications = new List<Specification>();
 
         public void TheCallingAssembly()
         {
@@ -23,7 +23,7 @@ namespace SpecExpress
 
         public void AddAssembly(Assembly assembly)
         {
-
+            registerValidTypeInAssembly(assembly);
         }
 
 
@@ -53,9 +53,9 @@ namespace SpecExpress
             }
         }
 
-        internal IDictionary<Type, IValidatable> FoundSpecifications
+        internal IList<Specification> FoundSpecifications
         {
-            get { return _registry; }
+            get { return _specifications; }
         }
 
         private static Assembly findTheCallingAssembly()
@@ -90,7 +90,8 @@ namespace SpecExpress
                     try
                     {
                         //Register
-                        _registry.Add(o.GetType().BaseType.GetGenericArguments().FirstOrDefault(), o as IValidatable);
+                        _specifications.Add(o as Specification); 
+                        //_specifications.Add(o.GetType().BaseType.GetGenericArguments().FirstOrDefault(), o as IValidatable);
                     }
                     catch (System.ArgumentException argumentException)
                     {

@@ -20,8 +20,8 @@ namespace SpecExpressTest
             var notifications = spec.Validate(customer);
 
             Assert.IsNotNull(notifications);
-            Assert.AreEqual(1,notifications.Errors.Count);
-            Assert.AreEqual("'Name' must be between 2 and 100 characters. You entered 1 characters.",notifications.Errors[0].ErrorMessage);
+            Assert.AreEqual(1,notifications.Count);
+            Assert.AreEqual("'Name' must be between 2 and 100 characters. You entered 1 characters.",notifications[0].ErrorMessage);
         }
 
         [Test]
@@ -39,8 +39,8 @@ namespace SpecExpressTest
             var notifications = spec.Validate(customer);
 
             Assert.IsNotNull(notifications);
-            Assert.AreEqual(2, notifications.Errors.Count);
-            Assert.AreEqual("'Customer Date' must be before 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM characters.", notifications.Errors[0].ErrorMessage);
+            Assert.AreEqual(2, notifications.Count);
+            Assert.AreEqual("'Customer Date' must be before 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM characters.", notifications[0].ErrorMessage);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace SpecExpressTest
 
             var notifications = spec.Validate(customer);
 
-            Assert.IsEmpty(notifications.Errors);
+            Assert.IsEmpty(notifications);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace SpecExpressTest
             spec.Check(cust => cust.Name).Required();
 
             var notification = spec.Validate(customer);
-            Assert.IsNotEmpty(notification.Errors);
+            Assert.IsNotEmpty(notification);
         }
 
         [Test]
@@ -81,8 +81,8 @@ namespace SpecExpressTest
             spec.Check(cust => cust.Name).Required().And.Between(2,100);
 
             var notification = spec.Validate(customer);
-            Assert.IsNotEmpty(notification.Errors);
-            Assert.AreEqual(2, notification.Errors.Count);
+            Assert.IsNotEmpty(notification);
+            Assert.AreEqual(2, notification.Count);
         }
 
         [Test]
@@ -94,8 +94,8 @@ namespace SpecExpressTest
             spec.Check(cust => cust.Name).Required().And.Between(2, 100);
 
             var notification = spec.Validate(customer);
-            Assert.IsNotEmpty(notification.Errors);
-            Assert.AreEqual(1, notification.Errors.Count);
+            Assert.IsNotEmpty(notification);
+            Assert.AreEqual(1, notification.Count);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace SpecExpressTest
             spec.Check(cust => cust.Name).Optional().And.Between(0, 100);
 
             var notification = spec.Validate(customer);
-            Assert.IsEmpty(notification.Errors);
+            Assert.IsEmpty(notification);
         }
 
         [Test]
@@ -119,8 +119,8 @@ namespace SpecExpressTest
             spec.Check(cust => cust.Name).Optional().And.Between(2, 100);
 
             var notification = spec.Validate(customer);
-            Assert.IsNotEmpty(notification.Errors);
-            Assert.AreEqual(1,notification.Errors.Count);
+            Assert.IsNotEmpty(notification);
+            Assert.AreEqual(1,notification.Count);
         }
 
     

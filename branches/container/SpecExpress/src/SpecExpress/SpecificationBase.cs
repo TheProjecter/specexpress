@@ -8,16 +8,28 @@ namespace SpecExpress
 {
     public abstract class Specification : IValidatable
     {
+        private List<PropertyValidator> _propertyValidators = new List<PropertyValidator>();
+
+        public List<PropertyValidator> PropertyValidators
+        {
+            get { return _propertyValidators; }
+            set { _propertyValidators = value; }
+        }
+
         #region IValidatable Members
 
-        public abstract List<ValidationResult> Validate(object instance);
+        //public abstract List<ValidationResult> Validate(object instance);
+        public List<ValidationResult> Validate(object instance)
+        {
+            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+        }
 
         #endregion
     }
     
     public abstract class SpecificationBase<T> : Specification
     {
-        protected List<PropertyValidator<T>> PropertyValidators = new List<PropertyValidator<T>>();
+        //protected List<PropertyValidator<T>> PropertyValidators = new List<PropertyValidator<T>>();
 
         #region Check
 
@@ -51,15 +63,15 @@ namespace SpecExpress
         }
         #endregion
 
-        [Obsolete("This is used if calling Validate explicitly on the Specification. Validation should happen only thru the Container.")]
-        public ValidationNotification Validate(T instance)
-        {
-            var notification = new ValidationNotification();
-            notification.Errors.AddRange(PropertyValidators.SelectMany(x => x.Validate(instance)).ToList());
-            return notification;
-        }
+        //[Obsolete("This is used if calling Validate explicitly on the Specification. Validation should happen only thru the Container.")]
+        //public ValidationNotification Validate(T instance)
+        //{
+        //    var notification = new ValidationNotification();
+        //    notification.Errors.AddRange(PropertyValidators.SelectMany(x => x.Validate(instance)).ToList());
+        //    return notification;
+        //}
 
-        public override List<ValidationResult> Validate(object instance)
+        public new List<ValidationResult> Validate(T instance)
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }

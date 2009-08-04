@@ -22,13 +22,12 @@ namespace SpecExpress.Test
         public void ValidationContainer_Initialize()
         {
             //Create Rules Adhoc
-            ValidationContainer.RulesForEntity<Contact>(x =>
+            ValidationContainer.AddSpecification<Contact>(x =>
             {
                 x.Check(contact => contact.LastName).Required();
                 x.Check(contact => contact.FirstName).Required();
                 x.Check(contact => contact.DateOfBirth).Optional().And.IsAfter(
                     new DateTime(1950, 1, 1));
-
             });
 
             //Dummy Contact

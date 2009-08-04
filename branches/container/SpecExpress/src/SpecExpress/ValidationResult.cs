@@ -5,18 +5,18 @@ namespace SpecExpress
 {
     public class ValidationResult
     {
-        private PropertyInfo _property;
+        private MemberInfo _property;
         private String _errorMessage;
         private object _actualValue;
 
-        public ValidationResult(PropertyInfo property, string errorMessage, object actualValue)
+        public ValidationResult(MemberInfo property, string errorMessage, object actualValue)
         {
             _property = property;
             _errorMessage = errorMessage;
             _actualValue = actualValue;
         }
 
-        public PropertyInfo Property
+        public MemberInfo Property
         {
             get { return _property; }
         }

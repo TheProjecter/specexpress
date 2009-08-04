@@ -18,7 +18,7 @@ namespace SpecExpress.Test.Entities
         public ValidationNotification Errors;
         public bool IsValid()
         {
-            ValidationContainer.RulesForEntity<Contact>(x =>
+            ValidationContainer.AddSpecification<Contact>(x =>
             {
                 x.Check(contact => contact.LastName).Required();
                 x.Check(contact => contact.FirstName).Required();
@@ -29,7 +29,7 @@ namespace SpecExpress.Test.Entities
 
             //Validate
             Errors = ValidationContainer.Validate(this);
-            return Errors.IsValid();
+            return Errors.IsValid;
         }
     }
 }

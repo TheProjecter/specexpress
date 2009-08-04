@@ -7,9 +7,8 @@ using SpecExpress.Rules;
 
 namespace SpecExpress.MessageStore
 {
-    public interface IMessageStore<T, TProperty>
+    public interface IMessageStore
     {
-        string GetFormattedErrorMessage(RuleValidator<T, TProperty> ruleValidator, RuleValidatorContext<T, TProperty> ruleValidatorContext);
-        
+        string GetFormattedErrorMessage(RuleValidator ruleValidator, RuleValidatorContext ruleValidatorContext);
     }
 }

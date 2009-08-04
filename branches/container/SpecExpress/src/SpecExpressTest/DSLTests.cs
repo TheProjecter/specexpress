@@ -43,6 +43,7 @@ namespace SpecExpressTest
             Check(contact => contact.FirstName).Required().And.Between(1, 5).With.Message("ere").And.Between(1, 5).Or.
                 Between(1, 5).With.Message("erjaldfj");
 
+            //Check(contact => contact.FirstName).Required().And.LengthBetween(1, 5);
 
         }
 

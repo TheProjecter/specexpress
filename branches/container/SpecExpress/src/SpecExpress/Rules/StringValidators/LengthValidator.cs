@@ -29,7 +29,7 @@ namespace SpecExpress.Rules.StringValidators
 
             if (length < Min || length > Max)
             {
-                RuleValidatorContext<T, string> contextWithLength = new RuleValidatorContext<T, string>(
+                var contextWithLength = new RuleValidatorContext<T, string>(
                context.PropertyName, length.ToString(), context.PropertyInfo);
 
                 return CreateValidationResult(contextWithLength);

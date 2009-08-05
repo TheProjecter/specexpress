@@ -85,21 +85,16 @@ namespace SpecExpress
                 if (Registry.ContainsKey(typeForSpec))
                 {
                     //Add rules for all PropertyValidators to the Rules for existing Property Validators
-                    var existingSpecification = Registry[typeForSpec];
-
-                    foreach ( var propertyValidator in incomingSpecification.PropertyValidators)
-                    {
-                        //find the matching propertyValidator
-                        var p = from propertyValidators in existingSpecification.PropertyValidators
-                                where propertyValidators.PropertyInfo == propertyValidator.PropertyInfo
-                                select propertyValidators;
-
-                        //Add all the rules on the incoming PropertyValidator to the matching existing PropertyValidator Rules
-                        foreach (var ruleValidator in propertyValidator.Rules)
-                        {
-                            p.First().AddRule(ruleValidator);
-                        }
-                    }
+                    incomingSpecification.PropertyValidators.ForEach(pv =>
+                        {   
+                            //find the matching propertyValidator
+                            var p = from propertyValidators in Registry[typeForSpec].PropertyValidators
+                                    where propertyValidators.PropertyInfo == pv.PropertyInfo
+                                    select propertyValidators;                            
+                            
+                            //Add all the rules on the incoming PropertyValidator to the matching existing PropertyValidator Rules
+                            pv.Rules.ForEach(r => p.First().AddRule(r));
+                        });
                 }
                 else
                 {

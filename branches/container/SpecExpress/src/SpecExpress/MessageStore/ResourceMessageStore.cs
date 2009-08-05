@@ -62,7 +62,7 @@ namespace SpecExpress.MessageStore
             {
                 errorMessageParams.AddRange(_ruleValidator.Parameters);
             }
-
+            
             return String.Format(errorTemplate, errorMessageParams.ToArray());
         }
     }

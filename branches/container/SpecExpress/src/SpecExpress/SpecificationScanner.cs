@@ -90,8 +90,7 @@ namespace SpecExpress
                     try
                     {
                         //Register
-                        _specifications.Add(o as Specification); 
-                        //_specifications.Add(o.GetType().BaseType.GetGenericArguments().FirstOrDefault(), o as IValidatable);
+                        _specifications.Add(o as Specification);
                     }
                     catch (System.ArgumentException argumentException)
                     {

@@ -81,7 +81,7 @@ namespace SpecExpress
 
     }
 
-    public abstract class PropertyValidator<T> : PropertyValidator, IValidatable
+    public abstract class PropertyValidator<T> : PropertyValidator
     {
         public abstract List<ValidationResult> Validate(T instance);
 

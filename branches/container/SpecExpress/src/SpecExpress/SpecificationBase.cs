@@ -6,7 +6,7 @@ using SpecExpress.Enums;
 
 namespace SpecExpress
 {
-    public abstract class Specification : IValidatable
+    public abstract class Specification 
     {
         private List<PropertyValidator> _propertyValidators = new List<PropertyValidator>();
 
@@ -16,15 +16,11 @@ namespace SpecExpress
             set { _propertyValidators = value; }
         }
 
-        #region IValidatable Members
-
-        //public abstract List<ValidationResult> Validate(object instance);
         public List<ValidationResult> Validate(object instance)
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }
-
-        #endregion
+        
     }
     
     public abstract class SpecificationBase<T> : Specification

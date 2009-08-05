@@ -8,7 +8,7 @@ namespace SpecExpress.Util
     {
         public static MemberInfo GetMember<T, TProperty>(this Expression<Func<T, TProperty>> expression)
         {
-            var memberExp = RemoveUnary(expression.Body);
+            MemberExpression memberExp = RemoveUnary(expression.Body);
 
             if (memberExp == null)
             {
@@ -22,7 +22,7 @@ namespace SpecExpress.Util
         {
             if (toUnwrap is UnaryExpression)
             {
-                return ((UnaryExpression)toUnwrap).Operand as MemberExpression;
+                return ((UnaryExpression) toUnwrap).Operand as MemberExpression;
             }
 
             return toUnwrap as MemberExpression;

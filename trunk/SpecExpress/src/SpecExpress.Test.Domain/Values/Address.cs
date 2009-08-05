@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace SpecExpress.Test.Domain.Values
+﻿namespace SpecExpress.Test.Domain.Values
 {
     public class Address
     {
@@ -17,7 +12,7 @@ namespace SpecExpress.Test.Domain.Values
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            Address a = obj as Address;
+            var a = obj as Address;
             return a.Street == Street;
         }
     }

@@ -2,11 +2,8 @@ using System;
 
 namespace SpecExpress.Rules.StringValidators
 {
-    public class LengthValidator<T> :  RuleValidator<T, string>
+    public class LengthValidator<T> : RuleValidator<T, string>
     {
-        public int Min { get; private set; }
-        public int Max { get; private set; }
-
         public LengthValidator(int min, int max)
         {
             Max = max;
@@ -18,18 +15,22 @@ namespace SpecExpress.Rules.StringValidators
             }
         }
 
+        public int Min { get; private set; }
+        public int Max { get; private set; }
+
         public override object[] Parameters
         {
-            get { return new object[] { Min, Max }; }
+            get { return new object[] {Min, Max}; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
-        {   
+        {
             int length = context.PropertyValue == null ? 0 : context.PropertyValue.Length;
 
             if (length < Min || length > Max)
             {
-                var contextWithLength = new RuleValidatorContext<T, string>(context.PropertyName, length.ToString(), context.PropertyInfo, null);
+                var contextWithLength = new RuleValidatorContext<T, string>(context.PropertyName, length.ToString(),
+                                                                            context.PropertyInfo, null);
 
                 return CreateValidationResult(contextWithLength);
             }

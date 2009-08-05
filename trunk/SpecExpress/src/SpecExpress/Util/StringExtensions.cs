@@ -12,6 +12,5 @@ namespace SpecExpress.Util
             }
             return Regex.Replace(input, "([A-Z])", " $1").Trim();
         }
-
     }
 }

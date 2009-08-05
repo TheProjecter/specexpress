@@ -23,11 +23,10 @@ namespace SpecExpress
         }
 
         public static ActionJoinBuilder<T, string> Between<T>(this IRuleBuilder<T, string> expression, int min,
-                                                                   int max)
+                                                              int max)
         {
             expression.RegisterValidator(new LengthValidator<T>(min, max));
             return expression.JoinBuilder;
         }
-
     }
 }

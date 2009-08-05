@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 
 namespace SpecExpress.Rules.StringValidators
 {
     public class IsInSet<T> : RuleValidator<T, string>
     {
-        private List<string> _set;
+        private readonly List<string> _set;
 
         public IsInSet(List<string> set)
         {
@@ -14,7 +13,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public override object[] Parameters
         {
-            get { return new object[] { _set }; }
+            get { return new object[] {_set}; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)

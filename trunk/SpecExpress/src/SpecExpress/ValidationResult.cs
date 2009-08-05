@@ -5,9 +5,9 @@ namespace SpecExpress
 {
     public class ValidationResult
     {
-        private MemberInfo _property;
-        private String _errorMessage;
-        private object _actualValue;
+        private readonly object _actualValue;
+        private readonly String _errorMessage;
+        private readonly MemberInfo _property;
 
         public ValidationResult(MemberInfo property, string errorMessage, object actualValue)
         {

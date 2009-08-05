@@ -29,7 +29,7 @@ namespace SpecExpress.Test
             RuleValidator<Contact, string> ruleValidator = new LengthValidator<Contact>(1, 5);
 
             //Create a context
-            RuleValidatorContext<Contact, string> context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator);
+            RuleValidatorContext<Contact, string> context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator, null);
             
             //create it like this? IOC? Factory?
             IMessageStore messageStore = new ResourceMessageStore();

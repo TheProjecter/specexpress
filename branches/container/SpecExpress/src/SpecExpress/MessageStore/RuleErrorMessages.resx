@@ -120,4 +120,7 @@
   <data name="LengthValidator" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
   </data>
+  <data name="Required" xml:space="preserve">
+    <value>{PropertyName} is required.</value>
+  </data>
 </root>

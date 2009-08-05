@@ -7,6 +7,7 @@ namespace SpecExpress.Rules
 {
     public abstract class RuleValidatorContext
     {
+        public RuleValidatorContext Parent { get; internal set; }
         public string PropertyName { get; protected set; }
         public object PropertyValue { get; protected set; }
         public MemberInfo PropertyInfo { get; set; } 
@@ -19,18 +20,20 @@ namespace SpecExpress.Rules
     /// <typeparam name="TProperty"></typeparam>
     public class RuleValidatorContext<T, TProperty> : RuleValidatorContext
     {
-        public RuleValidatorContext(T instance, PropertyValidator<T,TProperty> validator)
+        public RuleValidatorContext(T instance, PropertyValidator<T,TProperty> validator, RuleValidatorContext parentContext)
         {
             PropertyName = String.IsNullOrEmpty(validator.PropertyNameOverride) ? validator.PropertyInfo.Name.SplitPascalCase() : validator.PropertyNameOverride;
             PropertyValue = (TProperty)validator.GetValueForProperty(instance);
             PropertyInfo = validator.PropertyInfo;
+            Parent = parentContext;
         }
 
-        public RuleValidatorContext(string propertyName, TProperty propertyValue, MemberInfo propertyInfo)
+        public RuleValidatorContext(string propertyName, TProperty propertyValue, MemberInfo propertyInfo, RuleValidatorContext parentContext)
         {
             PropertyName = propertyName;
             PropertyValue = propertyValue;
             PropertyInfo = propertyInfo;
+            Parent = parentContext;
         }
       
         public new TProperty PropertyValue 

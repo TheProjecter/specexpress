@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTypesTests.cs" />
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />
     <Compile Include="DSLTests\StructureTests.cs" />

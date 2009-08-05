@@ -25,8 +25,6 @@ namespace SpecExpress
     
     public abstract class SpecificationBase<T> : Specification
     {
-        //protected List<PropertyValidator<T>> PropertyValidators = new List<PropertyValidator<T>>();
-
         #region Check
 
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression, string propertyNameOverride)
@@ -58,15 +56,7 @@ namespace SpecExpress
             return Warn(expression, null);
         }
         #endregion
-
-        //[Obsolete("This is used if calling Validate explicitly on the Specification. Validation should happen only thru the Container.")]
-        //public ValidationNotification Validate(T instance)
-        //{
-        //    var notification = new ValidationNotification();
-        //    notification.Errors.AddRange(PropertyValidators.SelectMany(x => x.Validate(instance)).ToList());
-        //    return notification;
-        //}
-
+        
         public new List<ValidationResult> Validate(T instance)
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();

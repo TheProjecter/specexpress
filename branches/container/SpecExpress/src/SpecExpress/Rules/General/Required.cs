@@ -15,9 +15,10 @@ namespace SpecExpress.Rules.General
             if (context.PropertyValue == null 
                 || context.PropertyValue.Equals(string.Empty) 
                 || Equals(context.PropertyValue, default(TProperty)))
-            {
-                string error = string.Format("{0} is required.", context.PropertyName);
-                return new ValidationResult(context.PropertyInfo, error, context.PropertyValue);
+            { 
+                return CreateValidationResult(context);
+
+                //return new ValidationResult(context.PropertyInfo, error, context.PropertyValue);
             }
             else
             {

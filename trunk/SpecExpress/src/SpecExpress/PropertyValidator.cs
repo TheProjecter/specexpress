@@ -6,145 +6,191 @@ using System.Reflection;
 using SpecExpress.Enums;
 using SpecExpress.Rules;
 using SpecExpress.Rules.General;
-using SpecExpress.Util;
 
 namespace SpecExpress
 {
-    public abstract class PropertyValidator<T>
+    public abstract class PropertyValidator
     {
-        public abstract List<ValidationResult> Validate(T instance);
+        protected PropertyValidator(Type entityType, Type propertyType)
+        {
+            EntityType = entityType;
+            PropertyType = propertyType;
     }
+
+        public abstract List<RuleValidator> Rules { get; }
+        public abstract void AddRule(RuleValidator ruleValidator);
+
+        public abstract List<ValidationResult> Validate(object instance);
+        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
+
+
+        public Type PropertyType { get; private set; }
+
+        public Type EntityType { get; private set; }
+
+        public MemberInfo PropertyInfo
+        {
+            get { return ((MemberExpression) (Property.Body)).Member; }
+            set { }
+        }
+
+        public string PropertyNameOverride { get; set; }
+
+        public ValidationLevelType Level { get; set; }
+
+        public bool PropertyValueRequired { get; protected set; }
+
+        public PropertyValidator Child { get; set; }
+
+        public PropertyValidator Parent { get; set; }
+
+        public LambdaExpression Property { get; set; }
+
+        public object GetValueForProperty(object instance)
+        {   
+            if (instance == null)
+        {
+                return null;
+        }
+           
+           return Property.Compile().DynamicInvoke(new[] { instance });
+        }
+    }
+
+    public abstract class PropertyValidator<T> : PropertyValidator
+        {
+        protected PropertyValidator(Type propertyType) : base(typeof (T), propertyType)
+        {
+        }
+
+        public abstract List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext);
+            
+        public List<ValidationResult> Validate(T instance)
+            {
+            return Validate(instance, null);
+        }
+
+        public override List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContext)
+                {
+            return Validate((T)instance, parentRuleContext);
+                }
+
+        public override List<ValidationResult> Validate(object instance)
+                {
+            return Validate((T) instance, null);
+                }
+            }
 
     public class PropertyValidator<T, TProperty> : PropertyValidator<T>
     {
-        private ValidationLevelType _level;
-        bool _propertyValueRequired = false;
-        
-        private List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
-        private Expression<Func<T, TProperty>> _targetExpression;
-        private Predicate<T> _condition;
-        private PropertyValidator<T, TProperty> _child = null;
-        private PropertyValidator<T, TProperty> _parent = null;
+        private readonly bool _propertyValueRequired;
+        private readonly List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
 
-        private Func<T, TProperty> _propertyFunc;
-        private PropertyInfo _propertyInfo;
-        
         public PropertyValidator(Expression<Func<T, TProperty>> targetExpression)
+            : base(targetExpression.Body.Type)
         {
-            _rules = new List<RuleValidator<T, TProperty>>();
-            _targetExpression = targetExpression;
-            _propertyInfo = _targetExpression.GetMember() as PropertyInfo;
-            _propertyFunc = _targetExpression.Compile();
+            Property = targetExpression;
         }
 
         internal PropertyValidator(PropertyValidator<T, TProperty> parent)
+            : base(parent.Property.Body.Type)
         {
-            _parent = parent;
-            _propertyValueRequired = _parent._propertyValueRequired;
-            _propertyInfo = _parent._propertyInfo;
-            _propertyFunc = _parent._propertyFunc;
-            PropertyNameOverride = _parent.PropertyNameOverride;
-            _targetExpression = parent._targetExpression;
+            Parent = parent;
+            _propertyValueRequired = Parent._propertyValueRequired;
+            PropertyInfo = Parent.PropertyInfo;
+            PropertyNameOverride = Parent.PropertyNameOverride;
+            Property = parent.Property;
         }
 
-        public override List<ValidationResult> Validate(T instance)
-        {
-            //TODO: Instantiate RuleValidatorContext
-            RuleValidatorContext<T, TProperty> context = new RuleValidatorContext<T, TProperty>(instance, this);
-
-            //TODO: Only Validate rules
-            List<ValidationResult> list = null;
-
-            list = _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
-            
-            // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
-            if (list.Count != 0 && _child != null)
-            {
-                List<ValidationResult> orList = _child.Validate(instance);
-                if (orList.Count == 0)
-                {
-                    list.Clear();
-                }
-                else
-                {
-                    list.AddRange(orList);
-                }
-            }
-
-            return list;
-        }
-
-        public List<RuleValidator<T, TProperty>> Rules
-        {
-            get { return _rules; }
-        }
-
-        public Predicate<T> Condition
-        {
-            get { return _condition; }
-            set { _condition = value; }
-        }
-
-        public PropertyValidator<T, TProperty> Child
+        public override List<RuleValidator> Rules
         {
             get
             {
-                return _child;
+                return _rules.Select(x => x as RuleValidator).ToList();
             }
-            set
-            {
-                _child = value;
             }
-        }
 
-        public string PropertyNameOverride
-        {
-            get; set;
-        }
+        public Predicate<T> Condition { get; set; }
 
-        public ValidationLevelType Level
+        public new bool PropertyValueRequired
         {
-            get { return _level; }
-            set { _level = value; }
-        }
-
-        public bool PropertyValueRequired
-        {
-            get { return _propertyValueRequired; }
+            get { return base.PropertyValueRequired; }
             set
             {
                 // Ensure only one Required rule is in list by Removing all Required Rules
-                Rules.RemoveAll(rule => rule.GetType() == typeof (Required<T, TProperty>));
+                //Alan: Required<T, TProperty> can be moved to base class and the type genrically constructed and created
+                _rules.RemoveAll(rule => rule.GetType() == typeof (Required<T, TProperty>));
 
                 if (value)
                 {
                     // Add Required Rule as first rule if RropertyValueRequired set to true
-                    Rules.Insert(0,new Required<T, TProperty>());
+                    _rules.Insert(0, new Required<T, TProperty>());
                 }
 
-                _propertyValueRequired = value;
+                base.PropertyValueRequired = value;
             }
         }
 
-        public PropertyValidator<T, TProperty> Parent
+        public new PropertyValidator<T, TProperty> Child
         {
-            get { return _parent; }
-            set { _parent = value; }
+            get { return (PropertyValidator<T, TProperty>) base.Child; }
+            set { base.Child = value; }
         }
 
-        public Func<T, TProperty> PropertyFunc
+        public new PropertyValidator<T, TProperty> Parent
         {
-            get { return _propertyFunc; }
+            get { return (PropertyValidator<T, TProperty>) base.Parent; }
+            set { base.Parent = value; }
         }
 
-        public PropertyInfo PropertyInfo
+        public override void AddRule(RuleValidator ruleValidator)
         {
-            get { return _propertyInfo; }
+            _rules.Add(ruleValidator as RuleValidator<T, TProperty>);
         }
 
-        internal Expression<Func<T, TProperty>> TargetExpression
+        public void AddRule(RuleValidator<T, TProperty> ruleValidator)
         {
-            get { return _targetExpression; }
+            _rules.Add(ruleValidator);
         }
+
+        public  override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
+        {
+            if (_rules == null || !_rules.Any())
+            {
+                throw new ArgumentException(
+                    "No rules exist for this Property. This is because the rules are improperly configured.");
+    }
+
+            var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
+
+            var list = _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+
+            //Check if this Property Type has a Registered specification to validate with 
+            if (ValidationContainer.Registry.ContainsKey(typeof(TProperty)))
+            {
+                //Spec found, use it to validate
+                var specification = ValidationContainer.Registry[typeof(TProperty)];
+                //Add any errors to the existing list of errors
+                list.AddRange(specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
+            }
+
+            // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
+            if (list.Any() && Child != null)
+            {
+                var orList = Child.Validate(instance);
+                if (orList.Any())
+                {
+                    list.AddRange(orList);
+                }
+                else
+                {
+                    list.Clear();
+                }
+            }
+
+            return list; 
+        }
+
+       
     }
 }

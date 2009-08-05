@@ -68,5 +68,14 @@ namespace SpecExpress.MessageStore {
                 return ResourceManager.GetString("LengthValidator", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} is required..
+        /// </summary>
+        internal static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+    }
+        }
     }
 }

@@ -6,17 +6,25 @@ using SpecExpress.Enums;
 
 namespace SpecExpress
 {
-    /// <summary>
-    /// Changes:
-    /// 1. Renamed ValidationLevelType.Err to Error
-    /// 2. Set PropertyValidator.Level in here instead of ActionOption because we have it already 
-    ///     and don't need to add it to the constructor
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    public abstract class SpecificationBase<T>
+    public abstract class Specification 
     {
-        protected List<PropertyValidator<T>> _propertyValidators = new List<PropertyValidator<T>>();
+        private List<PropertyValidator> _propertyValidators = new List<PropertyValidator>();
 
+        public List<PropertyValidator> PropertyValidators
+        {
+            get { return _propertyValidators; }
+            set { _propertyValidators = value; }
+        }
+
+        public List<ValidationResult> Validate(object instance)
+        {
+            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+        }
+        
+    }
+    
+    public abstract class SpecificationBase<T> : Specification
+    {
         #region Check
 
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression, string propertyNameOverride)
@@ -48,21 +56,16 @@ namespace SpecExpress
             return Warn(expression, null);
         }
         #endregion
-
-
-        public ValidationNotification Validate(T instance)
+        
+        public new List<ValidationResult> Validate(T instance)
         {
-            var notification = new ValidationNotification();
-            notification.Errors.AddRange(_propertyValidators.SelectMany(x => x.Validate(instance)).ToList());
-
-            return notification;
+            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }
-
 
         private PropertyValidator<T, TProperty> registerValidator<TProperty>(Expression<Func<T, TProperty>> expression)
         {
-            PropertyValidator<T, TProperty> propertyValidator = new PropertyValidator<T, TProperty>(expression);
-            _propertyValidators.Add(propertyValidator);
+            var propertyValidator = new PropertyValidator<T, TProperty>(expression);
+            PropertyValidators.Add(propertyValidator);
             return propertyValidator;
         }
 

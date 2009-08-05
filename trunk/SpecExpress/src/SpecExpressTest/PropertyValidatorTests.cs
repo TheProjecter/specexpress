@@ -11,25 +11,32 @@ namespace SpecExpress.Test
     [TestFixture]
     public class PropertyValidatorTests
     {
+        [Test]
         public void Validate_OptionalProperty_WithNoValue_IsValid()
         {
-            Contact emptyContact = new Contact();
+            var emptyContact = new Contact();
             emptyContact.FirstName = string.Empty;
             emptyContact.LastName = string.Empty;
 
-            PropertyValidator<Contact, string> propertyValidator =
+           var propertyValidator =
                 new PropertyValidator<Contact, string>(contact => contact.LastName);
 
             propertyValidator.PropertyValueRequired = false;
 
             //add a single rule
-            LengthValidator<Contact>  lengthValidator = new LengthValidator<Contact>(0,1);
-            propertyValidator.Rules.Add(lengthValidator);
+           var lengthValidator = new LengthValidator<Contact>(1,5);
+           propertyValidator.AddRule(lengthValidator);//.Rules.Add(lengthValidator);
 
             //Validate
             var result = propertyValidator.Validate(emptyContact);
 
-            //Assert.That(result.);
+            Assert.That(result, Is.Not.Empty);
+
+            Assert.That(result.First().ActualValue, Is.EqualTo("0"));
+            Assert.That(result.First().ErrorMessage, Is.EqualTo("'Last Name' must be between 1 and 5 characters. You entered 0 characters."));
+            Assert.That(result.First().Property.Name, Is.EqualTo("LastName"));
+
+
 
             
             

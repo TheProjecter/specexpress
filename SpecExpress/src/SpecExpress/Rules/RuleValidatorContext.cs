@@ -5,38 +5,42 @@ using System.Reflection;
 
 namespace SpecExpress.Rules
 {
+    public abstract class RuleValidatorContext
+    {
+        public RuleValidatorContext Parent { get; internal set; }
+        public string PropertyName { get; protected set; }
+        public object PropertyValue { get; protected set; }
+        public MemberInfo PropertyInfo { get; set; } 
+    }
+
     /// <summary>
     /// Retrieves the name and value of the Property given the of the Expression
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    public class RuleValidatorContext<T, TProperty>
+    public class RuleValidatorContext<T, TProperty> : RuleValidatorContext
     {
-        public RuleValidatorContext(T instance, PropertyValidator<T,TProperty> validator)
+        public RuleValidatorContext(T instance, PropertyValidator<T,TProperty> validator, RuleValidatorContext parentContext)
         {
-            // Set PropertyName
             PropertyName = String.IsNullOrEmpty(validator.PropertyNameOverride) ? validator.PropertyInfo.Name.SplitPascalCase() : validator.PropertyNameOverride;
-
-            // Set PropertyValue
-            PropertyValue = validator.PropertyFunc(instance);
-
+            PropertyValue = (TProperty)validator.GetValueForProperty(instance);
             PropertyInfo = validator.PropertyInfo;
-
+            Parent = parentContext;
         }
 
-        public RuleValidatorContext(string propertyName, TProperty propertyValue, PropertyInfo propertyInfo)
+        public RuleValidatorContext(string propertyName, TProperty propertyValue, MemberInfo propertyInfo, RuleValidatorContext parentContext)
         {
-            // Set PropertyName
             PropertyName = propertyName;
-            // Set PropertyValue
             PropertyValue = propertyValue;
             PropertyInfo = propertyInfo;
+            Parent = parentContext;
         }
-
-
-        public string PropertyName { get; private set; }
-        public TProperty PropertyValue { get; private set; }
-        public PropertyInfo PropertyInfo { get; set; }
+      
+        public new TProperty PropertyValue 
+        { 
+            get { return (TProperty)base.PropertyValue;}
+            set { base.PropertyValue = value;}
+        }
 
     }
 }

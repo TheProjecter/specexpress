@@ -33,7 +33,7 @@ namespace SpecExpress.DSL
 
         RuleBuilder<T, TProperty> IRuleBuilder<T, TProperty>.RegisterValidator(RuleValidator<T, TProperty> validator)
         {
-            _propertyValidator.Rules.Add(validator);
+            _propertyValidator.AddRule(validator);
             return this;
         }
 

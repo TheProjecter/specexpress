@@ -1,29 +1,43 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using SpecExpress.Rules;
 
 namespace SpecExpress.MessageStore
 {
-    public class ResourceMessageStore<T, TProperty> : IMessageStore<T, TProperty>
+    public class ResourceMessageStore : IMessageStore
     {
-        private RuleValidator<T, TProperty> _ruleValidator;
-        private RuleValidatorContext<T, TProperty> _ruleValidatorContext;
+        private RuleValidator _ruleValidator;
+        private MemberInfo PropertyInfo;
+        private string PropertyName;
+        private object PropertyValue;
 
-        #region IMessageStore<T,TProperty> Members
+        #region IMessageStore Members
 
-        public string GetFormattedErrorMessage(RuleValidator<T, TProperty> ruleValidator, RuleValidatorContext<T, TProperty> ruleValidatorContext)
+        public string GetFormattedErrorMessage(RuleValidator ruleValidator, RuleValidatorContext ruleValidatorContext)
         {
             _ruleValidator = ruleValidator;
-            _ruleValidatorContext = ruleValidatorContext;
+            PropertyName = ruleValidatorContext.PropertyName;
+            PropertyValue = ruleValidatorContext.PropertyValue;
+            PropertyInfo = ruleValidatorContext.PropertyInfo;
+
+            return formatErrorMessage(getErrorTemplate());
+        }
+
+        public string GetFormattedErrorMessage(RuleValidator ruleValidator, string propertyName, object propertyValue,
+                                               MemberInfo propertyInfo)
+        {
+            _ruleValidator = ruleValidator;
+            PropertyName = propertyName;
+            PropertyValue = propertyValue;
+            PropertyInfo = propertyInfo;
 
             return formatErrorMessage(getErrorTemplate());
         }
 
         #endregion
-      
+
         /// <summary>
         /// Retrieve the Error Message string form the resource file
         /// </summary>
@@ -32,13 +46,15 @@ namespace SpecExpress.MessageStore
         {
             //Use Name of the Rule Validator as the Key to get the error message format string
             string key = _ruleValidator.GetType().Name;
-            key = key.Split('`').FirstOrDefault(); //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
-            
+            //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
+            key = key.Split('`').FirstOrDefault();
+
             string errorString = RuleErrorMessages.ResourceManager.GetString(key);
 
             if (String.IsNullOrEmpty(errorString))
             {
-                throw new InvalidOperationException(String.Format("Unable to find error message for {0} in resources file.", key));
+                throw new InvalidOperationException(
+                    String.Format("Unable to find error message for {0} in resources file.", key));
             }
 
             return errorString;
@@ -52,10 +68,10 @@ namespace SpecExpress.MessageStore
         private string formatErrorMessage(string errorTemplate)
         {
             //Replace known keywords with actual values
-            errorTemplate = errorTemplate.Replace("{PropertyName}", _ruleValidatorContext.PropertyName);
+            errorTemplate = errorTemplate.Replace("{PropertyName}", PropertyName);
             //TODO: Handle null PropertyValue's
-            errorTemplate = errorTemplate.Replace("{PropertyValue}", _ruleValidatorContext.PropertyValue as string);
-            
+            errorTemplate = errorTemplate.Replace("{PropertyValue}", PropertyValue as string);
+
             //create param list for String.Format
             var errorMessageParams = new ArrayList();
             if (_ruleValidator.Parameters != null && _ruleValidator.Parameters.Any())

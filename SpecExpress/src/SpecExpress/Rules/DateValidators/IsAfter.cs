@@ -4,16 +4,16 @@ namespace SpecExpress.Rules.DateValidators
 {
     public class IsAfter<T> : RuleValidator<T, DateTime>
     {
-        public DateTime AfterDate { get; private set; }
-
         public IsAfter(DateTime afterDate)
         {
             AfterDate = afterDate;
         }
 
+        public DateTime AfterDate { get; private set; }
+
         public override object[] Parameters
         {
-            get { return new object[] { AfterDate }; }
+            get { return new object[] {AfterDate}; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)

@@ -2,11 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using SpecExpress.DSL;
 using SpecExpress.Enums;
 
 namespace SpecExpress
 {
-    public abstract class Specification 
+    public abstract class Specification
     {
         private List<PropertyValidator> _propertyValidators = new List<PropertyValidator>();
 
@@ -20,16 +21,16 @@ namespace SpecExpress
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }
-        
     }
-    
+
     public abstract class SpecificationBase<T> : Specification
     {
         #region Check
 
-        public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression, string propertyNameOverride)
+        public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,
+                                                                  string propertyNameOverride)
         {
-            var validator = registerValidator<TProperty>(expression);
+            PropertyValidator<T, TProperty> validator = registerValidator(expression);
             validator.PropertyNameOverride = propertyNameOverride;
             validator.Level = ValidationLevelType.Error;
             return new ActionOptionBuilder<T, TProperty>(validator);
@@ -39,13 +40,15 @@ namespace SpecExpress
         {
             return Check(expression, null);
         }
+
         #endregion
 
         #region Warn
 
-        public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression, string propertyNameOverride)
+        public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression,
+                                                                 string propertyNameOverride)
         {
-            var validator = registerValidator<TProperty>(expression);
+            PropertyValidator<T, TProperty> validator = registerValidator(expression);
             validator.Level = ValidationLevelType.Warn;
             validator.PropertyNameOverride = propertyNameOverride;
             return new ActionOptionBuilder<T, TProperty>(validator);
@@ -55,9 +58,10 @@ namespace SpecExpress
         {
             return Warn(expression, null);
         }
+
         #endregion
-        
-        public new List<ValidationResult> Validate(T instance)
+
+        public List<ValidationResult> Validate(T instance)
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }
@@ -68,6 +72,5 @@ namespace SpecExpress
             PropertyValidators.Add(propertyValidator);
             return propertyValidator;
         }
-
     }
 }

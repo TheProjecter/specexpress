@@ -10,26 +10,25 @@ namespace SpecExpress.Test.DSLTests
     /// </summary>
     public class StructureTests : SpecificationBase<Customer>
     {
-
         public void CompileCheckDSLStatements()
         {
             Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Check(c => c.Name).Required().And.LengthBetween(0, 10);
 
             Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Check(c => c.Name).Optional().And.LengthBetween(0, 10);
         }
@@ -39,24 +38,23 @@ namespace SpecExpress.Test.DSLTests
         {
             Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Warn(c => c.Name).Required().And.LengthBetween(0, 10);
 
             Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
                 .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new string[] { "Dumb", "Dumber" })).With.Message("Dumber Message");
+                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
 
             Warn(c => c.Name).Optional().And.LengthBetween(0, 10);
         }
-
     }
 }

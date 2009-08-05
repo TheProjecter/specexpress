@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SpecExpress.MessageStore;
 using SpecExpress.Rules;
 using SpecExpress.Rules.StringValidators;
@@ -17,24 +13,24 @@ namespace SpecExpress.Test
         public void GetFormattedErrorMessage_ReturnsFormattedString()
         {
             //Create an Entity
-            Contact emptyContact = new Contact();
+            var emptyContact = new Contact();
             emptyContact.FirstName = null;
             emptyContact.LastName = null;
-            
+
             //Create PropertyValidator
-            PropertyValidator<Contact, string> propertyValidator =
-                new PropertyValidator<Contact, string>(contact =>contact.LastName);
-            
+            var propertyValidator =
+                new PropertyValidator<Contact, string>(contact => contact.LastName);
+
             //Create a rule
             RuleValidator<Contact, string> ruleValidator = new LengthValidator<Contact>(1, 5);
 
             //Create a context
-            RuleValidatorContext<Contact, string> context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator, null);
-            
+            var context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator, null);
+
             //create it like this? IOC? Factory?
             IMessageStore messageStore = new ResourceMessageStore();
 
-            var errorMessage = messageStore.GetFormattedErrorMessage(ruleValidator, context);
+            string errorMessage = messageStore.GetFormattedErrorMessage(ruleValidator, context);
 
             Assert.That(errorMessage, Is.Not.Null.Or.Empty);
 

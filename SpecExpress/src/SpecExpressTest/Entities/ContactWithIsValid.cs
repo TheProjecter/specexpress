@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using SpecExpress.Rules.DateValidators;
 using SpecExpressTest.Entities;
 
@@ -9,23 +7,23 @@ namespace SpecExpress.Test.Entities
 {
     public class ContactWithIsValid
     {
+        public ValidationNotification Errors;
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public int NumberOfDependents { get; set; }
         public List<Address> Addresses { get; set; }
 
-        public ValidationNotification Errors;
         public bool IsValid()
         {
             ValidationContainer.AddSpecification<Contact>(x =>
-            {
-                x.Check(contact => contact.LastName).Required();
-                x.Check(contact => contact.FirstName).Required();
-                x.Check(contact => contact.DateOfBirth).Optional().And.IsAfter(
-                    new DateTime(1950, 1, 1));
-
-            });
+                                                              {
+                                                                  x.Check(contact => contact.LastName).Required();
+                                                                  x.Check(contact => contact.FirstName).Required();
+                                                                  x.Check(contact => contact.DateOfBirth).Optional().And
+                                                                      .IsAfter(
+                                                                      new DateTime(1950, 1, 1));
+                                                              });
 
             //Validate
             Errors = ValidationContainer.Validate(this);

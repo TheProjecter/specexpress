@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -48,11 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionJoinBuilder.cs" />
+    <Compile Include="DSL\ActionJoinBuilder.cs" />
     <Compile Include="DefaultRuleExtensions.cs" />
-    <Compile Include="ActionOptionConditionBuilder.cs" />
-    <Compile Include="ActionOptionConditionSatisfiedBuilder.cs" />
-    <Compile Include="ActionOptionBuilder.cs" />
+    <Compile Include="DSL\ActionOptionConditionBuilder.cs" />
+    <Compile Include="DSL\ActionOptionConditionSatisfiedBuilder.cs" />
+    <Compile Include="DSL\ActionOptionBuilder.cs" />
     <Compile Include="MessageStore\IMessageStore.cs" />
     <Compile Include="MessageStore\ResourceMessageStore.cs" />
     <Compile Include="MessageStore\RuleErrorMessages.Designer.cs">
@@ -60,13 +60,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RuleErrorMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="RuleBuilder.cs" />
+    <Compile Include="DSL\RuleBuilder.cs" />
     <Compile Include="Rules\General\Required.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationContainer.cs" />
     <Compile Include="ValidationNotification.cs" />
-    <Compile Include="WithBuilder.cs" />
+    <Compile Include="DSL\WithBuilder.cs" />
     <Compile Include="Enums\ValidationLevelType.cs" />
     <Compile Include="Rules\DateValidators\DateRuleExtensions.cs" />
     <Compile Include="Rules\DateValidators\IsAfter.cs" />

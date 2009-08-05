@@ -4,11 +4,16 @@ namespace SpecExpress.Test.Entities.EntityBuilders
 {
     public class CustomerBuilder
     {
-        Customer _customer = new Customer();
+        private readonly Customer _customer = new Customer();
 
         public CustomerBuilder()
         {
             _customer = new Customer();
+        }
+
+        public Customer Customer
+        {
+            get { return _customer; }
         }
 
         public CustomerBuilder Name(string name)
@@ -21,11 +26,6 @@ namespace SpecExpress.Test.Entities.EntityBuilders
         {
             _customer.CustomerDate = dateTime;
             return this;
-        }
-
-        public Customer Customer
-        {
-            get { return _customer; }
         }
     }
 }

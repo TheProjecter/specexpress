@@ -4,16 +4,16 @@ namespace SpecExpress.Rules.DateValidators
 {
     public class IsBefore<T> : RuleValidator<T, DateTime>
     {
-        public DateTime BeforeDate { get; private set; }
-
         public IsBefore(DateTime beforeDate)
         {
             BeforeDate = beforeDate;
         }
 
+        public DateTime BeforeDate { get; private set; }
+
         public override object[] Parameters
         {
-            get { return new object[] { BeforeDate }; }
+            get { return new object[] {BeforeDate}; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)

@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace SpecExpress
 {
     public class SpecificationScanner
     {
-        private static IList<Specification> _specifications = new List<Specification>();
+        private static readonly IList<Specification> _specifications = new List<Specification>();
+
+        internal IList<Specification> FoundSpecifications
+        {
+            get { return _specifications; }
+        }
 
         public void TheCallingAssembly()
         {
@@ -29,40 +34,37 @@ namespace SpecExpress
 
         public void AddAssembliesFromPath(string path)
         {
-            var assemblyPaths = System.IO.Directory.GetFiles(path).Where(file =>
-                                                                        System.IO.Path.GetExtension(file).Equals(
-                                                                            ".exe", StringComparison.OrdinalIgnoreCase)
-                                                                        ||
-                                                                        System.IO.Path.GetExtension(file).Equals(
-                                                                            ".dll", StringComparison.OrdinalIgnoreCase));
+            IEnumerable<string> assemblyPaths = Directory.GetFiles(path).Where(file =>
+                                                                               Path.GetExtension(file).Equals(
+                                                                                   ".exe",
+                                                                                   StringComparison.OrdinalIgnoreCase)
+                                                                               ||
+                                                                               Path.GetExtension(file).Equals(
+                                                                                   ".dll",
+                                                                                   StringComparison.OrdinalIgnoreCase));
 
-            foreach (var assemblyPath in assemblyPaths)
+            foreach (string assemblyPath in assemblyPaths)
             {
                 Assembly assembly = null;
                 try
                 {
-                    assembly = System.Reflection.Assembly.LoadFrom(assemblyPath);
+                    assembly = Assembly.LoadFrom(assemblyPath);
                 }
                 catch
                 {
                 }
-                if (assembly != null && assembly != Assembly.GetAssembly(typeof(ValidationContainer)))
+                if (assembly != null && assembly != Assembly.GetAssembly(typeof (ValidationContainer)))
                 {
                     AddAssembly(assembly);
                 }
             }
         }
 
-        internal IList<Specification> FoundSpecifications
-        {
-            get { return _specifications; }
-        }
-
         private static Assembly findTheCallingAssembly()
         {
             var trace = new StackTrace(false);
 
-            Assembly thisAssembly = System.Reflection.Assembly.GetExecutingAssembly();
+            Assembly thisAssembly = Assembly.GetExecutingAssembly();
             Assembly callingAssembly = null;
             for (int i = 0; i < trace.FrameCount; i++)
             {
@@ -79,9 +81,9 @@ namespace SpecExpress
 
         private static void registerValidTypeInAssembly(Assembly assembly)
         {
-            foreach (var type in assembly.GetExportedTypes())
+            foreach (Type type in assembly.GetExportedTypes())
             {
-                if (typeof(Specification).IsAssignableFrom(type))
+                if (typeof (Specification).IsAssignableFrom(type))
                 {
                     object o = Activator.CreateInstance(type);
 
@@ -92,13 +94,13 @@ namespace SpecExpress
                         //Register
                         _specifications.Add(o as Specification);
                     }
-                    catch (System.ArgumentException argumentException)
+                    catch (ArgumentException argumentException)
                     {
-                        throw new ArgumentException("A Specification for class " + keyType + " has been loaded already.", argumentException);
+                        throw new ArgumentException(
+                            "A Specification for class " + keyType + " has been loaded already.", argumentException);
                     }
                 }
             }
-
         }
     }
 }

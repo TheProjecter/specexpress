@@ -1,4 +1,3 @@
-using System;
 using SpecExpress.Rules;
 
 namespace SpecExpress.DSL
@@ -10,8 +9,8 @@ namespace SpecExpress.DSL
     /// <typeparam name="TProperty"></typeparam>
     public interface IRuleBuilder<T, TProperty>
     {
-        RuleBuilder<T, TProperty> RegisterValidator(RuleValidator<T, TProperty> validator);
         ActionJoinBuilder<T, TProperty> JoinBuilder { get; }
+        RuleBuilder<T, TProperty> RegisterValidator(RuleValidator<T, TProperty> validator);
     }
 
     /// <summary>
@@ -20,16 +19,18 @@ namespace SpecExpress.DSL
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
-    public class RuleBuilder<T, TProperty>: IRuleBuilder<T,TProperty>
+    public class RuleBuilder<T, TProperty> : IRuleBuilder<T, TProperty>
     {
-        private PropertyValidator<T, TProperty> _propertyValidator;
-        private ActionJoinBuilder<T, TProperty> JoinBuilder;
+        private readonly PropertyValidator<T, TProperty> _propertyValidator;
+        private readonly ActionJoinBuilder<T, TProperty> JoinBuilder;
 
         public RuleBuilder(PropertyValidator<T, TProperty> propertyValidator)
         {
             _propertyValidator = propertyValidator;
             JoinBuilder = new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
+
+        #region IRuleBuilder<T,TProperty> Members
 
         RuleBuilder<T, TProperty> IRuleBuilder<T, TProperty>.RegisterValidator(RuleValidator<T, TProperty> validator)
         {
@@ -42,5 +43,6 @@ namespace SpecExpress.DSL
             get { return JoinBuilder; }
         }
 
+        #endregion
     }
 }

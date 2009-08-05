@@ -15,13 +15,9 @@ namespace SpecExpress
         {
             EntityType = entityType;
             PropertyType = propertyType;
-    }
+        }
 
         public abstract List<RuleValidator> Rules { get; }
-        public abstract void AddRule(RuleValidator ruleValidator);
-
-        public abstract List<ValidationResult> Validate(object instance);
-        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
 
 
         public Type PropertyType { get; private set; }
@@ -45,41 +41,45 @@ namespace SpecExpress
         public PropertyValidator Parent { get; set; }
 
         public LambdaExpression Property { get; set; }
+        public abstract void AddRule(RuleValidator ruleValidator);
+
+        public abstract List<ValidationResult> Validate(object instance);
+        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
 
         public object GetValueForProperty(object instance)
-        {   
-            if (instance == null)
         {
+            if (instance == null)
+            {
                 return null;
-        }
-           
-           return Property.Compile().DynamicInvoke(new[] { instance });
+            }
+
+            return Property.Compile().DynamicInvoke(new[] {instance});
         }
     }
 
     public abstract class PropertyValidator<T> : PropertyValidator
-        {
+    {
         protected PropertyValidator(Type propertyType) : base(typeof (T), propertyType)
         {
         }
 
         public abstract List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext);
-            
+
         public List<ValidationResult> Validate(T instance)
-            {
+        {
             return Validate(instance, null);
         }
 
         public override List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContext)
-                {
-            return Validate((T)instance, parentRuleContext);
-                }
+        {
+            return Validate((T) instance, parentRuleContext);
+        }
 
         public override List<ValidationResult> Validate(object instance)
-                {
+        {
             return Validate((T) instance, null);
-                }
-            }
+        }
+    }
 
     public class PropertyValidator<T, TProperty> : PropertyValidator<T>
     {
@@ -104,11 +104,8 @@ namespace SpecExpress
 
         public override List<RuleValidator> Rules
         {
-            get
-            {
-                return _rules.Select(x => x as RuleValidator).ToList();
-            }
-            }
+            get { return _rules.Select(x => x as RuleValidator).ToList(); }
+        }
 
         public Predicate<T> Condition { get; set; }
 
@@ -153,31 +150,33 @@ namespace SpecExpress
             _rules.Add(ruleValidator);
         }
 
-        public  override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
+        public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
         {
             if (_rules == null || !_rules.Any())
             {
                 throw new ArgumentException(
                     "No rules exist for this Property. This is because the rules are improperly configured.");
-    }
+            }
 
             var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
 
-            var list = _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+            List<ValidationResult> list =
+                _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 
             //Check if this Property Type has a Registered specification to validate with 
-            if (ValidationContainer.Registry.ContainsKey(typeof(TProperty)))
+            if (ValidationContainer.Registry.ContainsKey(typeof (TProperty)))
             {
                 //Spec found, use it to validate
-                var specification = ValidationContainer.Registry[typeof(TProperty)];
+                Specification specification = ValidationContainer.Registry[typeof (TProperty)];
                 //Add any errors to the existing list of errors
-                list.AddRange(specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
+                list.AddRange(
+                    specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
             }
 
             // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
             if (list.Any() && Child != null)
             {
-                var orList = Child.Validate(instance);
+                List<ValidationResult> orList = Child.Validate(instance);
                 if (orList.Any())
                 {
                     list.AddRange(orList);
@@ -188,9 +187,7 @@ namespace SpecExpress
                 }
             }
 
-            return list; 
+            return list;
         }
-
-       
     }
 }

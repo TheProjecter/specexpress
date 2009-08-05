@@ -1,10 +1,11 @@
 using System.Linq;
+using SpecExpress.Rules;
 
-namespace SpecExpress
+namespace SpecExpress.DSL
 {
     public class WithBuilder<T, TProperty>
     {
-        private PropertyValidator<T, TProperty> _propertyValidator;
+        private readonly PropertyValidator<T, TProperty> _propertyValidator;
 
         public WithBuilder(PropertyValidator<T, TProperty> propertyValidator)
         {
@@ -14,7 +15,7 @@ namespace SpecExpress
         public IAndOr<T, TProperty> Message(string errorMessage)
         {
             //set error message for last rule added
-            var rule = _propertyValidator.Rules.Last();
+            RuleValidator rule = _propertyValidator.Rules.Last();
             rule.Message = errorMessage;
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }

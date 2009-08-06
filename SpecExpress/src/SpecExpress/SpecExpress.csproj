@@ -70,7 +70,7 @@
     <Compile Include="Rules\NumericValidators\Int\LessThan.cs" />
     <Compile Include="Rules\NumericValidators\Int\GreaterThan.cs" />
     <Compile Include="Rules\StringValidators\IsInSet.cs" />
-    <Compile Include="Rules\StringValidators\LengthValidator.cs" />
+    <Compile Include="Rules\StringValidators\LengthBetween.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationContainer.cs" />
@@ -85,6 +85,7 @@
     <Compile Include="SpecificationBase.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="PropertyValidator.cs" />
+    <Compile Include="ValidationResultFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MessageStore\RuleErrorMessages.resx">

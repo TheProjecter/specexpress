@@ -9,18 +9,11 @@ namespace SpecExpress.Rules.General
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
-            if (context.PropertyValue == null
-                || context.PropertyValue.Equals(string.Empty)
-                || Equals(context.PropertyValue, default(TProperty)))
-            {
-                return CreateValidationResult(context);
-
-                //return new ValidationResult(context.PropertyInfo, error, context.PropertyValue);
-            }
-            else
-            {
-                return null;
-            }
+            return Evaluate( 
+                !(  context.PropertyValue == null
+                    || context.PropertyValue.Equals(string.Empty)
+                    || Equals(context.PropertyValue, default(TProperty)))
+                , context);
         }
     }
 }

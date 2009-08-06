@@ -39,7 +39,7 @@ namespace SpecExpress
         public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,
                                                                     int max)
         {
-            expression.RegisterValidator(new LengthValidator<T>(min, max));
+            expression.RegisterValidator(new LengthBetween<T>(min, max));
             return expression.JoinBuilder;
         }
 
@@ -52,7 +52,7 @@ namespace SpecExpress
         public static ActionJoinBuilder<T, string> Between<T>(this IRuleBuilder<T, string> expression, int min,
                                                               int max)
         {
-            expression.RegisterValidator(new LengthValidator<T>(min, max));
+            expression.RegisterValidator(new LengthBetween<T>(min, max));
             return expression.JoinBuilder;
         }
     }

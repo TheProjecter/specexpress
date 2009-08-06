@@ -15,6 +15,12 @@ namespace SpecExpress
             expression.RegisterValidator(new Rules.NumericValidators.Int.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
         }
+
+        public static ActionJoinBuilder<T, int> LessThan<T>(this IRuleBuilder<T, int> expression, int lessThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Int.LessThan<T>(lessThan));
+            return expression.JoinBuilder;
+        }
         #endregion
 
         public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,

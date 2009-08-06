@@ -65,6 +65,7 @@
     <Compile Include="Rules\DateValidators\IsAfter.cs" />
     <Compile Include="Rules\DateValidators\IsBefore.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />
+    <Compile Include="Rules\NumericValidators\Int\LessThan.cs" />
     <Compile Include="Rules\NumericValidators\Int\GreaterThan.cs" />
     <Compile Include="Rules\StringValidators\IsInSet.cs" />
     <Compile Include="Rules\StringValidators\LengthValidator.cs" />

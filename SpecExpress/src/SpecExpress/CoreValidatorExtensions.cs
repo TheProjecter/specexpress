@@ -7,8 +7,16 @@ namespace SpecExpress
     /// <summary>
     /// Changed return from RuleBuilder to ActionJoin so displays AND/WITH after a Rule.
     /// </summary>
-    public static class DefaultRuleExtensions
+    public static class CoreValidatorExtensions
     {
+        #region Int
+        public static ActionJoinBuilder<T, int> GreaterThan<T>(this IRuleBuilder<T, int> expression, int greaterThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Int.GreaterThan<T>(greaterThan));
+            return expression.JoinBuilder;
+        }
+        #endregion
+
         public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,
                                                                     int max)
         {

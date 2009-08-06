@@ -70,7 +70,14 @@ namespace SpecExpress.MessageStore
             //Replace known keywords with actual values
             errorTemplate = errorTemplate.Replace("{PropertyName}", PropertyName);
             //TODO: Handle null PropertyValue's
-            errorTemplate = errorTemplate.Replace("{PropertyValue}", PropertyValue as string);
+            if (PropertyValue == null)
+            {
+                errorTemplate = errorTemplate.Replace("{PropertyValue}", PropertyValue as string);                
+            }
+            else
+            {
+                errorTemplate = errorTemplate.Replace("{PropertyValue}", PropertyValue.ToString());
+            }
 
             //create param list for String.Format
             var errorMessageParams = new ArrayList();

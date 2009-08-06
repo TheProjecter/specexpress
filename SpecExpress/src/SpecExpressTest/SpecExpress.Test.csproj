@@ -80,6 +80,8 @@
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
+    <Compile Include="RuleValidatorTests\Numeric\Int\LessThanEqualToTests.cs" />
+    <Compile Include="RuleValidatorTests\Numeric\Int\GreaterThanEqualToTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\Int\LessThanTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\Int\GreaterThanTests.cs" />
   </ItemGroup>

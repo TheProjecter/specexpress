@@ -71,6 +71,7 @@
     <Compile Include="Rules\NumericValidators\Int\GreaterThan.cs" />
     <Compile Include="Rules\StringValidators\IsInSet.cs" />
     <Compile Include="Rules\StringValidators\LengthBetween.cs" />
+    <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationContainer.cs" />

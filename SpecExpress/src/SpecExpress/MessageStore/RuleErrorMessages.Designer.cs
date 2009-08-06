@@ -106,6 +106,15 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} must be greater then {0} characters. You entered {PropertyValue}..
+        /// </summary>
+        internal static string MinLength {
+            get {
+                return ResourceManager.GetString("MinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} is required..
         /// </summary>
         internal static string Required {

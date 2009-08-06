@@ -132,6 +132,9 @@
   <data name="LessThanEqualTo" xml:space="preserve">
     <value>'{PropertyName}' must be less than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
+  <data name="MinLength" xml:space="preserve">
+    <value>{PropertyName} must be greater then {0} characters. You entered {PropertyValue}.</value>
+  </data>
   <data name="Required" xml:space="preserve">
     <value>{PropertyName} is required.</value>
   </data>

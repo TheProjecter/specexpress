@@ -36,12 +36,21 @@ namespace SpecExpress
 
         #endregion
 
+        #region String
+
         public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,
                                                                     int max)
         {
             expression.RegisterValidator(new LengthBetween<T>(min, max));
             return expression.JoinBuilder;
         }
+        public static ActionJoinBuilder<T, string> MinLength<T>(this IRuleBuilder<T, string> expression, int min)
+        {
+            expression.RegisterValidator(new MinLength<T>(min));
+            return expression.JoinBuilder;
+        }
+        #endregion
+
 
         public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, List<string> set)
         {

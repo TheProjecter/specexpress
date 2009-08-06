@@ -22,7 +22,7 @@ namespace SpecExpress.Test
             propertyValidator.PropertyValueRequired = false;
 
             //add a single rule
-            var lengthValidator = new LengthValidator<Contact>(1, 5);
+            var lengthValidator = new LengthBetween<Contact>(1, 5);
             propertyValidator.AddRule(lengthValidator); //.Rules.Add(lengthValidator);
 
             //Validate

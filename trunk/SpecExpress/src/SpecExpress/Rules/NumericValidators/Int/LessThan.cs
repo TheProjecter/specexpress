@@ -13,7 +13,7 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            return context.PropertyValue < _lessThan ? null : CreateValidationResult(context);
+            return Evaluate(context.PropertyValue < _lessThan, context);
         }
 
         public override object[] Parameters

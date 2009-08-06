@@ -22,7 +22,7 @@ namespace SpecExpress.Test
                 new PropertyValidator<Contact, string>(contact => contact.LastName);
 
             //Create a rule
-            RuleValidator<Contact, string> ruleValidator = new LengthValidator<Contact>(1, 5);
+            RuleValidator<Contact, string> ruleValidator = new LengthBetween<Contact>(1, 5);
 
             //Create a context
             var context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator, null);
@@ -30,7 +30,7 @@ namespace SpecExpress.Test
             //create it like this? IOC? Factory?
             IMessageStore messageStore = new ResourceMessageStore();
 
-            string errorMessage = messageStore.GetFormattedErrorMessage(ruleValidator, context);
+            string errorMessage = messageStore.GetFormattedErrorMessage(ruleValidator.GetType().Name, context, ruleValidator.Parameters);
 
             Assert.That(errorMessage, Is.Not.Null.Or.Empty);
 

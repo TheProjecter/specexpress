@@ -5,9 +5,8 @@ namespace SpecExpress.MessageStore
 {
     public interface IMessageStore
     {
-        string GetFormattedErrorMessage(RuleValidator ruleValidator, RuleValidatorContext ruleValidatorContext);
+        string GetFormattedErrorMessage(string key, RuleValidatorContext ruleValidatorContext, object[] parameters);
 
-        string GetFormattedErrorMessage(RuleValidator ruleValidator, string propertyName, object propertyValue,
-                                        MemberInfo propertyInfo);
+        string GetFormattedErrorMessage(string key, string propertyName, object propertyValue, MemberInfo propertyInfo, object[] parameters);
     }
 }

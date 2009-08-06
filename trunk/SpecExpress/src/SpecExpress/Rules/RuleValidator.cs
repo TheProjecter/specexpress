@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Text;
 using SpecExpress.MessageStore;
 
 namespace SpecExpress.Rules
@@ -11,35 +9,19 @@ namespace SpecExpress.Rules
         public string Message { get; set; }
         public abstract object[] Parameters { get; }
 
-        protected ValidationResult CreateValidationResult(RuleValidatorContext context)
+        protected ValidationResult Evaluate(bool isValid, RuleValidatorContext context)
         {
-            string errorMessage = string.Empty;
-
-
-            var propertyNameNodes = new List<string>();
-
-            RuleValidatorContext currentContext = context;
-            do
+            if (isValid)
             {
-                propertyNameNodes.Add(currentContext.PropertyName);
-                currentContext = currentContext.Parent;
-            } while (currentContext != null);
-
-
-            var propertyNameForNestedProperty = new StringBuilder();
-            propertyNameNodes.Reverse();
-
-
-            propertyNameNodes.ForEach(p => propertyNameForNestedProperty.AppendFormat(" {0}", p));
-
-
-            errorMessage = MessageStore.GetFormattedErrorMessage(this, propertyNameForNestedProperty.ToString().Trim(),
-                                                                 context.PropertyValue, context.PropertyInfo);
-
-
-            return new ValidationResult(context.PropertyInfo, errorMessage, context.PropertyValue);
+                return null;
+            }
+            else
+            {
+                return ValidationResultFactory.Create(GetType().Name, context, Parameters);
+            }
         }
     }
+
 
     public abstract class RuleValidator<T, TProperty> : RuleValidator
     {

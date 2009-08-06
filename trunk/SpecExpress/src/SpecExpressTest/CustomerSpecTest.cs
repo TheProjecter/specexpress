@@ -86,7 +86,7 @@ namespace SpecExpressTest
             Assert.IsNotNull(notifications);
             Assert.AreEqual(1, notifications.Count);
             Assert.AreEqual("'Name' must be between 2 and 100 characters. You entered 1 characters.",
-                            notifications[0].ErrorMessage);
+                            notifications[0].Message);
         }
 
         [Test]
@@ -107,7 +107,7 @@ namespace SpecExpressTest
             Assert.AreEqual(2, notifications.Count);
             Assert.AreEqual(
                 "'Customer Date' must be before 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM characters.",
-                notifications[0].ErrorMessage);
+                notifications[0].Message);
         }
 
         [Test]

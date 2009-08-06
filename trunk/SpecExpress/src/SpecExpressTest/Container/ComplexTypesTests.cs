@@ -39,7 +39,7 @@ namespace SpecExpress.Test
             ValidationNotification results = ValidationContainer.Validate(customerWithInvalidContact);
             Assert.That(results.Errors, Is.Not.Empty);
             Assert.That(
-                results.Errors.Select(e => e.ErrorMessage.Contains("Primary Contact Last Name is required.")).Any(),
+                results.Errors.Select(e => e.Message.Contains("Primary Contact Last Name is required.")).Any(),
                 Is.True);
         }
 
@@ -49,6 +49,8 @@ namespace SpecExpress.Test
             var customerWithMissingContact = new Customer {Name = "Customer"};
             ValidationNotification results = ValidationContainer.Validate(customerWithMissingContact);
             Assert.That(results.Errors, Is.Not.Empty);
+            //Check that null PrimaryContact only generates 1, error and the validator doesn't continue down the tree
+            Assert.That(results.Errors.Count, Is.EqualTo(1));
         }
     }
 }

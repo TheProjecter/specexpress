@@ -1,19 +1,29 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace SpecExpress
 {
     public class ValidationResult
     {
-        private readonly object _actualValue;
-        private readonly String _errorMessage;
+        private readonly String _message;
         private readonly MemberInfo _property;
-
-        public ValidationResult(MemberInfo property, string errorMessage, object actualValue)
+        private readonly object _target;
+        private readonly IEnumerable<ValidationResult> _nestedValidationResults;
+        
+        public ValidationResult(MemberInfo property, string errorMessage, object target)
         {
             _property = property;
-            _errorMessage = errorMessage;
-            _actualValue = actualValue;
+            _message = errorMessage;
+            _target = target;
+        }
+
+        public ValidationResult(MemberInfo property, string message,  object target, IEnumerable<ValidationResult> nestedValidationResults)
+        {
+            _property = property;
+            _message = message;
+            _target = target;
+            _nestedValidationResults = nestedValidationResults;
         }
 
         public MemberInfo Property
@@ -21,19 +31,20 @@ namespace SpecExpress
             get { return _property; }
         }
 
-        public string ErrorMessage
+        public string Message
         {
-            get { return _errorMessage; }
+            get { return _message; }
         }
 
-        public object ActualValue
+        public object Target
         {
-            get { return _actualValue; }
+            get { return _target; }
         }
-
         public override string ToString()
         {
-            return ErrorMessage;
+            return Message;
         }
     }
+
+
 }

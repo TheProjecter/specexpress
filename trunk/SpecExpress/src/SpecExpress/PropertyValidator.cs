@@ -163,15 +163,20 @@ namespace SpecExpress
             List<ValidationResult> list =
                 _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 
-            //Check if this Property Type has a Registered specification to validate with 
-            if (ValidationContainer.Registry.ContainsKey(typeof (TProperty)))
+            //Check if this Property Type has a Registered specification to validate with and the instance of the property
+            //isn't already invalid. For example if a property is required and the object is null, then 
+            //don't continue validating the object
+            if (!list.Any() && ValidationContainer.Registry.ContainsKey(typeof(TProperty)))
             {
                 //Spec found, use it to validate
-                Specification specification = ValidationContainer.Registry[typeof (TProperty)];
+                Specification specification = ValidationContainer.Registry[typeof(TProperty)];
                 //Add any errors to the existing list of errors
                 list.AddRange(
                     specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
             }
+            
+        
+            
 
             // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
             if (list.Any() && Child != null)

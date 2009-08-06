@@ -55,6 +55,25 @@ namespace SpecExpress
             expression.RegisterValidator(new MaxLength<T>(max));
             return expression.JoinBuilder;
         }
+
+        public static ActionJoinBuilder<T, string> IsNumeric<T>(this IRuleBuilder<T, string> expression)
+        {
+            expression.RegisterValidator(new Numeric<T>());
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> IsAlpha<T>(this IRuleBuilder<T, string> expression)
+        {
+            expression.RegisterValidator(new Alpha<T>());
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, IEnumerable<string> set)
+        {
+            expression.RegisterValidator(new IsInSet<T>(set));
+            return expression.JoinBuilder;
+        }
+
         #endregion
 
 

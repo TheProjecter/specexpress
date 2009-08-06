@@ -25,7 +25,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
         {   
-            int length = String.IsNullOrEmpty(context.PropertyValue)? 0 : context.PropertyValue.Length;
+            int length = String.IsNullOrEmpty(context.PropertyValue)? 0 : context.PropertyValue.Trim().Length;
 
             var contextWithLength = new RuleValidatorContext<T, string>(context.PropertyName, length.ToString(),
                                                                            context.PropertyInfo, null);

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SpecExpress.Rules.StringValidators
 {
     public class IsInSet<T> : RuleValidator<T, string>
     {
-        private readonly List<string> _set;
+        private readonly IEnumerable<string> _set;
 
-        public IsInSet(List<string> set)
+        public IsInSet(IEnumerable<string> set)
         {
             _set = set;
         }
@@ -18,14 +19,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
         {
-            if (!_set.Contains(context.PropertyValue))
-            {
-                return new ValidationResult(context.PropertyInfo, "some error", context.PropertyValue);
-            }
-            else
-            {
-                return null;
-            }
+            return Evaluate(_set.Contains(context.PropertyValue), context);
         }
     }
 }

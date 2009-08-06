@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace SpecExpress.Rules.StringValidators
 {
-    public class Numeric<T> : RuleValidator<T, string>
+    public class Alpha<T> : RuleValidator<T, string>
     {
         public override object[] Parameters
         {
@@ -18,8 +18,7 @@ namespace SpecExpress.Rules.StringValidators
                 return Evaluate(false, context);
             }
 
-            //use a regex over Convert.ToInt32 because the string could potentially be bigger than an integer
-            Match m = new Regex(@"^\d+$").Match(context.PropertyValue);
+            Match m = new Regex(@"^[a-zA-Z\s]+$").Match(context.PropertyValue.Trim());
             return Evaluate(m.Success, context);
         }
     }

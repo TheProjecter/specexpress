@@ -84,7 +84,7 @@
     <Compile Include="RuleValidatorTests\Numeric\Int\GreaterThanEqualToTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\Int\LessThanTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\Int\GreaterThanTests.cs" />
-    <Compile Include="RuleValidatorTests\Strings\MinLengthTests.cs" />
+    <Compile Include="RuleValidatorTests\Strings\LengthTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecExpress.Test.Domain\SpecExpress.Test.Domain.csproj">

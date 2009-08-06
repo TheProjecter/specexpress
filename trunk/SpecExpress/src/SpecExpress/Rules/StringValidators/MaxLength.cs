@@ -5,22 +5,22 @@ using System.Text;
 
 namespace SpecExpress.Rules.StringValidators
 {   
-    public class MinLength<T> : RuleValidator<T, string>
+    public class MaxLength<T> : RuleValidator<T, string>
     {
-        private int _min;
+        private int _max;
 
-        public MinLength(int min)
+        public MaxLength(int max)
         {
-            if (min < 0)
+            if (max < 0)
             {
-                throw new ArgumentOutOfRangeException("min", "Min should be greater than 0");
+                throw new ArgumentOutOfRangeException("max", "Max should be greater than 0");
             }
-            _min = min;
+            _max = max;
         }
 
         public override object[] Parameters
         {
-            get { return new object[] { _min}; }
+            get { return new object[] { _max}; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
@@ -30,7 +30,7 @@ namespace SpecExpress.Rules.StringValidators
             var contextWithLength = new RuleValidatorContext<T, string>(context.PropertyName, length.ToString(),
                                                                            context.PropertyInfo, null);
 
-            return Evaluate(length >= _min, contextWithLength);
+            return Evaluate(length <= _max, contextWithLength);
         }
     }
 }

@@ -49,6 +49,12 @@ namespace SpecExpress
             expression.RegisterValidator(new MinLength<T>(min));
             return expression.JoinBuilder;
         }
+
+        public static ActionJoinBuilder<T, string> MaxLength<T>(this IRuleBuilder<T, string> expression, int max)
+        {
+            expression.RegisterValidator(new MaxLength<T>(max));
+            return expression.JoinBuilder;
+        }
         #endregion
 
 

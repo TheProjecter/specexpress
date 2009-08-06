@@ -26,6 +26,19 @@ namespace SpecExpress.Test
         #endregion
 
         [Test]
+        public void ResetRegistries_RegisterAndReset_RegistryIsClean()
+        {
+            Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
+            //Set Assemblies to scan for Specifications
+            ValidationContainer.Scan(x => x.AddAssembly(assembly));
+            Assert.That(ValidationContainer.Registry, Is.Not.Empty);
+
+            ValidationContainer.ResetRegistries();
+            Assert.That(ValidationContainer.Registry, Is.Empty);
+            
+        }
+
+        [Test]
         public void TheCallingAssembly_FindsSpecifications()
         {
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");

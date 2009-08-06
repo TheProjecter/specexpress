@@ -46,7 +46,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             notification.IsValid.ShouldBeFalse();
             notification.Errors.ShouldNotBeEmpty();
             notification.Errors.Count.ShouldEqual(1);
-            notification.Errors[0].ErrorMessage.ShouldEqual(
+            notification.Errors[0].Message.ShouldEqual(
                 "'Number Of Dependents' must be greater than 0. You entered 0.");
         }
 
@@ -66,7 +66,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             notification.IsValid.ShouldBeFalse();
             notification.Errors.ShouldNotBeEmpty();
             notification.Errors.Count.ShouldEqual(1);
-            notification.Errors[0].ErrorMessage.ShouldEqual(
+            notification.Errors[0].Message.ShouldEqual(
                 "'Number Of Dependents' must be greater than 0. You entered -1.");
         }
     }

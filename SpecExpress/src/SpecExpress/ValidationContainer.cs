@@ -60,6 +60,8 @@ namespace SpecExpress
                 throw new ArgumentException("No Specification found for type " + instance.GetType());
             }
 
+            //Group
+
             return new ValidationNotification {Errors = spec.Validate(instance)};
         }
 

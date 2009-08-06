@@ -9,7 +9,7 @@ namespace SpecExpress
 {
     public class SpecificationScanner
     {
-        private static readonly IList<Specification> _specifications = new List<Specification>();
+        private readonly IList<Specification> _specifications = new List<Specification>();
 
         internal IList<Specification> FoundSpecifications
         {
@@ -60,7 +60,7 @@ namespace SpecExpress
             }
         }
 
-        private static Assembly findTheCallingAssembly()
+        private Assembly findTheCallingAssembly()
         {
             var trace = new StackTrace(false);
 
@@ -79,7 +79,7 @@ namespace SpecExpress
             return callingAssembly;
         }
 
-        private static void registerValidTypeInAssembly(Assembly assembly)
+        private void registerValidTypeInAssembly(Assembly assembly)
         {
             foreach (Type type in assembly.GetExportedTypes())
             {

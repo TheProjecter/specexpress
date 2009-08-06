@@ -63,7 +63,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             notification.IsValid.ShouldBeFalse();
             notification.Errors.ShouldNotBeEmpty();
             notification.Errors.Count.ShouldEqual(1);
-            notification.Errors[0].ErrorMessage.ShouldEqual(
+            notification.Errors[0].Message.ShouldEqual(
                 "'Number Of Dependents' must be less than or equal to 10. You entered 11.");
         }
     }

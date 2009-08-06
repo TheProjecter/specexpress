@@ -30,8 +30,8 @@ namespace SpecExpress.Test
 
             Assert.That(result, Is.Not.Empty);
 
-            Assert.That(result.First().ActualValue, Is.EqualTo("0"));
-            Assert.That(result.First().ErrorMessage,
+            Assert.That(result.First().Target, Is.EqualTo("0"));
+            Assert.That(result.First().Message,
                         Is.EqualTo("'Last Name' must be between 1 and 5 characters. You entered 0 characters."));
             Assert.That(result.First().Property.Name, Is.EqualTo("LastName"));
         }

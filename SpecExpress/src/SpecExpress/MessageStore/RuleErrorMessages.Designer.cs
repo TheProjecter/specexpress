@@ -61,6 +61,15 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should only contain letters..
+        /// </summary>
+        internal static string Alpha {
+            get {
+                return ResourceManager.GetString("Alpha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be greater than {0}. You entered {PropertyValue}..
         /// </summary>
         internal static string GreaterThan {
@@ -75,6 +84,15 @@ namespace SpecExpress.MessageStore {
         internal static string GreaterThanEqualTo {
             get {
                 return ResourceManager.GetString("GreaterThanEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} is not a valid value..
+        /// </summary>
+        internal static string IsInSet {
+            get {
+                return ResourceManager.GetString("IsInSet", resourceCulture);
             }
         }
         
@@ -120,6 +138,15 @@ namespace SpecExpress.MessageStore {
         internal static string MinLength {
             get {
                 return ResourceManager.GetString("MinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should only contain numbers..
+        /// </summary>
+        internal static string Numeric {
+            get {
+                return ResourceManager.GetString("Numeric", resourceCulture);
             }
         }
         

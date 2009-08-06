@@ -69,6 +69,7 @@
     <Compile Include="Rules\NumericValidators\Int\GreaterThanEqualTo.cs" />
     <Compile Include="Rules\NumericValidators\Int\LessThan.cs" />
     <Compile Include="Rules\NumericValidators\Int\GreaterThan.cs" />
+    <Compile Include="Rules\StringValidators\Alpha.cs" />
     <Compile Include="Rules\StringValidators\Numeric.cs" />
     <Compile Include="Rules\StringValidators\MaxLength.cs" />
     <Compile Include="Rules\StringValidators\IsInSet.cs" />

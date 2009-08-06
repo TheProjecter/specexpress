@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Alpha" xml:space="preserve">
+    <value>{PropertyName} should only contain letters.</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>'{PropertyName}' must be greater than {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="GreaterThanEqualTo" xml:space="preserve">
     <value>'{PropertyName}' must be greater than or equal to {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="IsInSet" xml:space="preserve">
+    <value>{PropertyName} is not a valid value.</value>
   </data>
   <data name="LengthBetween" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
@@ -137,6 +143,9 @@
   </data>
   <data name="MinLength" xml:space="preserve">
     <value>{PropertyName} must be greater than {0} characters. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Numeric" xml:space="preserve">
+    <value>{PropertyName} should only contain numbers.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{PropertyName} is required.</value>

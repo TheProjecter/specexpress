@@ -120,11 +120,17 @@
   <data name="GreaterThan" xml:space="preserve">
     <value>'{PropertyName}' must be greater than {0}. You entered {PropertyValue}.</value>
   </data>
+  <data name="GreaterThanEqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must be greater than or equal to {0}. You entered {PropertyValue}.</value>
+  </data>
   <data name="LengthValidator" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
   </data>
   <data name="LessThan" xml:space="preserve">
     <value>'{PropertyName}' must be less than {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="LessThanEqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must be less than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Required" xml:space="preserve">
     <value>{PropertyName} is required.</value>

@@ -70,6 +70,15 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be greater than or equal to {0}. You entered {PropertyValue}..
+        /// </summary>
+        internal static string GreaterThanEqualTo {
+            get {
+                return ResourceManager.GetString("GreaterThanEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be between {0} and {1} characters. You entered {PropertyValue} characters..
         /// </summary>
         internal static string LengthValidator {
@@ -84,6 +93,15 @@ namespace SpecExpress.MessageStore {
         internal static string LessThan {
             get {
                 return ResourceManager.GetString("LessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be less than or equal to {0}. You entered {PropertyValue}..
+        /// </summary>
+        internal static string LessThanEqualTo {
+            get {
+                return ResourceManager.GetString("LessThanEqualTo", resourceCulture);
             }
         }
         

@@ -69,7 +69,7 @@ namespace SpecExpress.MessageStore
         {
             //Replace known keywords with actual values
             errorTemplate = errorTemplate.Replace("{PropertyName}", PropertyName);
-            //TODO: Handle null PropertyValue's
+
             if (PropertyValue == null)
             {
                 errorTemplate = errorTemplate.Replace("{PropertyValue}", PropertyValue as string);                

@@ -9,11 +9,6 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
     [TestFixture]
     public class IntegerValidatorTests : SpecificationBase<Contact>
     {
-        [SetUp]
-        public void Setup()
-        {
-            ValidationContainer.ResetRegistries();
-        }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
         [TestCase(2, 1, Result = true, TestName = "PropertyGreater")]

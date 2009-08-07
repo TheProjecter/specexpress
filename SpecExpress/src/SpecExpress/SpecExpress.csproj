@@ -77,6 +77,12 @@
     <Compile Include="Rules\NumericValidators\Long\GreaterThanEqualTo.cs" />
     <Compile Include="Rules\NumericValidators\Long\LessThan.cs" />
     <Compile Include="Rules\NumericValidators\Long\LessThanEqualTo.cs" />
+    <Compile Include="Rules\NumericValidators\Short\Between.cs" />
+    <Compile Include="Rules\NumericValidators\Short\EqualTo.cs" />
+    <Compile Include="Rules\NumericValidators\Short\GreaterThan.cs" />
+    <Compile Include="Rules\NumericValidators\Short\GreaterThanEqualTo.cs" />
+    <Compile Include="Rules\NumericValidators\Short\LessThan.cs" />
+    <Compile Include="Rules\NumericValidators\Short\LessThanEqualTo.cs" />
     <Compile Include="Rules\StringValidators\Alpha.cs" />
     <Compile Include="Rules\StringValidators\Numeric.cs" />
     <Compile Include="Rules\StringValidators\MaxLength.cs" />

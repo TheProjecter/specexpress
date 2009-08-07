@@ -80,6 +80,7 @@
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
+    <Compile Include="RuleValidatorTests\Numeric\LongValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\IntegerValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Strings\StringValidatorTests.cs" />
   </ItemGroup>

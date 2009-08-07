@@ -42,6 +42,40 @@ namespace SpecExpress
 
         #endregion
 
+        #region Long
+        public static ActionJoinBuilder<T, long> GreaterThan<T>(this IRuleBuilder<T, long> expression, long greaterThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Long.GreaterThan<T>(greaterThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, long> LessThan<T>(this IRuleBuilder<T, long> expression, long lessThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Long.LessThan<T>(lessThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, long> GreaterThanEqualTo<T>(this IRuleBuilder<T, long> expression, long greaterThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Long.GreaterThanEqualTo<T>(greaterThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, long> LessThanEqualTo<T>(this IRuleBuilder<T, long> expression, long lessThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Long.LessThanEqualTo<T>(lessThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, long floor, long ceiling)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Long.Between<T>(floor, ceiling));
+            return expression.JoinBuilder;
+        }
+
+        #endregion
+
+
         #region String
 
         public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,

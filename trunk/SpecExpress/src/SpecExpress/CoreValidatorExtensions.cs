@@ -34,6 +34,12 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, int floor, int ceiling)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Int.Between<T>(floor,ceiling));
+            return expression.JoinBuilder;
+        }
+
         #endregion
 
         #region String

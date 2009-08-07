@@ -1,11 +1,13 @@
 using NUnit.Framework;
+using SpecExpress.Rules.NumericValidators.Int;
 using SpecExpressTest.Entities;
 using SpecUnit;
+using SpecExpress.Rules;
 
 namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
 {
     [TestFixture]
-    public class GreaterThanEqualToTests : SpecificationBase<Contact>
+    public class IntegerValidatorTests : SpecificationBase<Contact>
     {
         [SetUp]
         public void Setup()
@@ -13,58 +15,64 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             ValidationContainer.ResetRegistries();
         }
 
-        [Test]
-        public void GreaterThanEqualZeroValidator_DependantEqualOne_IsValid()
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThanEqualTo_IsValid(int propertyValue, int greaterThanEqualTo)
         {
-            //Setup
-            ValidationContainer.AddSpecification<Contact>(x =>
-            {
-                x.Check(c => c.NumberOfDependents).Optional().And.GreaterThanEqualTo(-1);
-            });
+            //Create Validator
+            var validator = new GreaterThanEqualTo<Contact>(greaterThanEqualTo);
+            RuleValidatorContext<Contact, int> context = BuildContextForLength(propertyValue);
 
-            var contact = new Contact() { NumberOfDependents = 1 };
-
-            ValidationNotification notification = ValidationContainer.Validate(contact);
-
-            notification.IsValid.ShouldBeTrue();
-            notification.Errors.ShouldBeEmpty();
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
         }
 
-        [Test]
-        public void GreaterThanEqualZeroValidator_DependantEqualZero_IsValid()
+        [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThan_IsValid(int propertyValue, int greaterThan)
         {
-            //Setup
-            ValidationContainer.AddSpecification<Contact>(x =>
-            {
-                x.Check(c => c.NumberOfDependents).Optional().And.GreaterThanEqualTo(0);
-            });
+            //Create Validator
+            var validator = new GreaterThan<Contact>(greaterThan);
+            RuleValidatorContext<Contact, int> context = BuildContextForLength(propertyValue);
 
-            var contact = new Contact() {NumberOfDependents = 0};
-
-            ValidationNotification notification = ValidationContainer.Validate(contact);
-
-            notification.IsValid.ShouldBeTrue();
-            notification.Errors.ShouldBeEmpty();
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
         }
 
-        [Test]
-        public void GreaterThanEqualZeroValidator_DependantNegativeOne_IsNotValid()
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThanEqualTo_IsValid(int propertyValue, int lessThanEqualTo)
         {
-            //Setup
-            ValidationContainer.AddSpecification<Contact>(x =>
-            {
-                x.Check(c => c.NumberOfDependents).Optional().And.GreaterThanEqualTo(0);
-            });
+            //Create Validator
+            var validator = new LessThanEqualTo<Contact>(lessThanEqualTo);
+            RuleValidatorContext<Contact, int> context = BuildContextForLength(propertyValue);
 
-            var contact = new Contact() { NumberOfDependents = -1 };
-
-            ValidationNotification notification = ValidationContainer.Validate(contact);
-
-            notification.IsValid.ShouldBeFalse();
-            notification.Errors.ShouldNotBeEmpty();
-            notification.Errors.Count.ShouldEqual(1);
-            notification.Errors[0].Message.ShouldEqual(
-                "'Number Of Dependents' must be greater than or equal to 0. You entered -1.");
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
         }
+
+        [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThan_IsValid(int propertyValue, int lessThan)
+        {
+            //Create Validator
+            var validator = new LessThan<Contact>(lessThan);
+            RuleValidatorContext<Contact, int> context = BuildContextForLength(propertyValue);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        public RuleValidatorContext<Contact, int> BuildContextForLength(int value)
+        {
+            var contact = new Contact { NumberOfDependents = value };
+            var context = new RuleValidatorContext<Contact, int>("NumberOfDependents", contact.NumberOfDependents, null, null);
+            return context;
+        }
+
     }
 }

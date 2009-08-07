@@ -10,6 +10,7 @@ namespace SpecExpressTest.Entities
         public DateTime DateOfBirth { get; set; }
         public int NumberOfDependents { get; set; }
         public long FavoriteNumber { get; set; }
+        public short Weight { get; set; }
         public List<Address> Addresses { get; set; }
     }
 }

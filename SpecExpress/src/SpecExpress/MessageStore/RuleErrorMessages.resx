@@ -120,6 +120,12 @@
   <data name="Alpha" xml:space="preserve">
     <value>{PropertyName} should only contain letters.</value>
   </data>
+  <data name="Between" xml:space="preserve">
+    <value>'{PropertyName}' must be between {0} and {1}.  You entered {PropertyValue}.</value>
+  </data>
+  <data name="EqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must equal {0}.  You entered {PropertyValue}.</value>
+  </data>
   <data name="GreaterThan" xml:space="preserve">
     <value>'{PropertyName}' must be greater than {0}. You entered {PropertyValue}.</value>
   </data>

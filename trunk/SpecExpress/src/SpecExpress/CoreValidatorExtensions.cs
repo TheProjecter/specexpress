@@ -141,6 +141,39 @@ namespace SpecExpress
 
         #endregion
 
+        #region Double
+        public static ActionJoinBuilder<T, double> GreaterThan<T>(this IRuleBuilder<T, double> expression, double greaterThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Double.GreaterThan<T>(greaterThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, double> LessThan<T>(this IRuleBuilder<T, double> expression, double lessThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Double.LessThan<T>(lessThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, double> GreaterThanEqualTo<T>(this IRuleBuilder<T, double> expression, double greaterThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Double.GreaterThanEqualTo<T>(greaterThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, double> LessThanEqualTo<T>(this IRuleBuilder<T, double> expression, double lessThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Double.LessThanEqualTo<T>(lessThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, double> Between<T>(this IRuleBuilder<T, double> expression, double floor, double ceiling)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Double.Between<T>(floor, ceiling));
+            return expression.JoinBuilder;
+        }
+
+        #endregion
+
 
         #region String
 

@@ -13,6 +13,7 @@ namespace SpecExpressTest.Entities
         public long FavoriteNumber { get; set; }
         public float GPA { get; set; }
         public double FavoriteDouble { get; set; }
+        public decimal FavoriteDecimal { get; set; }
         public List<Address> Addresses { get; set; }
     }
 }

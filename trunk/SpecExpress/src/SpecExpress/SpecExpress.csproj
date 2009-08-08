@@ -65,6 +65,12 @@
     <Compile Include="Rules\DateValidators\IsAfter.cs" />
     <Compile Include="Rules\DateValidators\IsBefore.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\Between.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\EqualTo.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\GreaterThan.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\GreaterThanEqualTo.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\LessThan.cs" />
+    <Compile Include="Rules\NumericValidators\Decimal\LessThanEqualTo.cs" />
     <Compile Include="Rules\NumericValidators\Double\Between.cs" />
     <Compile Include="Rules\NumericValidators\Double\EqualTo.cs" />
     <Compile Include="Rules\NumericValidators\Double\GreaterThan.cs" />

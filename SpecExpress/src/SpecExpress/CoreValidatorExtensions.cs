@@ -174,6 +174,39 @@ namespace SpecExpress
 
         #endregion
 
+        #region Decimal
+        public static ActionJoinBuilder<T, decimal> GreaterThan<T>(this IRuleBuilder<T, decimal> expression, decimal greaterThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Decimal.GreaterThan<T>(greaterThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, decimal> LessThan<T>(this IRuleBuilder<T, decimal> expression, decimal lessThan)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Decimal.LessThan<T>(lessThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, decimal> GreaterThanEqualTo<T>(this IRuleBuilder<T, decimal> expression, decimal greaterThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Decimal.GreaterThanEqualTo<T>(greaterThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, decimal> LessThanEqualTo<T>(this IRuleBuilder<T, decimal> expression, decimal lessThanEqualTo)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Decimal.LessThanEqualTo<T>(lessThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, decimal> Between<T>(this IRuleBuilder<T, decimal> expression, decimal floor, decimal ceiling)
+        {
+            expression.RegisterValidator(new Rules.NumericValidators.Decimal.Between<T>(floor, ceiling));
+            return expression.JoinBuilder;
+        }
+
+        #endregion
+
 
         #region String
 

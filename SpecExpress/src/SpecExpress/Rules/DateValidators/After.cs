@@ -2,9 +2,9 @@ using System;
 
 namespace SpecExpress.Rules.DateValidators
 {
-    public class IsAfter<T> : RuleValidator<T, DateTime>
+    public class After<T> : RuleValidator<T, DateTime>
     {
-        public IsAfter(DateTime afterDate)
+        public After(DateTime afterDate)
         {
             AfterDate = afterDate;
         }

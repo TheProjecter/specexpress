@@ -61,9 +61,8 @@
       <DependentUpon>RuleErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="DSL\RuleBuilder.cs" />
-    <Compile Include="Rules\DateValidators\DateRuleExtensions.cs" />
-    <Compile Include="Rules\DateValidators\IsAfter.cs" />
-    <Compile Include="Rules\DateValidators\IsBefore.cs" />
+    <Compile Include="Rules\DateValidators\After.cs" />
+    <Compile Include="Rules\DateValidators\Before.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />
     <Compile Include="Rules\NumericValidators\Decimal\Between.cs" />
     <Compile Include="Rules\NumericValidators\Decimal\EqualTo.cs" />

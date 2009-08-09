@@ -2,9 +2,9 @@ using System;
 
 namespace SpecExpress.Rules.DateValidators
 {
-    public class IsBefore<T> : RuleValidator<T, DateTime>
+    public class Before<T> : RuleValidator<T, DateTime>
     {
-        public IsBefore(DateTime beforeDate)
+        public Before(DateTime beforeDate)
         {
             BeforeDate = beforeDate;
         }

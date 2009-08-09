@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using SpecExpress.DSL;
+using SpecExpress.Rules.DateValidators;
 using SpecExpress.Rules.StringValidators;
 
 namespace SpecExpress
@@ -205,6 +207,22 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        #endregion
+
+        #region DateTime
+        public static ActionJoinBuilder<T, DateTime> IsBefore<T>(this IRuleBuilder<T, DateTime> expression,
+                                                         DateTime beforeDate)
+        {
+            expression.RegisterValidator(new Before<T>(beforeDate));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, DateTime> IsAfter<T>(this IRuleBuilder<T, DateTime> expression,
+                                                                DateTime afterDate)
+        {
+            expression.RegisterValidator(new After<T>(afterDate));
+            return expression.JoinBuilder;
+        }
         #endregion
 
 

@@ -28,9 +28,11 @@ namespace SpecExpress.Test
             var context = new RuleValidatorContext<Contact, string>(emptyContact, propertyValidator, null);
 
             //create it like this? IOC? Factory?
-            IMessageStore messageStore = new ResourceMessageStore();
+            //IMessageStore messageStore = new ResourceMessageStore();
 
-            string errorMessage = messageStore.GetFormattedErrorMessage(ruleValidator.GetType().Name, context, ruleValidator.Parameters);
+            //string errorMessage = messageStore.GetFormattedDefaultMessage(ruleValidator.GetType().Name, context, ruleValidator.Parameters);
+            var messageService = new MessageService();
+            var errorMessage = messageService.GetMessage(ruleValidator.GetType().Name, context, ruleValidator.Parameters);
 
             Assert.That(errorMessage, Is.Not.Null.Or.Empty);
 

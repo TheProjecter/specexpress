@@ -54,6 +54,7 @@
     <Compile Include="DSL\ActionOptionConditionSatisfiedBuilder.cs" />
     <Compile Include="DSL\ActionOptionBuilder.cs" />
     <Compile Include="MessageStore\IMessageStore.cs" />
+    <Compile Include="MessageStore\MessageService.cs" />
     <Compile Include="MessageStore\ResourceMessageStore.cs" />
     <Compile Include="MessageStore\RuleErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -61,6 +62,7 @@
       <DependentUpon>RuleErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="DSL\RuleBuilder.cs" />
+    <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\After.cs" />
     <Compile Include="Rules\DateValidators\Before.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />

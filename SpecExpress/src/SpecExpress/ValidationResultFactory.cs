@@ -11,32 +11,35 @@ namespace SpecExpress
     {
         public static ValidationResult Create(string key, RuleValidatorContext context, object[] parameters)
         {
-            //TODO: Convert to IOC? Configure thru initialize?
-            IMessageStore messageStore = new ResourceMessageStore();
+           
 
-            string message = string.Empty;
+           
 
-            var propertyNameNodes = new List<string>();
+            ////Build a string with the graph of property names
+            //var propertyNameNodes = new List<string>();
 
-            RuleValidatorContext currentContext = context;
-            do
-            {
-                propertyNameNodes.Add(currentContext.PropertyName);
-                currentContext = currentContext.Parent;
-            } while (currentContext != null);
-
-
-            var propertyNameForNestedProperty = new StringBuilder();
-            propertyNameNodes.Reverse();
+            //RuleValidatorContext currentContext = context;
+            //do
+            //{
+            //    propertyNameNodes.Add(currentContext.PropertyName);
+            //    currentContext = currentContext.Parent;
+            //} while (currentContext != null);
 
 
-            propertyNameNodes.ForEach(p => propertyNameForNestedProperty.AppendFormat(" {0}", p));
+            ////Reverse by putting the top level first
+            //propertyNameNodes.Reverse();
 
+            ////create a string containing the heirarchy flattened out 
+            //var propertyNameForNestedProperty = new StringBuilder();
+            ////add a space between nodes
+            //propertyNameNodes.ForEach(p => propertyNameForNestedProperty.AppendFormat(" {0}", p));
 
-            message = messageStore.GetFormattedErrorMessage(key, propertyNameForNestedProperty.ToString().Trim(),
-                                                                 context.PropertyValue, context.PropertyInfo, parameters);
+            //message = messageService.GetMessage(key, context, )
 
-
+            //message = messageStore.GetFormattedDefaultMessage(key, propertyNameForNestedProperty.ToString().Trim(),
+                                                                 //context.PropertyValue, context.PropertyInfo, parameters);
+            var messageService = new MessageService();
+            var message = messageService.GetMessage(key, context, parameters);
             return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);
         }
     }

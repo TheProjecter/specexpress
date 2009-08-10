@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SpecExpress.DSL;
+using SpecExpress.Rules;
 using SpecExpress.Rules.DateValidators;
 using SpecExpress.Rules.StringValidators;
 
@@ -265,6 +266,14 @@ namespace SpecExpress
         }
 
         #endregion
+
+        public static ActionJoinBuilder<T, string> Expects<T>(this IRuleBuilder<T, string> expression, Func<string, bool> rule, string message)
+        {   
+            expression.RegisterValidator(new CustomRule<T>(rule));
+            //Custom messages can't derive what the Error Message is because each case is so generic
+            expression.JoinBuilder.With.Message(message);
+            return expression.JoinBuilder;
+        }
 
 
         public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, List<string> set)

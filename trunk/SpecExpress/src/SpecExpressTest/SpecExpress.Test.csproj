@@ -75,11 +75,13 @@
     <Compile Include="Entities\EntityFactories\CustomerFactory.cs" />
     <Compile Include="Factories\MockFactory.cs" />
     <Compile Include="Factories\PropertyValidatorFactory.cs" />
+    <Compile Include="MessageStore\MessageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyValidatorTests.cs" />
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
+    <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\DecimalValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\DoubleValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\FloatValidatorTests.cs" />

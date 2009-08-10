@@ -9,7 +9,7 @@ namespace SpecExpress.MessageStore
 {
     public class MessageService
     {
-        public string GetMessage(string key , RuleValidatorContext context , object[] parameters)
+        public string GetDefaultMessage(string key , RuleValidatorContext context , object[] parameters)
         {
             //TODO: Convert to IOC? Configure thru initialize?
             IMessageStore messageStore = new ResourceMessageStore();

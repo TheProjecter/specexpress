@@ -17,7 +17,7 @@ namespace SpecExpress.Rules
             }
             else
             {
-                return ValidationResultFactory.Create(GetType().Name, context, Parameters);
+                return ValidationResultFactory.Create(GetType().Name, context, Parameters, Message);
             }
         }
     }

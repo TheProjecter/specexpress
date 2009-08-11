@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SpecExpress.Rules.StringValidators
@@ -16,6 +17,13 @@ namespace SpecExpress.Rules.StringValidators
                 throw new ArgumentOutOfRangeException("min", "Min should be greater than 0");
             }
             _min = min;
+        }
+
+        public MinLength(Expression<Func<T, int>> expression)
+        {
+            PropertyExpression = expression;
+
+            //_function = _expression.Compile();
         }
 
         public override object[] Parameters

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompiledLambdaExpression.cs" />
     <Compile Include="DSL\ActionJoinBuilder.cs" />
     <Compile Include="CoreValidatorExtensions.cs" />
     <Compile Include="DSL\ActionOptionConditionBuilder.cs" />

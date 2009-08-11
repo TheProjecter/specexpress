@@ -93,7 +93,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Decimal
         public RuleValidatorContext<Contact, decimal> BuildContextForFavoriteDecimal(decimal value)
         {
             var contact = new Contact { FavoriteDecimal = value };
-            var context = new RuleValidatorContext<Contact, decimal>("FavoriteDecimal", contact.FavoriteDecimal, null, null);
+            var context = new RuleValidatorContext<Contact, decimal>(contact, "FavoriteDecimal", contact.FavoriteDecimal, null, null);
             return context;
         }
 

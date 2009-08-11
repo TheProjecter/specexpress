@@ -93,7 +93,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
         public RuleValidatorContext<Contact, float> BuildContextForGPA(float value)
         {
             var contact = new Contact { GPA = value };
-            var context = new RuleValidatorContext<Contact, float>("GPA", contact.GPA, null, null);
+            var context = new RuleValidatorContext<Contact, float>(contact, "GPA", contact.GPA, null, null);
             return context;
         }
 

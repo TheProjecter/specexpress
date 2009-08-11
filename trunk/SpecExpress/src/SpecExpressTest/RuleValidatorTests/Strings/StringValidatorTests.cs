@@ -24,8 +24,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
         public bool MinLength_IsValid(string propertyValue, int minLength)
         {
             //Create Validator
-            var validator = new MinLength<string>(minLength);
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new MinLength<Contact>(minLength);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
@@ -40,8 +40,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
         public bool MaxLength_IsValid(string propertyValue, int maxLength)
         {
             //Create Validator
-            var validator = new MaxLength<string>(maxLength);
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new MaxLength<Contact>(maxLength);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
@@ -56,8 +56,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
         public bool IsNumerc_IsValid(string propertyValue)
         {
             //Create Validator
-            var validator = new Numeric<string>();
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new Numeric<Contact>();
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
@@ -73,8 +73,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
         public bool LengthBetween_IsValid(string propertyValue, int low, int high)
         {
             //Create Validator
-            var validator = new LengthBetween<string>(low, high);
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new LengthBetween<Contact>(low, high);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
@@ -90,8 +90,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
             //List
             var list = new List<string> {"US", "GB", "AU", "CA"};
             //Create Validator
-            var validator = new IsInSet<string>(list);
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new IsInSet<Contact>(list);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
 
@@ -106,16 +106,16 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
         public bool IsAlpha_IsValid(string propertyValue)
         {
             //Create Validator
-            var validator = new Alpha<string>();
-            RuleValidatorContext<string, string> context = BuildContextForLength(propertyValue);
+            var validator = new Alpha<Contact>();
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
 
-        public RuleValidatorContext<string, string> BuildContextForLength(string value)
+        public RuleValidatorContext<Contact, string> BuildContextForLength(string value)
         {
             var contact = new Contact {FirstName = value};
-            var context = new RuleValidatorContext<string, string>("First Name", contact.FirstName, null, null);
+            var context = new RuleValidatorContext<Contact, string>(contact, "First Name", contact.FirstName, null, null);
             return context;
         }
     }

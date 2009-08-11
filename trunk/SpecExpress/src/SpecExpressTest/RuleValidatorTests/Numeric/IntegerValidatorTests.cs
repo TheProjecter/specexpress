@@ -90,10 +90,25 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             return validator.Validate(context) == null;
         }
 
+
+        [TestCase(1, (short)1, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2, (short)1, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0, (short)1, Result = false, TestName = "PropertyLessThan")]
+        public bool NumberOfDependents_GreaterThan_Weight_IsValid(int numberOfDependents, short weight)
+        {
+            //Create Validator
+            var validator = new GreaterThan<Contact>(c => (int)c.Weight);
+            RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(numberOfDependents);
+            context.Instance.Weight = weight;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         public RuleValidatorContext<Contact, int> BuildContextForNumberOfDependents(int value)
         {
             var contact = new Contact { NumberOfDependents = value };
-            var context = new RuleValidatorContext<Contact, int>("NumberOfDependents", contact.NumberOfDependents, null, null);
+            var context = new RuleValidatorContext<Contact, int>(contact, "NumberOfDependents", contact.NumberOfDependents, null, null);
             return context;
         }
 

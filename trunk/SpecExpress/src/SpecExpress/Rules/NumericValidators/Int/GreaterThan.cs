@@ -6,8 +6,8 @@ namespace SpecExpress.Rules.NumericValidators.Int
     public class GreaterThan<T> : RuleValidator<T, int>
     {
         private int _greaterThan;
-        private Expression<Func<T, int>> _expression;
-        private Func<T, int> _function;
+        //private Expression<Func<T, int>> _expression;
+        //private Func<T, int> _function;
 
         public GreaterThan(int greaterThan)
         {
@@ -16,17 +16,20 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public GreaterThan(Expression<Func<T, int>> expression)
         {
-            _expression = expression;
-            _function = _expression.Compile();
+            //_expression = expression;
+            //_function = _expression.Compile();
+
+            PropertyExpression = expression;
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            if (_expression != null)
-            {
-                _greaterThan = _function(context.Instance);
-            }
+            //if (_expression != null)
+            //{
+            //    _greaterThan = _function(context.Instance);
+            //}
 
+            _greaterThan = (int)(PropertyFunction.DynamicInvoke(new object[] { context.Instance }));
             return Evaluate(context.PropertyValue > _greaterThan, context);
         }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using SpecExpress.MessageStore;
 
@@ -8,20 +9,6 @@ namespace SpecExpress.Rules
     {
         protected IMessageStore MessageStore = new ResourceMessageStore();
         protected RuleValidatorContext ParentContext;
-
-        protected LambdaExpression PropertyExpression;
-
-        protected Delegate PropertyFunction
-        {
-            get
-            {
-                if (PropertyExpression== null)
-                {
-                    throw new InvalidOperationException("PropertyExpression has not been set.");
-                }
-                return  PropertyExpression.Compile();
-            }
-        }
 
         public string Message { get; set; }
         public abstract object[] Parameters { get; }
@@ -43,6 +30,7 @@ namespace SpecExpress.Rules
 
     public abstract class RuleValidator<T, TProperty> : RuleValidator
     {
+        protected List<CompiledFunctionExpression<T, TProperty>> PropertyExpressions = new List<CompiledFunctionExpression<T, TProperty>>();
         public abstract ValidationResult Validate(RuleValidatorContext<T, TProperty> context);
     }
 }

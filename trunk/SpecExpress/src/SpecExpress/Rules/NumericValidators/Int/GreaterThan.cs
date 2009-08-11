@@ -19,17 +19,16 @@ namespace SpecExpress.Rules.NumericValidators.Int
             //_expression = expression;
             //_function = _expression.Compile();
 
-            PropertyExpression = expression;
+            PropertyExpressions.Add(new CompiledFunctionExpression<T, int>(expression));
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            //if (_expression != null)
-            //{
-            //    _greaterThan = _function(context.Instance);
-            //}
+            if (PropertyExpressions.Count == 1)
+            {
+                _greaterThan = PropertyExpressions[0].Invoke(context.Instance);
+            }
 
-            _greaterThan = (int)(PropertyFunction.DynamicInvoke(new object[] { context.Instance }));
             return Evaluate(context.PropertyValue > _greaterThan, context);
         }
 

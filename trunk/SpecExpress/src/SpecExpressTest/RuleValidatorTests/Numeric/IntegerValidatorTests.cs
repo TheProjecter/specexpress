@@ -75,6 +75,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
             return validator.Validate(context) == null;
         }
 
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool EqualTo_Expression_IsValid(int propertyValue, int lessThan)
+        {
+            //Create Validator
+            var validator = new EqualTo<Contact>(lessThan);
+            RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+
         [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
         [TestCase(10, 1, 10, Result = true, TestName = "PropertyEqualCeiling")]
         [TestCase(5, 1, 10, Result = true, TestName = "PropertyWithinRange")]
@@ -94,7 +108,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
         [TestCase(1, (short)1, Result = false, TestName = "PropertyEqual")]
         [TestCase(2, (short)1, Result = true, TestName = "PropertyGreater")]
         [TestCase(0, (short)1, Result = false, TestName = "PropertyLessThan")]
-        public bool NumberOfDependents_GreaterThan_Weight_IsValid(int numberOfDependents, short weight)
+        public bool GreaterThan_Expression_IsValid(int numberOfDependents, short weight)
         {
             //Create Validator
             var validator = new GreaterThan<Contact>(c => (int)c.Weight);

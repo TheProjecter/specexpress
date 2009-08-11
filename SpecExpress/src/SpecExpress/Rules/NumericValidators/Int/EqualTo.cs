@@ -1,13 +1,13 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
+using SpecExpress.Util;
 
 namespace SpecExpress.Rules.NumericValidators.Int
 {
     public class EqualTo<T> : RuleValidator<T, int>
     {
         private int _equalTo;
-        private Expression<Func<T, int>> _expression;
-        private Func<T, int> _function;
 
         public EqualTo(int greaterThan)
         {
@@ -16,15 +16,14 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public EqualTo(Expression<Func<T, int>> expression)
         {
-            _expression = expression;
-            _function = _expression.Compile();
+            PropertyExpressions.Add(new CompiledFunctionExpression<T, int>(expression));
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            if (_expression != null)
+            if (!PropertyExpressions.IsEmpty())
             {
-                _equalTo = _function(context.Instance);
+                _equalTo = PropertyExpressions.First().Invoke(context.Instance);
             }
 
             return Evaluate(context.PropertyValue == _equalTo, context);

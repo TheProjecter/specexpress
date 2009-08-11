@@ -1,13 +1,13 @@
 using System;
+using System.Linq;
 using System.Linq.Expressions;
+using SpecExpress.Util;
 
 namespace SpecExpress.Rules.NumericValidators.Int
 {
     public class GreaterThan<T> : RuleValidator<T, int>
     {
         private int _greaterThan;
-        //private Expression<Func<T, int>> _expression;
-        //private Func<T, int> _function;
 
         public GreaterThan(int greaterThan)
         {
@@ -16,17 +16,14 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public GreaterThan(Expression<Func<T, int>> expression)
         {
-            //_expression = expression;
-            //_function = _expression.Compile();
-
             PropertyExpressions.Add(new CompiledFunctionExpression<T, int>(expression));
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            if (PropertyExpressions.Count == 1)
+            if (!PropertyExpressions.IsEmpty())
             {
-                _greaterThan = PropertyExpressions[0].Invoke(context.Instance);
+                _greaterThan = PropertyExpressions.First().Invoke(context.Instance);
             }
 
             return Evaluate(context.PropertyValue > _greaterThan, context);

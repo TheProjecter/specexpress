@@ -123,8 +123,8 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
         {
             var contact = new Contact { NumberOfDependents = value };
             var context = new RuleValidatorContext<Contact, int>(contact, "NumberOfDependents", contact.NumberOfDependents, null, null);
+
             return context;
         }
-
     }
 }

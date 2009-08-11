@@ -92,7 +92,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
         public RuleValidatorContext<Contact, long> BuildContextForFavoriteNumber(long value)
         {
             var contact = new Contact { FavoriteNumber = value };
-            var context = new RuleValidatorContext<Contact, long>("FavoriteNumber", contact.FavoriteNumber, null, null);
+            var context = new RuleValidatorContext<Contact, long>(contact, "FavoriteNumber", contact.FavoriteNumber, null, null);
             return context;
         }
 

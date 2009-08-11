@@ -19,6 +19,8 @@ namespace SpecExpress.Rules
     /// <typeparam name="TProperty"></typeparam>
     public class RuleValidatorContext<T, TProperty> : RuleValidatorContext
     {
+        protected T _instance;
+
         public RuleValidatorContext(T instance, PropertyValidator<T, TProperty> validator,
                                     RuleValidatorContext parentContext)
         {
@@ -28,21 +30,28 @@ namespace SpecExpress.Rules
             PropertyValue = (TProperty) validator.GetValueForProperty(instance);
             PropertyInfo = validator.PropertyInfo;
             Parent = parentContext;
+            _instance = instance;
         }
 
-        public RuleValidatorContext(string propertyName, TProperty propertyValue, MemberInfo propertyInfo,
+        public RuleValidatorContext(T instance, string propertyName, TProperty propertyValue, MemberInfo propertyInfo,
                                     RuleValidatorContext parentContext)
         {
             PropertyName = propertyName;
             PropertyValue = propertyValue;
             PropertyInfo = propertyInfo;
             Parent = parentContext;
+            _instance = instance;
         }
 
         public new TProperty PropertyValue
         {
             get { return (TProperty) base.PropertyValue; }
             set { base.PropertyValue = value; }
+        }
+
+        public T Instance
+        {
+            get { return _instance; }
         }
     }
 }

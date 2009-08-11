@@ -92,7 +92,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
         public RuleValidatorContext<Contact, short> BuildContextForWeight(short value)
         {
             var contact = new Contact { Weight = value };
-            var context = new RuleValidatorContext<Contact, short>("Weight", contact.Weight, null, null);
+            var context = new RuleValidatorContext<Contact, short>(contact, "Weight", contact.Weight, null, null);
             return context;
         }
 

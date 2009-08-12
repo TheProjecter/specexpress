@@ -21,7 +21,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public MinLength(Expression<Func<T, string>> expression)
         {
-            PropertyExpressions.Add(new CompiledFunctionExpression<T, string>(expression));
+            PropertyExpressions.Add("min", new CompiledFunctionExpression<T, string>(expression));
         }
 
         public override object[] Parameters

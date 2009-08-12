@@ -30,7 +30,7 @@ namespace SpecExpress.Rules
 
     public abstract class RuleValidator<T, TProperty> : RuleValidator
     {
-        protected List<CompiledFunctionExpression<T, TProperty>> PropertyExpressions = new List<CompiledFunctionExpression<T, TProperty>>();
+        protected Dictionary<string, CompiledFunctionExpression<T, TProperty>> PropertyExpressions = new Dictionary<string, CompiledFunctionExpression<T, TProperty>>();
         public abstract ValidationResult Validate(RuleValidatorContext<T, TProperty> context);
     }
 }

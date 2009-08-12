@@ -111,7 +111,6 @@
     <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
-    <Compile Include="Util\ICollectionExtensions.cs" />
     <Compile Include="ValidationContainer.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="DSL\WithBuilder.cs" />

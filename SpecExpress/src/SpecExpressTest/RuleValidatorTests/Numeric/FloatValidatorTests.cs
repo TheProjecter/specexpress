@@ -23,6 +23,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             return validator.Validate(context) == null;
         }
 
+        [TestCase(1F, 1F, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2F, 1F, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0F, 1F, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThanEqualTo_Expression_IsValid(float propertyValue, float greaterThanEqualTo)
+        {
+            //Create Validator
+            var validator = new GreaterThanEqualTo<Contact>(c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)greaterThanEqualTo;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         [TestCase(1F, 1F, Result = false, TestName = "PropertyEqual")]
         [TestCase(2F, 1F, Result = true, TestName = "PropertyGreater")]
         [TestCase(0F, 1F, Result = false, TestName = "PropertyLessThan")]
@@ -31,6 +45,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             //Create Validator
             var validator = new GreaterThan<Contact>(greaterThan);
             RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase(1F, 1F, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2F, 1F, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0F, 1F, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThan_Expression_IsValid(float propertyValue, float greaterThanEqualTo)
+        {
+            //Create Validator
+            var validator = new GreaterThan<Contact>(c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)greaterThanEqualTo;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -49,6 +77,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             return validator.Validate(context) == null;
         }
 
+        [TestCase(1F, 1F, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2F, 1F, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0F, 1F, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThanEqualTo_Expression_IsValid(float propertyValue, float greaterThanEqualTo)
+        {
+            //Create Validator
+            var validator = new LessThanEqualTo<Contact>(c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)greaterThanEqualTo;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         [TestCase(1F, 1F, Result = false, TestName = "PropertyEqual")]
         [TestCase(2F, 1F, Result = false, TestName = "PropertyGreater")]
         [TestCase(0F, 1F, Result = true, TestName = "PropertyLessThan")]
@@ -57,6 +99,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             //Create Validator
             var validator = new LessThan<Contact>(lessThan);
             RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase(1F, 1F, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2F, 1F, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0F, 1F, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThan_Expression_IsValid(float propertyValue, float lessThan)
+        {
+            //Create Validator
+            var validator = new LessThan<Contact>(c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)lessThan;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -75,6 +131,20 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             return validator.Validate(context) == null;
         }
 
+        [TestCase(1F, 1F, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2F, 1F, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0F, 1F, Result = false, TestName = "PropertyLessThan")]
+        public bool EqualTo_Expression_IsValid(float propertyValue, float lessThan)
+        {
+            //Create Validator
+            var validator = new EqualTo<Contact>(c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)lessThan;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         [TestCase(1F, 1F, 10F, Result = true, TestName = "PropertyEqualFloor")]
         [TestCase(10F, 1F, 10F, Result = true, TestName = "PropertyEqualCeiling")]
         [TestCase(5F, 1F, 10F, Result = true, TestName = "PropertyWithinRange")]
@@ -85,6 +155,55 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Float
             //Create Validator
             var validator = new Between<Contact>(floor,ceiling);
             RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase(1F, 1F, 10F, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10F, 1F, 10F, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5F, 1F, 10F, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11F, 1F, 10F, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0F, 1F, 10F, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_FloorExpression_IsValid(float propertyValue, float floor, float ceiling)
+        {
+            //Create Validator
+            var validator = new Between<Contact>(c => (float)c.FavoriteDecimal, ceiling);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)floor;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase(1F, 1F, 10F, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10F, 1F, 10F, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5F, 1F, 10F, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11F, 1F, 10F, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0F, 1F, 10F, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_ceilingExpression_IsValid(float propertyValue, float floor, float ceiling)
+        {
+            //Create Validator
+            var validator = new Between<Contact>(floor, c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)ceiling;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase(1F, 1F, 10F, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10F, 1F, 10F, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5F, 1F, 10F, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11F, 1F, 10F, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0F, 1F, 10F, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_Expressions_IsValid(float propertyValue, float floor, float ceiling)
+        {
+            //Create Validator
+            var validator = new Between<Contact>(c=>(float)c.FavoriteDouble, c => (float)c.FavoriteDecimal);
+            RuleValidatorContext<Contact, float> context = BuildContextForGPA(propertyValue);
+            context.Instance.FavoriteDecimal = (decimal)ceiling;
+            context.Instance.FavoriteDouble = (double) floor;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;

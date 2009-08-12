@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace SpecExpress.Rules.NumericValidators.Float
 {
     public class LessThan<T> : RuleValidator<T, float>
@@ -9,8 +13,18 @@ namespace SpecExpress.Rules.NumericValidators.Float
             _lessThan = lessThan;
         }
 
+        public LessThan(Expression<Func<T, float>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, float> context)
         {
+            if (PropertyExpressions.Any())
+            {
+                _lessThan = GetExpressionValue(context);
+            }
+
             return Evaluate(context.PropertyValue < _lessThan, context);
         }
 

@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace SpecExpress.Rules.NumericValidators.Float
 {
     public class GreaterThanEqualTo<T> : RuleValidator<T, float>
@@ -9,8 +13,18 @@ namespace SpecExpress.Rules.NumericValidators.Float
             _greaterThanEqualTo = greaterThanEqualTo;
         }
 
+        public GreaterThanEqualTo(Expression<Func<T, float>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, float> context)
         {
+            if (PropertyExpressions.Any())
+            {
+                _greaterThanEqualTo = GetExpressionValue(context);
+            }
+
             return Evaluate(context.PropertyValue >= _greaterThanEqualTo, context);
         }
 

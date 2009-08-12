@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace SpecExpress.Rules.NumericValidators.Long
 {
     public class GreaterThan<T> : RuleValidator<T, long>
@@ -9,8 +13,18 @@ namespace SpecExpress.Rules.NumericValidators.Long
             _greaterThan = greaterThan;
         }
 
+        public GreaterThan(Expression<Func<T, long>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, long> context)
         {
+            if (PropertyExpressions.Any())
+            {
+                _greaterThan = GetExpressionValue(context);
+            }
+
             return Evaluate(context.PropertyValue > _greaterThan, context);
         }
 

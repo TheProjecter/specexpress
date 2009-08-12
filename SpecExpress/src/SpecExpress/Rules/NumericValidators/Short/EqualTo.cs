@@ -1,3 +1,7 @@
+using System;
+using System.Linq;
+using System.Linq.Expressions;
+
 namespace SpecExpress.Rules.NumericValidators.Short
 {
     public class EqualTo<T> : RuleValidator<T, short>
@@ -9,8 +13,18 @@ namespace SpecExpress.Rules.NumericValidators.Short
             _equalTo = greaterThan;
         }
 
+        public EqualTo(Expression<Func<T, short>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, short> context)
         {
+            if (PropertyExpressions.Any())
+            {
+                _equalTo = GetExpressionValue(context);
+            }
+
             return Evaluate(context.PropertyValue == _equalTo, context);
         }
 

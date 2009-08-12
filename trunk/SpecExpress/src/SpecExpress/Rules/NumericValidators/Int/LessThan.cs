@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.NumericValidators.Int
 {
@@ -11,8 +13,18 @@ namespace SpecExpress.Rules.NumericValidators.Int
             _lessThan = lessThan;
         }
 
+        public LessThan(Expression<Func<T, int>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
+
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
+            if (PropertyExpressions.Any())
+            {
+                _lessThan = GetExpressionValue(context);
+            }
+
             return Evaluate(context.PropertyValue < _lessThan, context);
         }
 

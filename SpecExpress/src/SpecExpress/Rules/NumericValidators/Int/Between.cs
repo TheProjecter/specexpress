@@ -36,12 +36,12 @@ namespace SpecExpress.Rules.NumericValidators.Int
         {
             if (PropertyExpressions.ContainsKey("floor"))
             {
-                _floor = PropertyExpressions["floor"].Invoke(context.Instance);
+                _floor = GetExpressionValue("floor", context);
             }
 
             if (PropertyExpressions.ContainsKey("ceiling"))
             {
-                _ceiling = PropertyExpressions["ceiling"].Invoke(context.Instance);
+                _ceiling = GetExpressionValue("ceiling", context);
             }
 
             return Evaluate(context.PropertyValue <= _ceiling && context.PropertyValue >= _floor , context);

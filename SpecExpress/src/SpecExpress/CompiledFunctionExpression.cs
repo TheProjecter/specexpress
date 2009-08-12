@@ -3,20 +3,40 @@ using System.Linq.Expressions;
 
 namespace SpecExpress
 {
-    public class CompiledFunctionExpression<T,TResult>
+    /// <summary>
+    /// Contains a LambdaExpression that has been compiled. 
+    /// This is to optimize performance by guaranteeing that the expression gets compiled only once.
+    /// </summary>
+    public class CompiledExpression
     {
-        private Expression<Func<T,TResult>> _expression;
-        Func<T,TResult> _func;
+        private LambdaExpression _expression;
+        private Delegate _func;
 
-        public CompiledFunctionExpression(Expression<Func<T, TResult>> expression)
+        public CompiledExpression(LambdaExpression expression)
         {
             _expression = expression;
             _func = _expression.Compile();
         }
 
-        public TResult Invoke(T parm)
+        public object Invoke(object param)
         {
-            return _func(parm);
+            return _func.DynamicInvoke(new object[] { param });
+        }
+    }
+
+    /// <summary>
+    /// A Generic implementation of CompiledExpression
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TResult"></typeparam>
+    public class CompiledFunctionExpression<T, TResult> : CompiledExpression
+    {
+        public CompiledFunctionExpression(Expression<Func<T, TResult>> expression) : base(expression)
+        {}
+
+        public TResult Invoke(T param)
+        {
+            return (TResult)base.Invoke(param);
         }
     }
 }

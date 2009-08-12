@@ -16,14 +16,14 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public GreaterThan(Expression<Func<T, int>> expression)
         {
-            PropertyExpressions.Add("greaterThan", new CompiledFunctionExpression<T, int>(expression));
+            AddPropertyExpression("greaterThan", expression);
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
             if (PropertyExpressions.ContainsKey("greaterThan"))
             {
-                _greaterThan = PropertyExpressions["greaterThan"].Invoke(context.Instance);
+                _greaterThan = GetExpressionValue("greaterThan", context);
             }
 
             return Evaluate(context.PropertyValue > _greaterThan, context);

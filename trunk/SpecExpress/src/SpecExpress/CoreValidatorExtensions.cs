@@ -214,14 +214,14 @@ namespace SpecExpress
         public static ActionJoinBuilder<T, DateTime> IsBefore<T>(this IRuleBuilder<T, DateTime> expression,
                                                          DateTime beforeDate)
         {
-            expression.RegisterValidator(new Before<T>(beforeDate));
+            expression.RegisterValidator(new LessThan<T>(beforeDate));
             return expression.JoinBuilder;
         }
 
         public static ActionJoinBuilder<T, DateTime> IsAfter<T>(this IRuleBuilder<T, DateTime> expression,
                                                                 DateTime afterDate)
         {
-            expression.RegisterValidator(new After<T>(afterDate));
+            expression.RegisterValidator(new GreaterThan<T>(afterDate));
             return expression.JoinBuilder;
         }
         #endregion

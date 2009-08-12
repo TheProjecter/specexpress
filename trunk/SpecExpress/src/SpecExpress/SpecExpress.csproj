@@ -64,8 +64,10 @@
     </Compile>
     <Compile Include="DSL\RuleBuilder.cs" />
     <Compile Include="Rules\CustomRule.cs" />
-    <Compile Include="Rules\DateValidators\After.cs" />
-    <Compile Include="Rules\DateValidators\Before.cs" />
+    <Compile Include="Rules\DateValidators\LessThanEqualTo.cs" />
+    <Compile Include="Rules\DateValidators\GreaterThanEqualTo.cs" />
+    <Compile Include="Rules\DateValidators\GreaterThan.cs" />
+    <Compile Include="Rules\DateValidators\LessThan.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />
     <Compile Include="Rules\NumericValidators\Decimal\Between.cs" />
     <Compile Include="Rules\NumericValidators\Decimal\EqualTo.cs" />

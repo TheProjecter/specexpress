@@ -13,7 +13,7 @@ namespace SpecExpress.Rules.NumericValidators.Decimal
             _greaterThan = greaterThan;
         }
 
-        public GreaterThan(Expression<Func<T, double>> expression)
+        public GreaterThan(Expression<Func<T, decimal>> expression)
         {
             SetPropertyExpression(expression);
         }

@@ -106,7 +106,7 @@ namespace SpecExpressTest
             Assert.IsNotNull(notifications);
             Assert.AreEqual(2, notifications.Count);
             Assert.AreEqual(
-                "'Customer Date' must be before 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM characters.",
+                "'Customer Date' must be before 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM.",
                 notifications[0].Message);
         }
 

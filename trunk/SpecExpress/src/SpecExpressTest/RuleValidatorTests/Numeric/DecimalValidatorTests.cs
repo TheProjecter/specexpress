@@ -56,7 +56,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Decimal
         public bool GreaterThan_Expression_IsValid(decimal propertyValue, decimal greaterThan)
         {
             //Create Validator
-            var validator = new GreaterThan<Contact>(c => (short)c.GPA);
+            var validator = new GreaterThan<Contact>(c => (decimal)c.GPA);
             RuleValidatorContext<Contact, decimal> context = BuildContextForFavoriteDecimal(propertyValue);
             context.Instance.GPA = (short)greaterThan;
 

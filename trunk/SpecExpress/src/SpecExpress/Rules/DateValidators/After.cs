@@ -1,33 +1,37 @@
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.DateValidators
 {
     public class After<T> : RuleValidator<T, DateTime>
     {
+        private DateTime _afterDate;
+
         public After(DateTime afterDate)
         {
-            AfterDate = afterDate;
+            _afterDate = afterDate;
         }
 
-        public DateTime AfterDate { get; private set; }
+        public After(Expression<Func<T, DateTime>> expression)
+        {
+            SetPropertyExpression(expression);
+        }
 
         public override object[] Parameters
         {
-            get { return new object[] {AfterDate}; }
+            get { return new object[] { _afterDate }; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)
         {
-            if (context.PropertyValue <= AfterDate)
+            if (PropertyExpressions.Any())
             {
-                string message = String.Format("'{0}' must be after {1}. You entered {2} characters.",
-                                               context.PropertyName, AfterDate, context.PropertyValue);
-                return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);
+                _afterDate = GetExpressionValue(context);
             }
-            else
-            {
-                return null;
-            }
+
+            return Evaluate(context.PropertyValue >= _afterDate, context);
+
         }
     }
 }

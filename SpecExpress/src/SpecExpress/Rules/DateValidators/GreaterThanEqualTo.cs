@@ -4,33 +4,34 @@ using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.DateValidators
 {
-    public class Before<T> : RuleValidator<T, DateTime>
+    public class GreaterThanEqualTo<T> : RuleValidator<T, DateTime>
     {
-        private DateTime _beforeDate;
+        private DateTime _afterDate;
 
-        public Before(DateTime beforeDate)
+        public GreaterThanEqualTo(DateTime afterDate)
         {
-            _beforeDate = beforeDate;
+            _afterDate = afterDate;
         }
 
-        public Before(Expression<Func<T, DateTime>>  expression)
+        public GreaterThanEqualTo(Expression<Func<T, DateTime>> expression)
         {
             SetPropertyExpression(expression);
         }
 
         public override object[] Parameters
         {
-            get { return new object[] { _beforeDate }; }
+            get { return new object[] { _afterDate }; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)
         {
             if (PropertyExpressions.Any())
             {
-                _beforeDate = GetExpressionValue(context);
+                _afterDate = GetExpressionValue(context);
             }
 
-            return Evaluate(context.PropertyValue <= _beforeDate, context);
+            return Evaluate(context.PropertyValue >= _afterDate, context);
+
         }
     }
 }

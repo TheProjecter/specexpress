@@ -61,29 +61,11 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be after {0}. You entered {PropertyValue}..
-        /// </summary>
-        internal static string After {
-            get {
-                return ResourceManager.GetString("After", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} should only contain letters..
         /// </summary>
         internal static string Alpha {
             get {
                 return ResourceManager.GetString("Alpha", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; must be before {0}. You entered {PropertyValue}..
-        /// </summary>
-        internal static string Before {
-            get {
-                return ResourceManager.GetString("Before", resourceCulture);
             }
         }
         

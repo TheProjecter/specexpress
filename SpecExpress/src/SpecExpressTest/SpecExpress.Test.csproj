@@ -64,6 +64,7 @@
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />
     <Compile Include="DSLTests\StructureTests.cs" />
+    <Compile Include="Entities\CalendarEvent.cs" />
     <Compile Include="Entities\ContactWithIsValid.cs" />
     <Compile Include="Entities\EntityBuilders\CustomerBuilder.cs" />
     <Compile Include="CustomerSpecification.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
     <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
+    <Compile Include="RuleValidatorTests\DateTimeTests\DateTimeValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\DecimalValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\DoubleValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\FloatValidatorTests.cs" />

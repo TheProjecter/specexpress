@@ -1,33 +1,36 @@
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.DateValidators
 {
     public class Before<T> : RuleValidator<T, DateTime>
     {
+        private DateTime _beforeDate;
+
         public Before(DateTime beforeDate)
         {
-            BeforeDate = beforeDate;
+            _beforeDate = beforeDate;
         }
 
-        public DateTime BeforeDate { get; private set; }
+        public Before(Expression<Func<T, DateTime>>  expression)
+        {
+            SetPropertyExpression(expression);
+        }
 
         public override object[] Parameters
         {
-            get { return new object[] {BeforeDate}; }
+            get { return new object[] { _beforeDate }; }
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)
         {
-            if (context.PropertyValue >= BeforeDate)
+            if (PropertyExpressions.Any())
             {
-                string message = String.Format("'{0}' must be before {1}. You entered {2} characters.",
-                                               context.PropertyName, BeforeDate, context.PropertyValue);
-                return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);
+                _beforeDate = GetExpressionValue(context);
             }
-            else
-            {
-                return null;
-            }
+
+            return Evaluate(context.PropertyValue <= _beforeDate, context);
         }
     }
 }

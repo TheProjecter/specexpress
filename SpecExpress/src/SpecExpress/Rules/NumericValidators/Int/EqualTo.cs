@@ -16,12 +16,12 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public EqualTo(Expression<Func<T, int>> expression)
         {
-            AddPropertyExpression("equalTo", expression);
+            SetPropertyExpression(expression);
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)
         {
-            if (PropertyExpressions.ContainsKey("equalTo"))
+            if (PropertyExpressions.Any())
             {
                 _equalTo = GetExpressionValue(context);
             }

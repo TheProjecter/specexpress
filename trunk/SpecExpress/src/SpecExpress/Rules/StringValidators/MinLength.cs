@@ -21,7 +21,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public MinLength(Expression<Func<T, int>> expression)
         {
-            AddPropertyExpression(expression);
+            SetPropertyExpression(expression);
         }
 
         public override object[] Parameters

@@ -33,23 +33,16 @@ namespace SpecExpress.Rules
     {
         protected IDictionary<string, CompiledExpression> PropertyExpressions = new Dictionary<string, CompiledExpression>();
 
-        protected CompiledExpression AddPropertyExpression(LambdaExpression expression)
+        protected CompiledExpression SetPropertyExpression(LambdaExpression expression)
         {
-            return AddPropertyExpression(string.Empty, expression);
+            return SetPropertyExpression(string.Empty, expression);
         }
 
-        protected CompiledExpression AddPropertyExpression(string key, LambdaExpression expression)
+        protected CompiledExpression SetPropertyExpression(string key, LambdaExpression expression)
         {
             var compiledExpression = new CompiledExpression(expression);
-            PropertyExpressions.Add(key, compiledExpression);
+            PropertyExpressions[key] = compiledExpression;
             return compiledExpression;
-        }
-
-
-        protected CompiledExpression AddPropertyExpression(string key, CompiledFunctionExpression<T, TProperty> expression)
-        {
-            PropertyExpressions.Add(key, expression);
-            return expression;
         }
 
         /// <summary>

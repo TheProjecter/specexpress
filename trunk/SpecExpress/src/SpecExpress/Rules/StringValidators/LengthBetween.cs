@@ -22,20 +22,20 @@ namespace SpecExpress.Rules.StringValidators
 
         public LengthBetween(Expression<Func<T, int>> min, Expression<Func<T, int>> max)
         {
-            AddPropertyExpression("min", min);
-            AddPropertyExpression("max", max);
+            SetPropertyExpression("min", min);
+            SetPropertyExpression("max", max);
         }
 
         public LengthBetween(Expression<Func<T, int>> min , int max)
         {
-             AddPropertyExpression("min", min);
+             SetPropertyExpression("min", min);
             _max = max;
         }
 
          public LengthBetween(int min, Expression<Func<T, int>> max)
         {
              _min = min;
-             AddPropertyExpression("max",max);
+             SetPropertyExpression("max",max);
         }
 
         public override object[] Parameters

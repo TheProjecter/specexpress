@@ -16,20 +16,20 @@ namespace SpecExpress.Rules.NumericValidators.Int
 
         public Between(Expression<Func<T, int>> floor, int ceiling)
         {
-            PropertyExpressions.Add("floor", new CompiledFunctionExpression<T, int>(floor));
+            SetPropertyExpression("floor", floor);
             _ceiling = ceiling;
         }
 
         public Between(int floor, Expression<Func<T, int>> ceiling)
         {
             _floor = floor;
-            PropertyExpressions.Add("ceiling",new CompiledFunctionExpression<T, int>(ceiling));
+            SetPropertyExpression("ceiling", ceiling);
         }
 
         public Between(Expression<Func<T, int>> floor, Expression<Func<T, int>> ceiling)
         {
-            PropertyExpressions.Add("floor", new CompiledFunctionExpression<T, int>(floor));
-            PropertyExpressions.Add("ceiling", new CompiledFunctionExpression<T, int>(ceiling));
+            SetPropertyExpression("floor", floor);
+            SetPropertyExpression("ceiling",ceiling);
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, int> context)

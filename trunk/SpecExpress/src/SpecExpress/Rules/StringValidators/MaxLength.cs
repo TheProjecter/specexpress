@@ -21,7 +21,7 @@ namespace SpecExpress.Rules.StringValidators
 
         public MaxLength(Expression<Func<T, int>> expression)
         {
-            AddPropertyExpression(expression);
+            SetPropertyExpression(expression);
         }
 
 

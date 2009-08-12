@@ -19,9 +19,9 @@ namespace SpecExpress.Rules.StringValidators
             _min = min;
         }
 
-        public MinLength(Expression<Func<T, string>> expression)
+        public MinLength(Expression<Func<T, int>> expression)
         {
-            PropertyExpressions.Add("min", new CompiledFunctionExpression<T, string>(expression));
+            AddPropertyExpression(expression);
         }
 
         public override object[] Parameters
@@ -31,11 +31,18 @@ namespace SpecExpress.Rules.StringValidators
 
         public override ValidationResult Validate(RuleValidatorContext<T, string> context)
         {
+
             int length = String.IsNullOrEmpty(context.PropertyValue) ? 0 : context.PropertyValue.Trim().Length;
 
             var contextWithLength = new RuleValidatorContext<T, string>(context.Instance, context.PropertyName, length.ToString(),
                                                                            context.PropertyInfo, null);
 
+            if (PropertyExpressions.Any())
+            {
+                //Get value manually because Type of TProperty is int instead of string
+                _min = (int)PropertyExpressions.First().Value.Invoke(context.Instance);
+            }
+            
             return Evaluate(length >= _min, contextWithLength);
         }
     }

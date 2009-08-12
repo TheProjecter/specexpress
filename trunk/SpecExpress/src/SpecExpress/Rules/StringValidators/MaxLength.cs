@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 
 namespace SpecExpress.Rules.StringValidators
@@ -18,6 +19,12 @@ namespace SpecExpress.Rules.StringValidators
             _max = max;
         }
 
+        public MaxLength(Expression<Func<T, int>> expression)
+        {
+            AddPropertyExpression(expression);
+        }
+
+
         public override object[] Parameters
         {
             get { return new object[] { _max}; }
@@ -29,6 +36,12 @@ namespace SpecExpress.Rules.StringValidators
 
             var contextWithLength = new RuleValidatorContext<T, string>(context.Instance, context.PropertyName, length.ToString(),
                                                                            context.PropertyInfo, null);
+            
+            if (PropertyExpressions.Any())
+            {
+                //Get value manually because Type of TProperty is int instead of string
+                _max = (int)PropertyExpressions.First().Value.Invoke(context.Instance);
+            }
 
             return Evaluate(length <= _max, contextWithLength);
         }

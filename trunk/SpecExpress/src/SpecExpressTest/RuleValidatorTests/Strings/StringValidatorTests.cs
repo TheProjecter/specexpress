@@ -30,6 +30,17 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
             return validator.Validate(context) == null;
         }
 
+        [TestCase("Joe", "Smith", Result = false, TestName = "First name less then lastname length")]
+        [TestCase("Joesph", "Smith", Result = true, TestName = "First name greater than lastname length")]
+        public bool MinLength_Expression_IsValid(string firstName, string lastName)
+        {
+            //Create Validator
+            //FirstName Length must be at least the same length as the LastName
+            var validator = new MinLength<Contact>(c => (int)(c.LastName.Length));
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName, lastName);
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
 
         [TestCase("", 1, Result = true, TestName = "Empty")]
         [TestCase("      ", 1, Result = true, TestName = "Empty")]
@@ -42,6 +53,18 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
             //Create Validator
             var validator = new MaxLength<Contact>(maxLength);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("Joesph", "Smith", Result = false, TestName = "First name greater then lastname length")]
+        [TestCase("Joe", "Smith", Result = true, TestName = "Last name greater than firstname length")]
+        public bool MaxLength_Expression_IsValid(string firstName, string lastName)
+        {
+            //Create Validator
+            //FirstName Length must be at least the same length as the LastName
+            var validator = new MaxLength<Contact>(c => (int)(c.LastName.Length));
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName, lastName);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
@@ -112,9 +135,25 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
             return validator.Validate(context) == null;
         }
 
+       
+      
+
+
         public RuleValidatorContext<Contact, string> BuildContextForLength(string value)
         {
             var contact = new Contact {FirstName = value};
+            var context = new RuleValidatorContext<Contact, string>(contact, "First Name", contact.FirstName, null, null);
+            return context;
+        }
+
+        public RuleValidatorContext<Contact, string> BuildContextForLength(string firstName, string lastName)
+        {
+            if (string.IsNullOrEmpty(lastName))
+            {
+                lastName = "Default";
+            }
+
+            var contact = new Contact { FirstName = firstName, LastName = lastName };
             var context = new RuleValidatorContext<Contact, string>(contact, "First Name", contact.FirstName, null, null);
             return context;
         }

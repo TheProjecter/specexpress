@@ -63,6 +63,7 @@
       <DependentUpon>RuleErrorMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="DSL\RuleBuilder.cs" />
+    <Compile Include="Rules\Collection\Contains.cs" />
     <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\Between.cs" />
     <Compile Include="Rules\DateValidators\IsInPast.cs" />

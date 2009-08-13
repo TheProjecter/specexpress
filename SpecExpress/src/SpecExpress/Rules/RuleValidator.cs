@@ -28,7 +28,6 @@ namespace SpecExpress.Rules
         }
     }
 
-
     public abstract class RuleValidator<T, TProperty> : RuleValidator
     {
         protected IDictionary<string, CompiledExpression> PropertyExpressions = new Dictionary<string, CompiledExpression>();

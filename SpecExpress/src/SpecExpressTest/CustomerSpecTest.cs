@@ -97,9 +97,9 @@ namespace SpecExpressTest
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.CustomerDate).Required()
                 .And
-                .IsBefore(new DateTime(2009, 1, 1))
+                .LessThan(new DateTime(2009, 1, 1))
                 .Or
-                .IsAfter(new DateTime(2010, 1, 1));
+                .GreaterThan(new DateTime(2010, 1, 1));
 
             List<ValidationResult> notifications = spec.Validate(customer);
 
@@ -118,9 +118,9 @@ namespace SpecExpressTest
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.CustomerDate).Required()
                 .And
-                .IsBefore(new DateTime(2009, 1, 1))
+                .LessThan(new DateTime(2009, 1, 1))
                 .Or
-                .IsAfter(new DateTime(2010, 1, 1));
+                .GreaterThan(new DateTime(2010, 1, 1));
 
             List<ValidationResult> notifications = spec.Validate(customer);
 

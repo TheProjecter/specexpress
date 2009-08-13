@@ -199,10 +199,106 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             return validator.Validate(context) == null;
         }
 
+        [TestCase("1/1/2009", "12/1/2009", "1/1/2010", Result = true, TestName = "StartDateBetweenRange")]
+        [TestCase("1/1/2010", "12/1/2009", "12/1/2010", Result = false, TestName = "StartDateBeforeRange")]
+        [TestCase("1/1/2009", "1/1/2010", "12/1/2009", Result = false, TestName = "StartDateAfterRange")]
+        [TestCase("1/1/2009", "1/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualFloor")]
+        [TestCase("1/1/2009", "12/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualCeiling")]
+        public bool Between_IsValid(string createDate, string startDate, string endDate)
+        {
+            DateTime createDateTime = DateTime.Parse(createDate);
+            DateTime startDateTime = DateTime.Parse(startDate);
+            DateTime endDateTime = DateTime.Parse(endDate);
+
+            //Create Validator
+            var validator = new Between<CalendarEvent>(createDateTime, endDateTime);
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
+                                                                                                          createDateTime,
+                                                                                                          startDateTime,
+                                                                                                          endDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null; 
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", "1/1/2010", Result = true, TestName = "StartDateBetweenRange")]
+        [TestCase("1/1/2010", "12/1/2009", "12/1/2010", Result = false, TestName = "StartDateBeforeRange")]
+        [TestCase("1/1/2009", "1/1/2010", "12/1/2009", Result = false, TestName = "StartDateAfterRange")]
+        [TestCase("1/1/2009", "1/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualFloor")]
+        [TestCase("1/1/2009", "12/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualCeiling")]
+        public bool Between_FloorExpression_IsValid(string createDate, string startDate, string endDate)
+        {
+            DateTime createDateTime = DateTime.Parse(createDate);
+            DateTime startDateTime = DateTime.Parse(startDate);
+            DateTime endDateTime = DateTime.Parse(endDate);
+
+            //Create Validator
+            var validator = new Between<CalendarEvent>(c=>c.CreateDate, endDateTime);
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
+                                                                                                          createDateTime,
+                                                                                                          startDateTime,
+                                                                                                          endDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", "1/1/2010", Result = true, TestName = "StartDateBetweenRange")]
+        [TestCase("1/1/2010", "12/1/2009", "12/1/2010", Result = false, TestName = "StartDateBeforeRange")]
+        [TestCase("1/1/2009", "1/1/2010", "12/1/2009", Result = false, TestName = "StartDateAfterRange")]
+        [TestCase("1/1/2009", "1/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualFloor")]
+        [TestCase("1/1/2009", "12/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualCeiling")]
+        public bool Between_CeilingExpression_IsValid(string createDate, string startDate, string endDate)
+        {
+            DateTime createDateTime = DateTime.Parse(createDate);
+            DateTime startDateTime = DateTime.Parse(startDate);
+            DateTime endDateTime = DateTime.Parse(endDate);
+
+            //Create Validator
+            var validator = new Between<CalendarEvent>(createDateTime, c=>c.EndDate);
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
+                                                                                                          createDateTime,
+                                                                                                          startDateTime,
+                                                                                                          endDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", "1/1/2010", Result = true, TestName = "StartDateBetweenRange")]
+        [TestCase("1/1/2010", "12/1/2009", "12/1/2010", Result = false, TestName = "StartDateBeforeRange")]
+        [TestCase("1/1/2009", "1/1/2010", "12/1/2009", Result = false, TestName = "StartDateAfterRange")]
+        [TestCase("1/1/2009", "1/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualFloor")]
+        [TestCase("1/1/2009", "12/1/2009", "12/1/2009", Result = true, TestName = "StartDateEqualCeiling")]
+        public bool Between_Expressions_IsValid(string createDate, string startDate, string endDate)
+        {
+            DateTime createDateTime = DateTime.Parse(createDate);
+            DateTime startDateTime = DateTime.Parse(startDate);
+            DateTime endDateTime = DateTime.Parse(endDate);
+
+            //Create Validator
+            var validator = new Between<CalendarEvent>(c=>c.CreateDate, c => c.EndDate);
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
+                                                                                                          createDateTime,
+                                                                                                          startDateTime,
+                                                                                                          endDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         public RuleValidatorContext<CalendarEvent, System.DateTime> BuildContextForCalendarEventStartDate(string subject, DateTime startDate, DateTime endDate)
         {
             var calendarEvent = new CalendarEvent() {Subject = subject, StartDate = startDate, EndDate = endDate};
             var context = new RuleValidatorContext<CalendarEvent,DateTime>(calendarEvent, "StartDate", calendarEvent.StartDate, null, null);
+
+            return context;
+        }
+
+        public RuleValidatorContext<CalendarEvent, System.DateTime> BuildContextForCalendarEventStartDate(string subject, DateTime createDate, DateTime startDate, DateTime endDate)
+        {
+            var calendarEvent = new CalendarEvent() { Subject = subject, CreateDate = createDate, StartDate = startDate, EndDate = endDate };
+            var context = new RuleValidatorContext<CalendarEvent, DateTime>(calendarEvent, "StartDate", calendarEvent.StartDate, null, null);
 
             return context;
         }

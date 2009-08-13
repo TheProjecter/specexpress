@@ -64,6 +64,8 @@
     </Compile>
     <Compile Include="DSL\RuleBuilder.cs" />
     <Compile Include="Rules\CustomRule.cs" />
+    <Compile Include="Rules\DateValidators\IsInPast.cs" />
+    <Compile Include="Rules\DateValidators\IsInFuture.cs" />
     <Compile Include="Rules\DateValidators\LessThanEqualTo.cs" />
     <Compile Include="Rules\DateValidators\GreaterThanEqualTo.cs" />
     <Compile Include="Rules\DateValidators\GreaterThan.cs" />

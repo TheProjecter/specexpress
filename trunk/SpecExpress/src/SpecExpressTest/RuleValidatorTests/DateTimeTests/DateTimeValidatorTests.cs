@@ -31,6 +31,26 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
 
         [TestCase("1/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsBefore")]
         [TestCase("1/1/2010", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsAfter")]
+        [TestCase("12/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueEquals")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = false, TestName = "DateTimePropertyValueIsBefore")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = true, TestName = "DateTimePropertyValueIsAfter")]
+        [TestCase("12/1/2009 1:00 AM", "12/1/2009 1:00 AM", Result = false, TestName = "DateTimePropertyValueEquals")]
+        public bool GreaterThan_Expression_IsValid(string propertyValue, string greaterThan)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+            DateTime greaterThanDateTime = DateTime.Parse(greaterThan);
+
+            //Create Validator
+            var validator = new GreaterThan<CalendarEvent>(c => c.StartDate);
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", greaterThanDateTime, propertyValueDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsBefore")]
+        [TestCase("1/1/2010", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsAfter")]
         [TestCase("12/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueEquals")]
         [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = false, TestName = "DateTimePropertyValueIsBefore")]
         [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = true, TestName = "DateTimePropertyValueIsAfter")]
@@ -44,6 +64,26 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             var validator = new GreaterThanEqualTo<CalendarEvent>(endDateTime);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", DateTime.Now, propertyValueDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsBefore")]
+        [TestCase("1/1/2010", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsAfter")]
+        [TestCase("12/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueEquals")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = false, TestName = "DateTimePropertyValueIsBefore")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = true, TestName = "DateTimePropertyValueIsAfter")]
+        [TestCase("12/1/2009 1:00 AM", "12/1/2009 1:00 AM", Result = true, TestName = "DateTimePropertyValueEquals")]
+        public bool GreaterThanEqualTo_Expression_IsValid(string propertyValue, string greaterThan)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+            DateTime greaterThanDateTime = DateTime.Parse(greaterThan);
+
+            //Create Validator
+            var validator = new GreaterThanEqualTo<CalendarEvent>(c => c.StartDate);
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", greaterThanDateTime, propertyValueDateTime);
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -71,6 +111,26 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
 
         [TestCase("1/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsBefore")]
         [TestCase("1/1/2010", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsAfter")]
+        [TestCase("12/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueEquals")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = true, TestName = "DateTimePropertyValueIsBefore")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = false, TestName = "DateTimePropertyValueIsAfter")]
+        [TestCase("12/1/2009 1:00 AM", "12/1/2009 1:00 AM", Result = false, TestName = "DateTimePropertyValueEquals")]
+        public bool LessThan_Expression_IsValid(string propertyValue, string lessThan)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+            DateTime lessThanDateTime = DateTime.Parse(lessThan);
+
+            //Create Validator
+            var validator = new LessThan<CalendarEvent>(c=>c.EndDate);
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, lessThanDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsBefore")]
+        [TestCase("1/1/2010", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsAfter")]
         [TestCase("12/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueEquals")]
         [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = true, TestName = "DateTimePropertyValueIsBefore")]
         [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = false, TestName = "DateTimePropertyValueIsAfter")]
@@ -82,6 +142,56 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
 
             //Create Validator
             var validator = new LessThanEqualTo<CalendarEvent>(beforeDateTime);
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsBefore")]
+        [TestCase("1/1/2010", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsAfter")]
+        [TestCase("12/1/2009", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueEquals")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 PM", Result = true, TestName = "DateTimePropertyValueIsBefore")]
+        [TestCase("12/1/2009 9:00 AM", "12/1/2009 1:00 AM", Result = false, TestName = "DateTimePropertyValueIsAfter")]
+        [TestCase("12/1/2009 1:00 AM", "12/1/2009 1:00 AM", Result = true, TestName = "DateTimePropertyValueEquals")]
+        public bool LessThanEqualTo_Expression_IsValid(string propertyValue, string lessThan)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+            DateTime lessThanDateTime = DateTime.Parse(lessThan);
+
+            //Create Validator
+            var validator = new LessThanEqualTo<CalendarEvent>(c => c.EndDate);
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, lessThanDateTime);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("1/1/2009", Result = false, TestName = "PropertyValueIsInPast")]
+        [TestCase("1/1/2100", Result = true, TestName = "PropertyValueIsInFuture")]
+        public bool IsInFuture_IsValid(string propertyValue)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+
+            //Create Validator
+            var validator = new IsInFuture<CalendarEvent>();
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;            
+        }
+
+        [TestCase("1/1/2009", Result = true, TestName = "PropertyValueIsInPast")]
+        [TestCase("1/1/2100", Result = false, TestName = "PropertyValueIsInFuture")]
+        public bool IsInPast_IsValid(string propertyValue)
+        {
+            DateTime propertyValueDateTime = DateTime.Parse(propertyValue);
+
+            //Create Validator
+            var validator = new IsInPast<CalendarEvent>();
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
 

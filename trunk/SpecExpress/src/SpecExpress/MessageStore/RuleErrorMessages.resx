@@ -132,6 +132,12 @@
   <data name="GreaterThanEqualTo" xml:space="preserve">
     <value>'{PropertyName}' must be greater than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
+  <data name="IsInFuture" xml:space="preserve">
+    <value>'{PropertyName} must be in the future. You entered {PropertyValue}.</value>
+  </data>
+  <data name="IsInPast" xml:space="preserve">
+    <value>'{PropertyName} must be in the past.  You entered {PropertyValue}.</value>
+  </data>
   <data name="IsInSet" xml:space="preserve">
     <value>{PropertyName} is not a valid value.</value>
   </data>

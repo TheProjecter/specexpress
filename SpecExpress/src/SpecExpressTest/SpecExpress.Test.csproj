@@ -92,6 +92,7 @@
     <Compile Include="RuleValidatorTests\Numeric\ShortValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\LongValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\IntegerValidatorTests.cs" />
+    <Compile Include="RuleValidatorTests\Object\ObjectTests.cs" />
     <Compile Include="RuleValidatorTests\Strings\StringValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -115,6 +115,15 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} must be false..
+        /// </summary>
+        internal static string IsFalse {
+            get {
+                return ResourceManager.GetString("IsFalse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &apos;{PropertyName} must be in the future. You entered {PropertyValue}..
         /// </summary>
         internal static string IsInFuture {
@@ -138,6 +147,15 @@ namespace SpecExpress.MessageStore {
         internal static string IsInSet {
             get {
                 return ResourceManager.GetString("IsInSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} must be true..
+        /// </summary>
+        internal static string IsTrue {
+            get {
+                return ResourceManager.GetString("IsTrue", resourceCulture);
             }
         }
         

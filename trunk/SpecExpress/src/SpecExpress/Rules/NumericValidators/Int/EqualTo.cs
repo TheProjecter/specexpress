@@ -9,9 +9,9 @@ namespace SpecExpress.Rules.NumericValidators.Int
     {
         private int _equalTo;
 
-        public EqualTo(int greaterThan)
+        public EqualTo(int equalTo)
         {
-            _equalTo = greaterThan;
+            _equalTo = equalTo;
         }
 
         public EqualTo(Expression<Func<T, int>> expression)

@@ -15,5 +15,6 @@ namespace SpecExpressTest.Entities
         public double FavoriteDouble { get; set; }
         public decimal FavoriteDecimal { get; set; }
         public List<Address> Addresses { get; set; }
+        public List<string> Aliases { get; set; }
     }
 }

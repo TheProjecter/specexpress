@@ -123,6 +123,9 @@
   <data name="Between" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1}.  You entered {PropertyValue}.</value>
   </data>
+  <data name="Contains" xml:space="preserve">
+    <value>{PropertyName} does not contain {PropertyValue}.</value>
+  </data>
   <data name="EqualTo" xml:space="preserve">
     <value>'{PropertyName}' must equal {0}.  You entered {PropertyValue}.</value>
   </data>

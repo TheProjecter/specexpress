@@ -82,6 +82,7 @@
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
+    <Compile Include="RuleValidatorTests\Collection\CollectionTests.cs" />
     <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
     <Compile Include="RuleValidatorTests\DateTimeTests\DateTimeValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\Numeric\DecimalValidatorTests.cs" />

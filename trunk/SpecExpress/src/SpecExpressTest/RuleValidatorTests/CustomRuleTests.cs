@@ -24,15 +24,17 @@ namespace SpecExpress.Test.RuleValidatorTests
         public void Rule()
         {
             //ValidationContainer.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required()
-            //                                                          .And.Expects(
-            //                                                          (lastName) => lastName.StartsWith("A"), "You hoser!"));
+            //                                                          .And.Expect(name=>name.StartsWith("A"),"You idiot"));
 
+            ValidationContainer.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required()
+                                                          .And.Expect((c, lastname) => c.FirstName == lastname,"You Idiot"));
 
-            //var contact = new Contact {LastName = "Baker"};
+            var contact = new Contact { LastName = "Amy" };
 
-            //ValidationNotification result = ValidationContainer.Validate(contact);
+            ValidationNotification result = ValidationContainer.Validate(contact);
 
-            //Assert.That(result, Is.Not.Empty);
+            Assert.That(result.Errors, Is.Not.Empty);
         }
+
     }
 }

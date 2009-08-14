@@ -3,22 +3,22 @@ using System.Text.RegularExpressions;
 
 namespace SpecExpress.Rules
 {
-    public class CustomRule<T> : RuleValidator<T, string>
+    public class CustomRule<T,TProperty> : RuleValidator<T, TProperty>
     {
-        private Func<string, bool> _expression;
+        private Func<T,TProperty,bool> _expression;
         public override object[] Parameters
         {
             get { return new object[] {}; }
         }
 
-        public CustomRule(Func<string, bool> rule)
+        public CustomRule(Func<T, TProperty, bool> rule)
         {
             _expression = rule;
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, string> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
-            var result = (bool)(_expression.DynamicInvoke(new object[] { context.PropertyValue }));
+            var result = (bool)(_expression.DynamicInvoke(new object[] {context.Instance, context.PropertyValue }));
 
             return Evaluate(result, context);
         }

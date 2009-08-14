@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using SpecExpress.DSL;
@@ -20,7 +21,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> GreaterThan<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> greaterThan)
+        public static ActionJoinBuilder<T, int> GreaterThan<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> greaterThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
@@ -32,7 +33,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> LessThan<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> lessThan)
+        public static ActionJoinBuilder<T, int> LessThan<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> lessThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.LessThan<T>(lessThan));
             return expression.JoinBuilder;
@@ -44,7 +45,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> GreaterThanEqualTo<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> greaterThanEqualTo)
+        public static ActionJoinBuilder<T, int> GreaterThanEqualTo<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.GreaterThanEqualTo<T>(greaterThanEqualTo));
             return expression.JoinBuilder;
@@ -56,7 +57,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> LessThanEqualTo<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> lessThanEqualTo)
+        public static ActionJoinBuilder<T, int> LessThanEqualTo<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> lessThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.LessThanEqualTo<T>(lessThanEqualTo));
             return expression.JoinBuilder;
@@ -68,19 +69,19 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> floor, int ceiling)
+        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> floor, int ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, int floor, Expression<Func<T,int>> ceiling)
+        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, int floor, Expression<Func<T, int>> ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, Expression<Func<T,int>> floor, Expression<Func<T,int>> ceiling)
+        public static ActionJoinBuilder<T, int> Between<T>(this IRuleBuilder<T, int> expression, Expression<Func<T, int>> floor, Expression<Func<T, int>> ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Int.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
@@ -95,7 +96,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> GreaterThan<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> greaterThan)
+        public static ActionJoinBuilder<T, long> GreaterThan<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> greaterThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
@@ -107,7 +108,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> LessThan<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> lessThan)
+        public static ActionJoinBuilder<T, long> LessThan<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> lessThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.LessThan<T>(lessThan));
             return expression.JoinBuilder;
@@ -119,7 +120,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> GreaterThanEqualTo<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> greaterThanEqualTo)
+        public static ActionJoinBuilder<T, long> GreaterThanEqualTo<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.GreaterThanEqualTo<T>(greaterThanEqualTo));
             return expression.JoinBuilder;
@@ -131,7 +132,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> LessThanEqualTo<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> lessThanEqualTo)
+        public static ActionJoinBuilder<T, long> LessThanEqualTo<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> lessThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.LessThanEqualTo<T>(lessThanEqualTo));
             return expression.JoinBuilder;
@@ -143,19 +144,19 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> floor, long ceiling)
+        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> floor, long ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, long floor, Expression<Func<T,long>> ceiling)
+        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, long floor, Expression<Func<T, long>> ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, Expression<Func<T,long>> floor, Expression<Func<T,long>> ceiling)
+        public static ActionJoinBuilder<T, long> Between<T>(this IRuleBuilder<T, long> expression, Expression<Func<T, long>> floor, Expression<Func<T, long>> ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Long.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
@@ -170,7 +171,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, short> GreaterThan<T>(this IRuleBuilder<T, short> expression, Expression<Func<T,short>> greaterThan)
+        public static ActionJoinBuilder<T, short> GreaterThan<T>(this IRuleBuilder<T, short> expression, Expression<Func<T, short>> greaterThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Short.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
@@ -182,7 +183,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, short> LessThan<T>(this IRuleBuilder<T, short> expression, Expression<Func<T,short>> lessThan)
+        public static ActionJoinBuilder<T, short> LessThan<T>(this IRuleBuilder<T, short> expression, Expression<Func<T, short>> lessThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Short.LessThan<T>(lessThan));
             return expression.JoinBuilder;
@@ -194,7 +195,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, short> GreaterThanEqualTo<T>(this IRuleBuilder<T, short> expression, Expression<Func<T,short>> greaterThanEqualTo)
+        public static ActionJoinBuilder<T, short> GreaterThanEqualTo<T>(this IRuleBuilder<T, short> expression, Expression<Func<T, short>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Short.GreaterThanEqualTo<T>(greaterThanEqualTo));
             return expression.JoinBuilder;
@@ -206,7 +207,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, short> LessThanEqualTo<T>(this IRuleBuilder<T, short> expression, Expression<Func<T,short>> lessThanEqualTo)
+        public static ActionJoinBuilder<T, short> LessThanEqualTo<T>(this IRuleBuilder<T, short> expression, Expression<Func<T, short>> lessThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Short.LessThanEqualTo<T>(lessThanEqualTo));
             return expression.JoinBuilder;
@@ -245,7 +246,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, float> GreaterThan<T>(this IRuleBuilder<T, float> expression, Expression<Func<T,float>> greaterThan)
+        public static ActionJoinBuilder<T, float> GreaterThan<T>(this IRuleBuilder<T, float> expression, Expression<Func<T, float>> greaterThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Float.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
@@ -257,7 +258,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, float> LessThan<T>(this IRuleBuilder<T, float> expression, Expression<Func<T,float>> lessThan)
+        public static ActionJoinBuilder<T, float> LessThan<T>(this IRuleBuilder<T, float> expression, Expression<Func<T, float>> lessThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Float.LessThan<T>(lessThan));
             return expression.JoinBuilder;
@@ -269,7 +270,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, float> GreaterThanEqualTo<T>(this IRuleBuilder<T, float> expression, Expression<Func<T,float>> greaterThanEqualTo)
+        public static ActionJoinBuilder<T, float> GreaterThanEqualTo<T>(this IRuleBuilder<T, float> expression, Expression<Func<T, float>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Float.GreaterThanEqualTo<T>(greaterThanEqualTo));
             return expression.JoinBuilder;
@@ -281,7 +282,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, float> LessThanEqualTo<T>(this IRuleBuilder<T, float> expression, Expression<Func<T,float>> lessThanEqualTo)
+        public static ActionJoinBuilder<T, float> LessThanEqualTo<T>(this IRuleBuilder<T, float> expression, Expression<Func<T, float>> lessThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Float.LessThanEqualTo<T>(lessThanEqualTo));
             return expression.JoinBuilder;
@@ -293,7 +294,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, float> Between<T>(this IRuleBuilder<T, float> expression, Expression<Func<T,float>> floor, float ceiling)
+        public static ActionJoinBuilder<T, float> Between<T>(this IRuleBuilder<T, float> expression, Expression<Func<T, float>> floor, float ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Float.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
@@ -320,7 +321,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, double> GreaterThan<T>(this IRuleBuilder<T, double> expression, Expression<Func<T,double>> greaterThan)
+        public static ActionJoinBuilder<T, double> GreaterThan<T>(this IRuleBuilder<T, double> expression, Expression<Func<T, double>> greaterThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Double.GreaterThan<T>(greaterThan));
             return expression.JoinBuilder;
@@ -332,7 +333,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, double> LessThan<T>(this IRuleBuilder<T, double> expression, Expression<Func<T,double>> lessThan)
+        public static ActionJoinBuilder<T, double> LessThan<T>(this IRuleBuilder<T, double> expression, Expression<Func<T, double>> lessThan)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Double.LessThan<T>(lessThan));
             return expression.JoinBuilder;
@@ -344,7 +345,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, double> GreaterThanEqualTo<T>(this IRuleBuilder<T, double> expression, Expression<Func<T,double>> greaterThanEqualTo)
+        public static ActionJoinBuilder<T, double> GreaterThanEqualTo<T>(this IRuleBuilder<T, double> expression, Expression<Func<T, double>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Double.GreaterThanEqualTo<T>(greaterThanEqualTo));
             return expression.JoinBuilder;
@@ -356,7 +357,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, double> LessThanEqualTo<T>(this IRuleBuilder<T, double> expression, Expression<Func<T,double>> lessThanEqualTo)
+        public static ActionJoinBuilder<T, double> LessThanEqualTo<T>(this IRuleBuilder<T, double> expression, Expression<Func<T, double>> lessThanEqualTo)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Double.LessThanEqualTo<T>(lessThanEqualTo));
             return expression.JoinBuilder;
@@ -368,7 +369,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, double> Between<T>(this IRuleBuilder<T, double> expression, Expression<Func<T,double>> floor, double ceiling)
+        public static ActionJoinBuilder<T, double> Between<T>(this IRuleBuilder<T, double> expression, Expression<Func<T, double>> floor, double ceiling)
         {
             expression.RegisterValidator(new Rules.NumericValidators.Double.Between<T>(floor, ceiling));
             return expression.JoinBuilder;
@@ -600,6 +601,20 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        #endregion
+
+        #region Collection
+        public static ActionJoinBuilder<T, IEnumerable> Contains<T>(this IRuleBuilder<T, IEnumerable> expression, object valueToLookFor)
+        {
+            expression.RegisterValidator(new Rules.Collection.Contains<T>(valueToLookFor));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, IEnumerable> Contains<T>(this IRuleBuilder<T, IEnumerable> expression, Expression<Func<T, IEnumerable>> valueToLookFor)
+        {
+            expression.RegisterValidator(new Rules.Collection.Contains<T>(valueToLookFor));
+            return expression.JoinBuilder;
+        }
         #endregion
 
         public static ActionJoinBuilder<T, string> Expects<T>(this IRuleBuilder<T, string> expression, Func<string, bool> rule, string message)

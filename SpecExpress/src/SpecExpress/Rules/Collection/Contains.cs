@@ -35,7 +35,7 @@ namespace SpecExpress.Rules.Collection
 
             foreach (var value in context.PropertyValue)
             {
-                if (value == _contains)
+                if (value.Equals(_contains))
                 {
                     contains = true;
                     break;

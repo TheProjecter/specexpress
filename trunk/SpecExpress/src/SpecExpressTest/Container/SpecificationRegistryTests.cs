@@ -74,7 +74,7 @@ namespace SpecExpress.Test
 
             //Add some additional rules that will break the test Address object
             ValidationContainer.AddSpecification<Address>(
-                x => x.Check(address => address.Street).Required().And.Between(5, 40));
+                x => x.Check(address => address.Street).Required().And.LengthBetween(5, 40));
 
             Assert.That(ValidationContainer.Validate(testAddress).IsValid, Is.False);
         }

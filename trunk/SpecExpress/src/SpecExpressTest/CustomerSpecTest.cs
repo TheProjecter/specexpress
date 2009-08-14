@@ -16,7 +16,7 @@ namespace SpecExpressTest
             var customer = new Customer();
 
             var spec = new CustomerSpecification();
-            spec.Check(cust => cust.Name).Optional().And.Between(0, 100);
+            spec.Check(cust => cust.Name).Optional().And.LengthBetween(0, 100);
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsEmpty(notification);
@@ -28,7 +28,7 @@ namespace SpecExpressTest
             var customer = new Customer();
 
             var spec = new CustomerSpecification();
-            spec.Check(cust => cust.Name).Optional().And.Between(2, 100);
+            spec.Check(cust => cust.Name).Optional().And.LengthBetween(2, 100);
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);
@@ -53,7 +53,7 @@ namespace SpecExpressTest
             var customer = new Customer();
 
             var spec = new CustomerSpecification();
-            spec.Check(cust => cust.Name).Required().And.Between(2, 100);
+            spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);
@@ -66,7 +66,7 @@ namespace SpecExpressTest
             var customer = new Customer {Name = "X"};
 
             var spec = new CustomerSpecification();
-            spec.Check(cust => cust.Name).Required().And.Between(2, 100);
+            spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);

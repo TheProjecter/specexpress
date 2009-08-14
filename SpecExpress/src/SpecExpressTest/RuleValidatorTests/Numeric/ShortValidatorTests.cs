@@ -136,7 +136,7 @@ namespace SpecExpress.Test.RuleValidatorTests.Numeric.Int
         public bool EqualTo_Expression_IsValid(short propertyValue, short equalTo)
         {
             //Create Validator
-            var validator = new EqualTo<Contact>(equalTo);
+            var validator = new EqualTo<Contact>(c=>c.Weight);
             RuleValidatorContext<Contact, short> context = BuildContextForWeight(propertyValue);
             context.Instance.Weight = equalTo;
 

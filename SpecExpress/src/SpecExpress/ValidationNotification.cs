@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SpecExpress
 {
+    [Serializable]
     public class ValidationNotification
     {
         public ValidationNotification()

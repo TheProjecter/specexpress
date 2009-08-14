@@ -135,6 +135,9 @@
   <data name="GreaterThanEqualTo" xml:space="preserve">
     <value>'{PropertyName}' must be greater than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
+  <data name="IsFalse" xml:space="preserve">
+    <value>{PropertyName} must be false.</value>
+  </data>
   <data name="IsInFuture" xml:space="preserve">
     <value>'{PropertyName} must be in the future. You entered {PropertyValue}.</value>
   </data>
@@ -143,6 +146,9 @@
   </data>
   <data name="IsInSet" xml:space="preserve">
     <value>{PropertyName} is not a valid value.</value>
+  </data>
+  <data name="IsTrue" xml:space="preserve">
+    <value>{PropertyName} must be true.</value>
   </data>
   <data name="LengthBetween" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>

@@ -617,6 +617,20 @@ namespace SpecExpress
         }
         #endregion
 
+        #region Boolean
+        public static ActionJoinBuilder<T, bool> IsTrue<T>(this IRuleBuilder<T, bool> expression)
+        {
+            expression.RegisterValidator(new Rules.Boolean.IsTrue<T>());
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, bool> IsFalse<T>(this IRuleBuilder<T, bool> expression)
+        {
+            expression.RegisterValidator(new Rules.Boolean.IsFalse<T>());
+            return expression.JoinBuilder;
+        }
+        #endregion
+
         public static ActionJoinBuilder<T, string> Expects<T>(this IRuleBuilder<T, string> expression, Func<string, bool> rule, string message)
         {
             expression.RegisterValidator(new CustomRule<T>(rule));

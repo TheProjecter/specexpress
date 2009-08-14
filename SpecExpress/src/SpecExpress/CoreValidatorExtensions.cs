@@ -673,6 +673,12 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, List<string> set)
+        {
+            expression.RegisterValidator(new IsInSet<T>(set));
+            return expression.JoinBuilder;
+        }
+
         #endregion
 
         #region Collection
@@ -689,19 +695,19 @@ namespace SpecExpress
         }
         #endregion
 
-        #region Object
-        public static ActionJoinBuilder<T, object> Equals<T>(this IRuleBuilder<T, object> expression, object equalTo)
-        {
-            expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
-            return expression.JoinBuilder;
-        }
+        //#region Object
+        //public static ActionJoinBuilder<T, object> EqualTo<T>(this IRuleBuilder<T, object> expression, object equalTo)
+        //{
+        //    expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
+        //    return expression.JoinBuilder;
+        //}
 
-        public static ActionJoinBuilder<T, object> Equals<T>(this IRuleBuilder<T, object> expression, Expression<Func<T,object>> equalTo)
-        {
-            expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
-            return expression.JoinBuilder;
-        }
-        #endregion
+        //public static ActionJoinBuilder<T, object> EqualTo<T>(this IRuleBuilder<T, object> expression, Expression<Func<T,object>> equalTo)
+        //{
+        //    expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
+        //    return expression.JoinBuilder;
+        //}
+        //#endregion
 
         #region Boolean
         public static ActionJoinBuilder<T, bool> IsTrue<T>(this IRuleBuilder<T, bool> expression)
@@ -725,17 +731,5 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, List<string> set)
-        {
-            expression.RegisterValidator(new IsInSet<T>(set));
-            return expression.JoinBuilder;
-        }
-
-        public static ActionJoinBuilder<T, string> Between<T>(this IRuleBuilder<T, string> expression, int min,
-                                                              int max)
-        {
-            expression.RegisterValidator(new LengthBetween<T>(min, max));
-            return expression.JoinBuilder;
-        }
     }
 }

@@ -10,51 +10,101 @@ namespace SpecExpress.Test.DSLTests
     /// </summary>
     public class StructureTests : SpecificationBase<Customer>
     {
-        public void CompileCheckDSLStatements()
+        /// <summary>
+        /// Ensures that various Check statements compile:
+        ///     Required and Optional
+        ///     Conditional If
+        ///     ActionJoins
+        ///     With.Message
+        /// </summary>
+        public void EssentialCompileCheckDSLStatements()
         {
-            Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
-            Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Check(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
             Check(c => c.Name).Required().And.LengthBetween(0, 10);
 
-            Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
-            Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Check(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .Or.IsInSet(new List<string>(new[] {"Msg", "Another"})).With.Message("Message");
 
             Check(c => c.Name).Optional().And.LengthBetween(0, 10);
         }
 
 
-        public void CompileWarnDSLStatements()
+        /// <summary>
+        /// Ensures that various Warn statements compile:
+        ///     Required and Optional
+        ///     Conditional If
+        ///     ActionJoins
+        ///     With.Message
+        /// </summary>
+      public void EssentialCompileWarnDSLStatements()
         {
-            Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
-            Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Warn(c => c.Name).Required().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
             Warn(c => c.Name).Required().And.LengthBetween(0, 10);
 
-            Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .And.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
-            Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a stupid rule!")
-                .And.LengthBetween(0, 10).With.Message("Dumb Message")
-                .Or.IsInSet(new List<string>(new[] {"Dumb", "Dumber"})).With.Message("Dumber Message");
+            Warn(c => c.Name).Optional().If(c => c.CustomerDate > DateTime.Now).With.Message("You broke a rule!")
+                .And.LengthBetween(0, 10).With.Message("Message")
+                .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
             Warn(c => c.Name).Optional().And.LengthBetween(0, 10);
+        }
+
+        /// <summary>
+        /// Ensures that various IComparable statements compile:
+        ///     GreaterThan
+        ///     GreaterThanEqualTo
+        ///     LessThan
+        ///     LessThanEqualTo
+        ///     Between
+        /// </summary>
+        public void IComparableRules()
+        {
+            // Greater Than Constant
+            Check(c => c.CustomerDate).Required().And.GreaterThan(DateTime.Now);
+            // Greater Than Expression
+            Check(c => c.CustomerDate).Required().And.GreaterThan(c => c.ActiveDate);
+            // Greater Than Equal To Constant
+            Check(c => c.CustomerDate).Required().And.GreaterThanEqualTo(DateTime.Now);
+            // Greater Than Equal To Expression
+            Check(c => c.CustomerDate).Required().And.GreaterThanEqualTo(c => c.ActiveDate);
+            // Less Than Constant
+            Check(c => c.CustomerDate).Required().And.LessThan(DateTime.Now);
+            // Less Than Expression
+            Check(c => c.CustomerDate).Required().And.LessThan(c => c.ExpireDate);
+            // Less Than Equal To Constant
+            Check(c => c.CustomerDate).Required().And.LessThanEqualTo(DateTime.Now);
+            // Less Than Equal To Expression
+            Check(c => c.CustomerDate).Required().And.LessThanEqualTo(c => c.ExpireDate);
+            // Between constant and constant
+            Check(c => c.CustomerDate).Required().And.Between(new DateTime(200, 1, 1), DateTime.Now);
+            // Between expression and constant
+            Check(c => c.CustomerDate).Required().And.Between(c => c.ActiveDate, DateTime.Now);
+            // Between constant and expression
+            Check(c => c.CustomerDate).Required().And.Between(new DateTime(200, 1, 1), c => c.ExpireDate);
+            // Between expression and expression
+            Check(c => c.CustomerDate).Required().And.Between(c => c.ActiveDate, c => c.ExpireDate);
         }
     }
 }

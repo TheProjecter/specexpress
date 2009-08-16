@@ -86,12 +86,9 @@
     <Compile Include="RuleValidatorTests\Collection\CollectionTests.cs" />
     <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
     <Compile Include="RuleValidatorTests\DateTimeTests\DateTimeValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\DecimalValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\DoubleValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\FloatValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\ShortValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\LongValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\Numeric\IntegerValidatorTests.cs" />
+    <Compile Include="RuleValidatorTests\IComparable\IComparableValidatorTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="RuleValidatorTests\Object\ObjectTests.cs" />
     <Compile Include="RuleValidatorTests\Strings\StringValidatorTests.cs" />
   </ItemGroup>

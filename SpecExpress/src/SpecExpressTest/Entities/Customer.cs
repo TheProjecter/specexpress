@@ -6,5 +6,7 @@ namespace SpecExpress.Test.Entities
     {
         public string Name { get; set; }
         public DateTime CustomerDate { get; set; }
+        public DateTime ActiveDate { get; set; }
+        public DateTime ExpireDate { get; set; }
     }
 }

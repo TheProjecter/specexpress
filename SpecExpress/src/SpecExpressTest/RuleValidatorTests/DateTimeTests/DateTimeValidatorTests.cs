@@ -1,6 +1,7 @@
 using System;
 using NUnit.Framework;
 using SpecExpress.Rules.DateValidators;
+using SpecExpress.Rules.IComparableValidators;
 using SpecExpress.Test.Entities;
 using SpecExpress.Rules;
 
@@ -21,7 +22,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(end);
 
             //Create Validator
-            var validator = new GreaterThan<CalendarEvent>(endDateTime);
+            var validator = new GreaterThan<CalendarEvent,DateTime>(endDateTime);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", DateTime.Now, propertyValueDateTime);
 
@@ -41,7 +42,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime greaterThanDateTime = DateTime.Parse(greaterThan);
 
             //Create Validator
-            var validator = new GreaterThan<CalendarEvent>(c => c.StartDate);
+            var validator = new GreaterThan<CalendarEvent,DateTime>(c => c.StartDate);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", greaterThanDateTime, propertyValueDateTime);
 
@@ -61,7 +62,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(end);
 
             //Create Validator
-            var validator = new GreaterThanEqualTo<CalendarEvent>(endDateTime);
+            var validator = new GreaterThanEqualTo<CalendarEvent,DateTime>(endDateTime);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", DateTime.Now, propertyValueDateTime);
 
@@ -81,7 +82,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime greaterThanDateTime = DateTime.Parse(greaterThan);
 
             //Create Validator
-            var validator = new GreaterThanEqualTo<CalendarEvent>(c => c.StartDate);
+            var validator = new GreaterThanEqualTo<CalendarEvent,DateTime>(c => c.StartDate);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventEndDate("Test Event", greaterThanDateTime, propertyValueDateTime);
 
@@ -101,7 +102,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime beforeDateTime = DateTime.Parse(before);
 
             //Create Validator
-            var validator = new LessThan<CalendarEvent>(beforeDateTime);
+            var validator = new LessThan<CalendarEvent,DateTime>(beforeDateTime);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
 
@@ -121,7 +122,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime lessThanDateTime = DateTime.Parse(lessThan);
 
             //Create Validator
-            var validator = new LessThan<CalendarEvent>(c=>c.EndDate);
+            var validator = new LessThan<CalendarEvent,DateTime>(c=>c.EndDate);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, lessThanDateTime);
 
@@ -141,7 +142,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime beforeDateTime = DateTime.Parse(before);
 
             //Create Validator
-            var validator = new LessThanEqualTo<CalendarEvent>(beforeDateTime);
+            var validator = new LessThanEqualTo<CalendarEvent,DateTime>(beforeDateTime);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
 
@@ -161,7 +162,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime lessThanDateTime = DateTime.Parse(lessThan);
 
             //Create Validator
-            var validator = new LessThanEqualTo<CalendarEvent>(c => c.EndDate);
+            var validator = new LessThanEqualTo<CalendarEvent,DateTime>(c => c.EndDate);
             // Build context for CalendarEvent containing a StartDate of propertyValue.
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, lessThanDateTime);
 
@@ -211,7 +212,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(endDate);
 
             //Create Validator
-            var validator = new Between<CalendarEvent>(createDateTime, endDateTime);
+            var validator = new Between<CalendarEvent,DateTime>(createDateTime, endDateTime);
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
                                                                                                           createDateTime,
                                                                                                           startDateTime,
@@ -233,7 +234,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(endDate);
 
             //Create Validator
-            var validator = new Between<CalendarEvent>(c=>c.CreateDate, endDateTime);
+            var validator = new Between<CalendarEvent,DateTime>(c=>c.CreateDate, endDateTime);
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
                                                                                                           createDateTime,
                                                                                                           startDateTime,
@@ -255,7 +256,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(endDate);
 
             //Create Validator
-            var validator = new Between<CalendarEvent>(createDateTime, c=>c.EndDate);
+            var validator = new Between<CalendarEvent,DateTime>(createDateTime, c=>c.EndDate);
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
                                                                                                           createDateTime,
                                                                                                           startDateTime,
@@ -277,7 +278,7 @@ namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
             DateTime endDateTime = DateTime.Parse(endDate);
 
             //Create Validator
-            var validator = new Between<CalendarEvent>(c=>c.CreateDate, c => c.EndDate);
+            var validator = new Between<CalendarEvent,DateTime>(c=>c.CreateDate, c => c.EndDate);
             RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event",
                                                                                                           createDateTime,
                                                                                                           startDateTime,

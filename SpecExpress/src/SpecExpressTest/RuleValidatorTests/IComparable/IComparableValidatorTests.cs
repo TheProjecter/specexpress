@@ -25,15 +25,15 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, Result = true, TestName = "PropertyEqual")]
-        [TestCase(2, (short)1, Result = true, TestName = "PropertyGreater")]
-        [TestCase(0, (short)1, Result = false, TestName = "PropertyLessThan")]
-        public bool GreaterThanEqualTo_Expression_IsValid(int propertyValue, short greaterThanEqualTo)
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThanEqualTo_Expression_IsValid(int propertyValue, int greaterThanEqualTo)
         {
             //Create Validator
-            var validator = new GreaterThanEqualTo<Contact,int>(c => c.Weight);
+            var validator = new GreaterThanEqualTo<Contact,int>(c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = greaterThanEqualTo;
+            context.Instance.NumberOfDependents = greaterThanEqualTo;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -52,15 +52,15 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, Result = false, TestName = "PropertyEqual")]
-        [TestCase(2, (short)1, Result = true, TestName = "PropertyGreater")]
-        [TestCase(0, (short)1, Result = false, TestName = "PropertyLessThan")]
-        public bool GreaterThan_Expression_IsValid(int numberOfDependents, short weight)
+        [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = true, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool GreaterThan_Expression_IsValid(int propertyValue, int greaterThan)
         {
             //Create Validator
-            var validator = new GreaterThan<Contact,int>(c => c.Weight);
-            RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(numberOfDependents);
-            context.Instance.Weight = weight;
+            var validator = new GreaterThan<Contact,int>(c => c.NumberOfDependents);
+            RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
+            context.Instance.NumberOfDependents = greaterThan;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -79,15 +79,15 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, Result = true, TestName = "PropertyEqual")]
-        [TestCase(2, (short)1, Result = false, TestName = "PropertyGreater")]
-        [TestCase(0, (short)1, Result = true, TestName = "PropertyLessThan")]
-        public bool LessThanEqualTo_Expression_IsValid(int propertyValue, short lessThanEqualTo)
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThanEqualTo_Expression_IsValid(int propertyValue, int lessThanEqualTo)
         {
             //Create Validator
-            var validator = new LessThanEqualTo<Contact,int>(c => c.Weight);
+            var validator = new LessThanEqualTo<Contact,int>(c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = lessThanEqualTo;
+            context.Instance.NumberOfDependents = lessThanEqualTo;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -106,15 +106,15 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, Result = false, TestName = "PropertyEqual")]
-        [TestCase(2, (short)1, Result = false, TestName = "PropertyGreater")]
-        [TestCase(0, (short)1, Result = true, TestName = "PropertyLessThan")]
-        public bool LessThan_Expression_IsValid(int propertyValue, short lessThan)
+        [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = true, TestName = "PropertyLessThan")]
+        public bool LessThan_Expression_IsValid(int propertyValue, int lessThan)
         {
             //Create Validator
-            var validator = new LessThan<Contact,int>(c => c.Weight);
+            var validator = new LessThan<Contact,int>(c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = lessThan;
+            context.Instance.NumberOfDependents = lessThan;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -133,15 +133,15 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, Result = true, TestName = "PropertyEqual")]
-        [TestCase(2, (short)1, Result = false, TestName = "PropertyGreater")]
-        [TestCase(0, (short)1, Result = false, TestName = "PropertyLessThan")]
-        public bool EqualTo_Expression_IsValid(int propertyValue, short equalTo)
+        [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
+        [TestCase(2, 1, Result = false, TestName = "PropertyGreater")]
+        [TestCase(0, 1, Result = false, TestName = "PropertyLessThan")]
+        public bool EqualTo_Expression_IsValid(int propertyValue, int equalTo)
         {
             //Create Validator
-            var validator = new EqualTo<Contact,int>(c => c.Weight);
+            var validator = new EqualTo<Contact,int>(c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = equalTo;
+            context.Instance.NumberOfDependents = equalTo;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
@@ -163,50 +163,50 @@ namespace SpecExpress.Test.RuleValidatorTests.IComparable
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (short)1, 10, Result = true, TestName = "PropertyEqualFloor")]
-        [TestCase(10, (short)1, 10, Result = true, TestName = "PropertyEqualCeiling")]
-        [TestCase(5, (short)1, 10, Result = true, TestName = "PropertyWithinRange")]
-        [TestCase(11, (short)1, 10, Result = false, TestName = "PropertyGreaterThanCeiling")]
-        [TestCase(0, (short)1, 10, Result = false, TestName = "PropertyLessThanFloor")]
-        public bool Between_FloorExpression_IsValid(int propertyValue, short floor, int ceiling)
+        [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10, 1, 10, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5, 1, 10, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11, 1, 10, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0, 1, 10, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_FloorExpression_IsValid(int propertyValue, int floor, int ceiling)
         {
             //Create Validator
-            var validator = new Between<Contact, int>(c => c.Weight, ceiling);
+            var validator = new Between<Contact, int>(c => c.NumberOfDependents, ceiling);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = floor;
+            context.Instance.NumberOfDependents = floor;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, 1, (short)10, Result = true, TestName = "PropertyEqualFloor")]
-        [TestCase(10, 1, (short)10, Result = true, TestName = "PropertyEqualCeiling")]
-        [TestCase(5, 1, (short)10, Result = true, TestName = "PropertyWithinRange")]
-        [TestCase(11, 1, (short)10, Result = false, TestName = "PropertyGreaterThanCeiling")]
-        [TestCase(0, 1, (short)10, Result = false, TestName = "PropertyLessThanFloor")]
-        public bool Between_CielingExpression_IsValid(int propertyValue, int floor, short ceiling)
+        [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10, 1, 10, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5, 1, 10, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11, 1, 10, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0, 1, 10, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_CielingExpression_IsValid(int propertyValue, int floor, int ceiling)
         {
             //Create Validator
-            var validator = new Between<Contact, int>(floor, c => c.Weight);
+            var validator = new Between<Contact, int>(floor, c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = ceiling;
+            context.Instance.NumberOfDependents = ceiling;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
 
-        [TestCase(1, (long)1, (short)10, Result = true, TestName = "PropertyEqualFloor")]
-        [TestCase(10, (long)1, (short)10, Result = true, TestName = "PropertyEqualCeiling")]
-        [TestCase(5, (long)1, (short)10, Result = true, TestName = "PropertyWithinRange")]
-        [TestCase(11, (long)1, (short)10, Result = false, TestName = "PropertyGreaterThanCeiling")]
-        [TestCase(0, (long)1, (short)10, Result = false, TestName = "PropertyLessThanFloor")]
-        public bool Between_Expressions_IsValid(int propertyValue, long floor, short ceiling)
+        [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
+        [TestCase(10, 1, 10, Result = true, TestName = "PropertyEqualCeiling")]
+        [TestCase(5, 1, 10, Result = true, TestName = "PropertyWithinRange")]
+        [TestCase(11, 1, 10, Result = false, TestName = "PropertyGreaterThanCeiling")]
+        [TestCase(0, 1, 10, Result = false, TestName = "PropertyLessThanFloor")]
+        public bool Between_Expressions_IsValid(int propertyValue, int floor, int ceiling)
         {
             //Create Validator
-            var validator = new Between<Contact, int>(c => (int)c.FavoriteNumber, c => c.Weight);
+            var validator = new Between<Contact, int>(c => c.NumberOfChildren, c => c.NumberOfDependents);
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
-            context.Instance.Weight = ceiling;
-            context.Instance.FavoriteNumber = floor;
+            context.Instance.NumberOfDependents = ceiling;
+            context.Instance.NumberOfChildren = floor;
 
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;

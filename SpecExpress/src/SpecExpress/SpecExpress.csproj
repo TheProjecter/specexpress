@@ -69,7 +69,6 @@
     <Compile Include="Rules\IComparableValidators\GreaterThanEqualTo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Rules\ObjectValidators\EqualTo.cs" />
     <Compile Include="Rules\StringValidators\Alpha.cs" />
     <Compile Include="Rules\StringValidators\Numeric.cs" />
     <Compile Include="Rules\StringValidators\MaxLength.cs" />

@@ -89,7 +89,6 @@
     <Compile Include="RuleValidatorTests\IComparable\IComparableValidatorTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RuleValidatorTests\Object\ObjectTests.cs" />
     <Compile Include="RuleValidatorTests\Strings\StringValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>

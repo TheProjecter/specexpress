@@ -177,20 +177,6 @@ namespace SpecExpress
         }
         #endregion
 
-        //#region Object
-        //public static ActionJoinBuilder<T, object> EqualTo<T>(this IRuleBuilder<T, object> expression, object equalTo)
-        //{
-        //    expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
-        //    return expression.JoinBuilder;
-        //}
-
-        //public static ActionJoinBuilder<T, object> EqualTo<T>(this IRuleBuilder<T, object> expression, Expression<Func<T,object>> equalTo)
-        //{
-        //    expression.RegisterValidator(new Rules.ObjectValidators.EqualTo<T>(equalTo));
-        //    return expression.JoinBuilder;
-        //}
-        //#endregion
-
         #region Boolean
         public static ActionJoinBuilder<T, bool> IsTrue<T>(this IRuleBuilder<T, bool> expression)
         {

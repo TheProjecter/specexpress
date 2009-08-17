@@ -13,5 +13,6 @@ namespace SpecExpressTest.Entities
         public List<Address> Addresses { get; set; }
         public List<string> Aliases { get; set; }
         public bool Active { get; set; }
+        public string NamePattern { get; set; }
     }
 }

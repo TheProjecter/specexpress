@@ -13,5 +13,6 @@ namespace SpecExpress.Test.Entities
         public Address Address { get; set; }
         public int Max { get; set;}
         public int Min { get; set; }
+        public string NamePattern { get; set; }
     }
 }

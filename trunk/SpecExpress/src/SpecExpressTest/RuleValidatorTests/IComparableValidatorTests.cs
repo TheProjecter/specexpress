@@ -6,7 +6,7 @@ using SpecUnit;
 using SpecExpress.Rules;
 using SpecExpress.Rules.IComparableValidators;
 
-namespace SpecExpress.Test.RuleValidatorTests.IComparable
+namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
     public class IComparableValidatorTests : SpecificationBase<Contact>

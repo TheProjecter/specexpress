@@ -85,6 +85,24 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, string> Matches<T>(this IRuleBuilder<T, string> expression, string regexPattern)
+        {
+            expression.RegisterValidator(new Matches<T>(regexPattern));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> Matches<T>(this IRuleBuilder<T, string> expression, Expression<Func<T,string>> regexPattern)
+        {
+            expression.RegisterValidator(new Matches<T>(regexPattern));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> MaxLength<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, string>> regexPattern)
+        {
+            expression.RegisterValidator(new Matches<T>(regexPattern));
+            return expression.JoinBuilder;
+        }
+
         public static ActionJoinBuilder<T, string> IsNumeric<T>(this IRuleBuilder<T, string> expression)
         {
             expression.RegisterValidator(new Numeric<T>());

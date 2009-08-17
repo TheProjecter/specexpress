@@ -121,12 +121,6 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, List<string> set)
-        {
-            expression.RegisterValidator(new IsInSet<T>(set));
-            return expression.JoinBuilder;
-        }
-
         public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, IEnumerable<string>>> set)
         {
             expression.RegisterValidator(new IsInSet<T>(set));

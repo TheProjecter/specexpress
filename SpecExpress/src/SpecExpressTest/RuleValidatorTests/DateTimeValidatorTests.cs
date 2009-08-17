@@ -5,7 +5,7 @@ using SpecExpress.Rules.IComparableValidators;
 using SpecExpress.Test.Entities;
 using SpecExpress.Rules;
 
-namespace SpecExpress.Test.RuleValidatorTests.DateTimeTests
+namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
     public class DateTimeValidatorTests : SpecificationBase<CalendarEvent>

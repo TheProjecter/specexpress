@@ -3,7 +3,7 @@ using SpecExpress.Rules;
 using SpecExpress.Rules.Boolean;
 using SpecExpressTest.Entities;
 
-namespace SpecExpress.Test.RuleValidatorTests.Boolean
+namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
     public class BooleanTests

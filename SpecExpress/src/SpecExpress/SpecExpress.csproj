@@ -70,6 +70,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Rules\StringValidators\Alpha.cs" />
+    <Compile Include="Rules\StringValidators\Matches.cs" />
     <Compile Include="Rules\StringValidators\Numeric.cs" />
     <Compile Include="Rules\StringValidators\MaxLength.cs" />
     <Compile Include="Rules\StringValidators\IsInSet.cs" />

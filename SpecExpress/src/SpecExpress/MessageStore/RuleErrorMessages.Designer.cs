@@ -187,6 +187,15 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The value in {PropertyName} does not meet the pattern of &apos;{0}&apos;.  You entered {PropertyValue}..
+        /// </summary>
+        internal static string Matches {
+            get {
+                return ResourceManager.GetString("Matches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} must be less than {0} characters. You entered {PropertyValue}..
         /// </summary>
         internal static string MaxLength {

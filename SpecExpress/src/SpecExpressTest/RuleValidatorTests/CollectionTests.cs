@@ -5,7 +5,7 @@ using SpecExpress.Rules;
 using SpecExpress.Rules.Collection;
 using SpecExpressTest.Entities;
 
-namespace SpecExpress.Test.RuleValidatorTests.Collection
+namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
     public class CollectionTests : SpecificationBase<Contact>

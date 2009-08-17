@@ -140,6 +140,10 @@ namespace SpecExpress.Test.DSLTests
             Check(c => c.Name).Required().And.MaxLength(100);
             Check(c => c.Name).Required().And.MaxLength(c => c.Max);
 
+            // Matches
+            Check(c => c.Name).Required().And.Matches(".*");
+            Check(c => c.Name).Required().And.Matches(c => c.NamePattern);
+
             // Numeric
             Check(c => c.Id).Required().And.IsNumeric();
         }

@@ -4,7 +4,7 @@ using SpecExpress.Rules;
 using SpecExpress.Rules.StringValidators;
 using SpecExpressTest.Entities;
 
-namespace SpecExpress.Test.RuleValidatorTests.Strings
+namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
     public class StringValidatorTests
@@ -68,6 +68,32 @@ namespace SpecExpress.Test.RuleValidatorTests.Strings
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
         }
+
+        [TestCase("King Kong",".*",Result = true,TestName = "MatchAnyNumberOfCharacters")]
+        [TestCase("King Kong", @"\d", Result = false, TestName = "MatchAnyNumberOfDigits")]
+        public bool Matches_IsValid(string firstName, string regexPattern)
+        {
+            //Create Validator
+            var validator = new Matches<Contact>(regexPattern);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
+        [TestCase("King Kong", ".*", Result = true, TestName = "MatchAnyNumberOfCharacters")]
+        [TestCase("King Kong", @"\d", Result = false, TestName = "MatchAnyNumberOfDigits")]
+        public bool Matches_Expression_IsValid(string firstName, string regexPattern)
+        {
+            //Create Validator
+            var validator = new Matches<Contact>(c=>c.NamePattern);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName);
+            context.Instance.NamePattern = regexPattern;
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
 
         [TestCase("", Result = false, TestName = "Empty")]
         [TestCase("      ", Result = false, TestName = "Whitespace")]

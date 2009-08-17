@@ -82,14 +82,14 @@
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
     <Compile Include="Container\SpecificationRegistryTests.cs" />
     <Compile Include="Container\ValidationContainerTests.cs" />
-    <Compile Include="RuleValidatorTests\Boolean\BooleanTests.cs" />
-    <Compile Include="RuleValidatorTests\Collection\CollectionTests.cs" />
+    <Compile Include="RuleValidatorTests\BooleanTests.cs" />
+    <Compile Include="RuleValidatorTests\CollectionTests.cs" />
     <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
-    <Compile Include="RuleValidatorTests\DateTimeTests\DateTimeValidatorTests.cs" />
-    <Compile Include="RuleValidatorTests\IComparable\IComparableValidatorTests.cs">
+    <Compile Include="RuleValidatorTests\DateTimeValidatorTests.cs" />
+    <Compile Include="RuleValidatorTests\IComparableValidatorTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RuleValidatorTests\Strings\StringValidatorTests.cs" />
+    <Compile Include="RuleValidatorTests\StringValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecExpress.Test.Domain\SpecExpress.Test.Domain.csproj">

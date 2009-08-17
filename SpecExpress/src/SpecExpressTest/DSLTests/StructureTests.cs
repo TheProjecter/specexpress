@@ -106,5 +106,19 @@ namespace SpecExpress.Test.DSLTests
             // Between expression and expression
             Check(c => c.CustomerDate).Required().And.Between(c => c.ActiveDate, c => c.ExpireDate);
         }
+
+        /// <summary>
+        /// Ensures that a custom rule compiles
+        /// </summary>
+        public void CustomRules()
+        {
+            Check(c => c.Name).Required().And.Expect((c, name) => name == "A valid name.","You entered an invalid name.");
+            Check(c => c.Name).Required().And.Expect(ValidName, "You entered an invalid name.");
+        }
+
+        private bool ValidName(Customer customer, string name)
+        {
+            return name == "A valid name.";
+        }
     }
 }

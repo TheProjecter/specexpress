@@ -191,13 +191,15 @@ namespace SpecExpress
         }
         #endregion
 
+        #region Custom
         public static ActionJoinBuilder<T, TProperty> Expect<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Func<T, TProperty, bool> rule, string message)
         {
-            expression.RegisterValidator(new CustomRule<T,TProperty>(rule));
+            expression.RegisterValidator(new CustomRule<T, TProperty>(rule));
             //Custom messages can't derive what the Error Message is because each case is so generic
             expression.JoinBuilder.With.Message(message);
             return expression.JoinBuilder;
-        }
+        } 
+        #endregion
 
     }
 }

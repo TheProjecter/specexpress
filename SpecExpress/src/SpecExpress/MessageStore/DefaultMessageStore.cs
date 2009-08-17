@@ -6,15 +6,15 @@ using SpecExpress.Rules;
 
 namespace SpecExpress.MessageStore
 {
-    public class ResourceMessageStore : IMessageStore
+    public class DefaultMessageStore : IMessageStore
     {
         #region IMessageStore Members
 
-        public string GetMessageTemplate(string key)
+        public string GetMessageTemplate(MessageContext context)
         {
             //Use Name of the Rule Validator as the Key to get the error message format string
             //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
-            key = key.Split('`').FirstOrDefault();
+            string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
             string errorString = RuleErrorMessages.ResourceManager.GetString(key);
 
             if (System.String.IsNullOrEmpty(errorString))

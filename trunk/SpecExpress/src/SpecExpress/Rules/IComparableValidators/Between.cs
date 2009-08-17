@@ -36,12 +36,12 @@ namespace SpecExpress.Rules.IComparableValidators
         {
             if (PropertyExpressions.ContainsKey("floor"))
             {
-                _floor = GetExpressionValue("floor", context);
+                _floor = (TProperty)GetExpressionValue("floor", context);
             }
 
             if (PropertyExpressions.ContainsKey("ceiling"))
             {
-                _ceiling = GetExpressionValue("ceiling", context);
+                _ceiling = (TProperty)GetExpressionValue("ceiling", context);
             }
 
             return Evaluate(context.PropertyValue.CompareTo(_ceiling) <= 0 && context.PropertyValue.CompareTo(_floor) >= 0 , context);

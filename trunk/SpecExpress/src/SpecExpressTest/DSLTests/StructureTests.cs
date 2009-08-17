@@ -108,6 +108,43 @@ namespace SpecExpress.Test.DSLTests
         }
 
         /// <summary>
+        /// Ensures that String statements compile:
+        ///     IsAlpha
+        ///     IsInSet
+        ///     LengthBetween
+        ///     MinLength
+        ///     MaxLength
+        ///     Numeric
+        /// </summary>
+        public void StringRules()
+        {
+            // IsAlpha
+            Check(c => c.Name).Required().And.IsAlpha();
+
+            // IsInSet
+            Check(c => c.Name).Required().And.IsInSet(new string[] { "Option1", "Option2" });
+            Check(c => c.Name).Required().And.IsInSet(new List<string>(new string[]{ "Option1", "Option2" }));
+            Check(c => c.Address.Country).Required().And.IsInSet(c => c.Address.CountryList);
+
+            // LengthBetween
+            Check(c => c.Name).Required().And.LengthBetween(0, 100);
+            Check(c => c.Name).Required().And.LengthBetween(0, c => c.Max);
+            Check(c => c.Name).Required().And.LengthBetween(c => c.Min, 100);
+            Check(c => c.Name).Required().And.LengthBetween(c => c.Min, c => c.Max);
+
+            // MinLength
+            Check(c => c.Name).Required().And.MinLength(100);
+            Check(c => c.Name).Required().And.MinLength(c => c.Min);
+
+            // MaxLength
+            Check(c => c.Name).Required().And.MaxLength(100);
+            Check(c => c.Name).Required().And.MaxLength(c => c.Max);
+
+            // Numeric
+            Check(c => c.Id).Required().And.IsNumeric();
+        }
+
+        /// <summary>
         /// Ensures that a custom rule compiles
         /// </summary>
         public void CustomRules()
@@ -115,6 +152,7 @@ namespace SpecExpress.Test.DSLTests
             Check(c => c.Name).Required().And.Expect((c, name) => name == "A valid name.","You entered an invalid name.");
             Check(c => c.Name).Required().And.Expect(ValidName, "You entered an invalid name.");
         }
+
 
         private bool ValidName(Customer customer, string name)
         {

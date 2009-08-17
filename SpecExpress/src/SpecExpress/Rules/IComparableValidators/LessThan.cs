@@ -22,7 +22,7 @@ namespace SpecExpress.Rules.IComparableValidators
         {
             if (PropertyExpressions.Any())
             {
-                _lessThan = GetExpressionValue(context);
+                _lessThan = (TProperty)GetExpressionValue(context);
             }
 
             return Evaluate(context.PropertyValue.CompareTo(_lessThan) < 0, context);

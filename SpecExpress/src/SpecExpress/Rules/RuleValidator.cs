@@ -50,7 +50,7 @@ namespace SpecExpress.Rules
         /// <param name="expression"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected TProperty GetExpressionValue(CompiledExpression expression, RuleValidatorContext<T, TProperty> context)
+        protected object GetExpressionValue(CompiledExpression expression, RuleValidatorContext<T, TProperty> context)
         {
             return (TProperty)expression.Invoke(context.Instance);
         }
@@ -61,12 +61,12 @@ namespace SpecExpress.Rules
         /// <param name="key"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        protected TProperty GetExpressionValue(string key, RuleValidatorContext<T, TProperty> context)
+        protected object GetExpressionValue(string key, RuleValidatorContext<T, TProperty> context)
         {
             return GetExpressionValue(PropertyExpressions[key], context);
         }
 
-        protected TProperty GetExpressionValue(RuleValidatorContext<T, TProperty> context)
+        protected object GetExpressionValue(RuleValidatorContext<T, TProperty> context)
         {
             return GetExpressionValue(PropertyExpressions.First().Value, context);
         }

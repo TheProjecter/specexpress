@@ -39,13 +39,47 @@ namespace SpecExpress
             expression.RegisterValidator(new LengthBetween<T>(min, max));
             return expression.JoinBuilder;
         }
+
+        public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, int>> min,
+                                                            int max)
+        {
+            expression.RegisterValidator(new LengthBetween<T>(min, max));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, int min,
+                                                            Expression<Func<T, int>> max)
+        {
+            expression.RegisterValidator(new LengthBetween<T>(min, max));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> LengthBetween<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, int>> min,
+                                                            Expression<Func<T, int>> max)
+        {
+            expression.RegisterValidator(new LengthBetween<T>(min, max));
+            return expression.JoinBuilder;
+        }
+
         public static ActionJoinBuilder<T, string> MinLength<T>(this IRuleBuilder<T, string> expression, int min)
         {
             expression.RegisterValidator(new MinLength<T>(min));
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, string> MinLength<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, int>> min)
+        {
+            expression.RegisterValidator(new MinLength<T>(min));
+            return expression.JoinBuilder;
+        }
+
         public static ActionJoinBuilder<T, string> MaxLength<T>(this IRuleBuilder<T, string> expression, int max)
+        {
+            expression.RegisterValidator(new MaxLength<T>(max));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> MaxLength<T>(this IRuleBuilder<T, string> expression, Expression<Func<T,int>> max)
         {
             expression.RegisterValidator(new MaxLength<T>(max));
             return expression.JoinBuilder;
@@ -75,6 +109,12 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, IEnumerable<string>>> set)
+        {
+            expression.RegisterValidator(new IsInSet<T>(set));
+            return expression.JoinBuilder;
+        }
+
         #endregion
 
         #region Collection
@@ -98,7 +138,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T,TProperty>> greaterThan) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> greaterThan) where TProperty : IComparable
         {
             expression.RegisterValidator(new Rules.IComparableValidators.GreaterThan<T, TProperty>(greaterThan));
             return expression.JoinBuilder;
@@ -198,7 +238,7 @@ namespace SpecExpress
             //Custom messages can't derive what the Error Message is because each case is so generic
             expression.JoinBuilder.With.Message(message);
             return expression.JoinBuilder;
-        } 
+        }
         #endregion
 
     }

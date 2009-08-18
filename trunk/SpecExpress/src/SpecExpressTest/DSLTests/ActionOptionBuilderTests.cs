@@ -3,7 +3,6 @@ using Rhino.Mocks;
 using SpecExpress.DSL;
 using SpecExpress.Test.Entities;
 using SpecExpress.Test.Factories;
-using SpecUnit;
 
 namespace SpecExpress.Test.DSLTests
 {
@@ -33,8 +32,8 @@ namespace SpecExpress.Test.DSLTests
             ActionOptionConditionBuilder<Customer, string> optionalResult = actionOptionBuilder.Optional();
 
             // Assert
-            validator.PropertyValueRequired.ShouldBeFalse();
-            optionalResult.ShouldBeOfType(typeof (ActionOptionConditionBuilder<Customer, string>));
+            Assert.That(validator.PropertyValueRequired, Is.False);
+            Assert.That(optionalResult, Is.InstanceOf<ActionOptionConditionBuilder<Customer, string>>());
         }
 
         [Test]
@@ -48,8 +47,8 @@ namespace SpecExpress.Test.DSLTests
             ActionOptionConditionBuilder<Customer, string> requiredResult = actionOptionBuilder.Required();
 
             // Assert
-            validator.PropertyValueRequired.ShouldBeTrue();
-            requiredResult.ShouldBeOfType(typeof (ActionOptionConditionBuilder<Customer, string>));
+            Assert.That(validator.PropertyValueRequired, Is.True);
+            Assert.That(requiredResult, Is.InstanceOf<ActionOptionConditionBuilder<Customer, string>>());
         }
     }
 }

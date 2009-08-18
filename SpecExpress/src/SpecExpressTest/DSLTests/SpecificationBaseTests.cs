@@ -2,7 +2,6 @@ using NUnit.Framework;
 using SpecExpress.DSL;
 using SpecExpress.Enums;
 using SpecExpress.Test.Entities;
-using SpecUnit;
 
 namespace SpecExpress.Test.DSLTests
 {
@@ -28,10 +27,10 @@ namespace SpecExpress.Test.DSLTests
         {
             ActionOptionBuilder<Customer, string> checkReturnObj = Check(C => C.Name);
 
-            PropertyValidators.ShouldNotBeEmpty();
-            PropertyValidators[0].ShouldBeOfType(typeof (PropertyValidator<Customer, string>));
-            (PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
-            checkReturnObj.ShouldBe(typeof (ActionOptionBuilder<Customer, string>));
+            Assert.That(PropertyValidators, Is.Not.Empty);
+            Assert.That(PropertyValidators[0],Is.InstanceOf<PropertyValidator<Customer, string>>());
+            Assert.That(PropertyValidators[0].Level, Is.EqualTo(ValidationLevelType.Error));
+            Assert.That(checkReturnObj,Is.InstanceOf<ActionOptionBuilder<Customer, string>>());
         }
 
         [Test]
@@ -39,11 +38,11 @@ namespace SpecExpress.Test.DSLTests
         {
             ActionOptionBuilder<Customer, string> checkReturnObj = Check(C => C.Name, "Formal Name");
 
-            PropertyValidators.ShouldNotBeEmpty();
-            PropertyValidators[0].ShouldBeOfType(typeof (PropertyValidator<Customer, string>));
-            (PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Error);
-            (PropertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
-            checkReturnObj.ShouldBe(typeof (ActionOptionBuilder<Customer, string>));
+            Assert.That(PropertyValidators, Is.Not.Empty);
+            Assert.That(PropertyValidators[0], Is.InstanceOf<PropertyValidator<Customer, string>>());
+            Assert.That(PropertyValidators[0].Level, Is.EqualTo(ValidationLevelType.Error));
+            Assert.That(PropertyValidators[0].PropertyNameOverride, Is.EqualTo("Formal Name"));
+            Assert.That(checkReturnObj, Is.InstanceOf<ActionOptionBuilder<Customer, string>>());
         }
 
 
@@ -52,10 +51,10 @@ namespace SpecExpress.Test.DSLTests
         {
             ActionOptionBuilder<Customer, string> checkReturnObj = Warn(C => C.Name);
 
-            PropertyValidators.ShouldNotBeEmpty();
-            PropertyValidators[0].ShouldBeOfType(typeof (PropertyValidator<Customer, string>));
-            (PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
-            checkReturnObj.ShouldBe(typeof (ActionOptionBuilder<Customer, string>));
+            Assert.That(PropertyValidators, Is.Not.Empty);
+            Assert.That(PropertyValidators[0], Is.InstanceOf<PropertyValidator<Customer, string>>());
+            Assert.That(PropertyValidators[0].Level, Is.EqualTo(ValidationLevelType.Warn));
+            Assert.That(checkReturnObj, Is.InstanceOf<ActionOptionBuilder<Customer, string>>());
         }
 
         [Test]
@@ -63,11 +62,11 @@ namespace SpecExpress.Test.DSLTests
         {
             ActionOptionBuilder<Customer, string> checkReturnObj = Warn(C => C.Name, "Formal Name");
 
-            PropertyValidators.ShouldNotBeEmpty();
-            PropertyValidators[0].ShouldBeOfType(typeof (PropertyValidator<Customer, string>));
-            (PropertyValidators[0]).Level.ShouldEqual(ValidationLevelType.Warn);
-            (PropertyValidators[0]).PropertyNameOverride.ShouldEqual("Formal Name");
-            checkReturnObj.ShouldBe(typeof (ActionOptionBuilder<Customer, string>));
+            Assert.That(PropertyValidators, Is.Not.Empty);
+            Assert.That(PropertyValidators[0], Is.InstanceOf<PropertyValidator<Customer, string>>());
+            Assert.That(PropertyValidators[0].Level, Is.EqualTo(ValidationLevelType.Warn));
+            Assert.That(PropertyValidators[0].PropertyNameOverride, Is.EqualTo("Formal Name"));
+            Assert.That(checkReturnObj, Is.InstanceOf<ActionOptionBuilder<Customer, string>>());            
         }
     }
 }

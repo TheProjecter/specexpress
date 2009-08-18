@@ -2,7 +2,6 @@ using NUnit.Framework;
 using SpecExpress.DSL;
 using SpecExpress.Test.Entities;
 using SpecExpress.Test.Factories;
-using SpecUnit;
 
 namespace SpecExpress.Test.DSLTests.Functional
 {
@@ -27,7 +26,7 @@ namespace SpecExpress.Test.DSLTests.Functional
 
 
             // Assert
-            validator.Condition.ShouldNotBeNull();
+            Assert.That(validator.Condition, Is.Not.Null);
         }
     }
 }

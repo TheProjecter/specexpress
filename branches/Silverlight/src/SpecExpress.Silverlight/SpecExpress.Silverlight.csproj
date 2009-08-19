@@ -8,8 +8,8 @@
     <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SpecExpress.Silverlight</RootNamespace>
-    <AssemblyName>SpecExpress.Silverlight</AssemblyName>
+    <RootNamespace>SpecExpress</RootNamespace>
+    <AssemblyName>SpecExpress</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SilverlightApplication>false</SilverlightApplication>
     <ValidateXaml>true</ValidateXaml>
@@ -37,6 +37,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation.Silverlight, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\IoC\Microsoft.Practices.ServiceLocation.Silverlight.dll</HintPath>
+    </Reference>
     <Reference Include="system" />
     <Reference Include="System.Windows" />
     <Reference Include="mscorlib" />

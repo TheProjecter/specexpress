@@ -31,7 +31,7 @@ namespace SpecExpress.MessageStore
             }
 
             //create param list for String.Format
-            var errorMessageParams = new ArrayList();
+            var errorMessageParams = new List<object>();
             if (parameters != null && parameters.Any())
             {
                 errorMessageParams.AddRange(parameters);

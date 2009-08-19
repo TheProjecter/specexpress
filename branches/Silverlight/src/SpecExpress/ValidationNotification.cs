@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace SpecExpress
 {
-    [Serializable]
     public class ValidationNotification
     {
         public ValidationNotification()

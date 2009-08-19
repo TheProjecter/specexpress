@@ -19,8 +19,8 @@
 
         <StackPanel Margin="2">
             <TextBlock Text="Project Name" Margin="2,3,2,1" />
-            <TextBox 
-			    Text="{Binding Project1.Name, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True}"
+            <TextBox x:Name="txtProjectName"
+			    Text="{Binding ProjectName, Mode=TwoWay, ValidatesOnExceptions=True, NotifyOnValidationError=True}"
                 Margin="2"/>
             <Button x:Name="Save1Button" Content="Save" HorizontalAlignment="Right" Margin="2" Click="Save1Button_Click" />
             <!--<ItemsControl ItemsSource="{Binding ValidationScope1.Errors}" DisplayMemberPath="ErrorContent" Foreground="Red" Margin="5"/>-->

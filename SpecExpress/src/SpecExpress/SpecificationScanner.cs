@@ -53,7 +53,7 @@ namespace SpecExpress
                 catch
                 {
                 }
-                if (assembly != null && assembly != Assembly.GetAssembly(typeof (ValidationContainer)))
+                if (assembly != null && assembly != typeof(ValidationContainer).Assembly)
                 {
                     AddAssembly(assembly);
                 }

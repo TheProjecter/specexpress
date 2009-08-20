@@ -4,7 +4,6 @@ using System.Reflection;
 
 namespace SpecExpress
 {
-    [Serializable]
     public class ValidationResult
     {
         private readonly String _message;

@@ -1,20 +1,22 @@
 using System;
 using System.ComponentModel;
 using System.Text;
+using System.Windows;
 using SpecExpress;
 using SpecExpress.Test.Domain.Entities;
 
 namespace SampleSilverlightApp
 {
-    public class MainPageModel : INotifyPropertyChanged
+    public class MainPageModel : ViewModelBase
     {
         private Project _currentProject;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ValidationScope ValidationScope1 { get; private set; }
 
         public MainPageModel(Project currentProject)
         {
             _currentProject = currentProject;
+            ValidationScope1 = new ValidationScope();
         }
 
         /// <summary>
@@ -23,22 +25,6 @@ namespace SampleSilverlightApp
         /// invalid then an exception is thrown containing a message to disply to the user.
         /// 
         /// Sucky restrictions needed to overcome:
-        /// - Silverlight assumes that the property's value did not change if invalid.
-        /// 
-        ///     Impact: SpecExpress validates the entity as a whole.  Since rules associated with other
-        ///     properties may reference this property (i.e. Custom Rule), we must set the property 
-        ///     on the instance.  
-        /// 
-        ///     Example: Consider an entity having a StartDate and EndDate property with rule for StartDate
-        ///     dictating that StartDate must be before EndDate, and a rule for EndDate dictating that 
-        ///     EndDate must be after StartDate.  If I change the EndDate to a value that is before StartDate,
-        ///     both rules are broken.  In order to know that both rules are broken, we can't just evaluate the 
-        ///     rules for EndDate when it changes - we must evaluate all rules for all properties on the entity.
-        ///     
-        ///     Furthermore, since the rule for StartDate compairs itself to the value in the EndDate property,
-        ///     the EndDate property must be set to the proposed value - we can't just fool the system into looking
-        ///     at some "proposed" value for EndDate since the rule for StartDate relies on that same "proposed"
-        ///     value for validation.
         /// 
         /// - The message thrown in the exception is tied to the control bound to the property.
         ///     Impact: Since a given property value may trigger other properties to be invalid, we need to somehow
@@ -46,57 +32,46 @@ namespace SampleSilverlightApp
         ///     rule is updated.  The below solution really is not suitable since it consolodates all the messages
         ///     into the single bound control.
         /// 
-        ///     Example: Consider the same entity having StartDate and EndDate as described above.  When either
-        ///     StartDate or EndDate are invalid, both are invalid, causing two rules to break and two 
-        ///     ValidationResults - one tied to StartDate and one tied to EndDate.  The user interface needs
-        ///     to reflect that both dates are invalid.  
+        ///     Example: Consider an entity having a StartDate and EndDate property with rule for StartDate
+        ///     dictating that StartDate must be before EndDate, and a rule for EndDate dictating that 
+        ///     EndDate must be after StartDate.  If I change the EndDate to a value that is before StartDate,
+        ///     both rules are broken resulting in two ValidationResults - one tied to StartDate and one tied to 
+        ///     EndDate.  The user interface needs to reflect that both dates are invalid.  
         /// </summary>
         public string ProjectName
         {
             get { return _currentProject.ProjectName; }
             set
             {
-                // Store off old propertyValue
-                //   (hack - storing the original value and calling the entity's setter with the original
-                //    value is not a best practice since it does not ensure original state of the entity and
-                //    may trigger invalid events that are raised by the property setter (if entity's property
-                //    raises events))
-                string oldValue = _currentProject.ProjectName;
-
-                // Set the new property on the domain entity so it can be validated.
-                _currentProject.ProjectName = value;
-
-                // Validate entity
-                var validationResults = ValidationContainer.Validate(_currentProject);
-
-                if (!validationResults.IsValid)
-                {
-                    // Houston we have a problem - build a message to be displayed
-                    //  (hack - not feasable to put all messages together since some messages may not be associated
-                    //   with the calling control)
-                    StringBuilder sb = new StringBuilder();
-                    foreach (var er in validationResults.Errors)
-                    {
-                        sb.AppendLine(er.Message);
-                    }
-                    // Set Entity back to initial state
-                    _currentProject.ProjectName = oldValue;
-                    // Throw exception with message to be displayed so binding can handle it.
-                    throw new ArgumentException(sb.ToString());
-                }
-                else
-                {
-                    // Everything looks great - Notify view that property changed
-                    OnPropertyChanged("ProjectName");
-                }
+                SetEntityPropertyValue(_currentProject, "ProjectName", value);
             }
         }
 
-        private void OnPropertyChanged(string propertyName)
+        public DateTime StartDate
         {
-            if (PropertyChanged != null)
+            get { return _currentProject.StartDate; }
+            set
             {
-                PropertyChanged(this,new PropertyChangedEventArgs(propertyName));
+                SetEntityPropertyValue(_currentProject, "StartDate", value);
+            }
+        }
+
+        public DateTime EndDate
+        {
+            get { return _currentProject.EndDate; }
+            set
+            {
+                SetEntityPropertyValue(_currentProject, "EndDate", value);
+            }
+        }
+
+        public void Save()
+        {
+            ValidationScope1.ValidateScope();
+            if (ValidationScope1.IsValid())
+            {
+                //ToDo: Save Entity
+                MessageBox.Show("Project Saved");
             }
         }
     }

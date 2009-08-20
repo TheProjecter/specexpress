@@ -36,7 +36,7 @@ namespace SampleSilverlightApp
 
         private void Save1Button_Click(object sender, RoutedEventArgs e)
         {
-            // ToDo: Save
+            _model.Save();
         }
     }
 }

@@ -72,6 +72,8 @@
     </Compile>
     <Compile Include="MainPageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValidationScope.cs" />
+    <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

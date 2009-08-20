@@ -6,7 +6,7 @@
     mc:Ignorable="d" d:DesignWidth="640" d:DesignHeight="480">
   <Grid x:Name="LayoutRoot">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
+            <ColumnDefinition MaxWidth="200" />
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="2" app:ValidationScope.ValidationScope="{Binding ValidationScope1}">

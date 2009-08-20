@@ -29,7 +29,7 @@ namespace SampleSilverlightApp
             // Initialize the Validaiton Container
             ValidationContainer.Scan(x => x.AddAssembly(typeof (Project).Assembly));
 
-            _model = new MainPageModel(new Project(){ProjectName = "Test Project"});
+            _model = new MainPageModel(new Project(){ProjectName = ""});
 
            LayoutRoot.DataContext = _model;
         }

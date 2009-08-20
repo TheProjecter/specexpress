@@ -84,7 +84,7 @@ namespace SpecExpress
     public class PropertyValidator<T, TProperty> : PropertyValidator<T>
     {
         private readonly bool _propertyValueRequired;
-        private readonly List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
+        private List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
 
         public PropertyValidator(Expression<Func<T, TProperty>> targetExpression)
             : base(targetExpression.Body.Type)
@@ -116,7 +116,11 @@ namespace SpecExpress
             {
                 // Ensure only one Required rule is in list by Removing all Required Rules
                 //Alan: Required<T, TProperty> can be moved to base class and the type genrically constructed and created
-                _rules.RemoveAll(rule => rule.GetType() == typeof (Required<T, TProperty>));
+                List<RuleValidator<T, TProperty>> newList =
+                    new List<RuleValidator<T, TProperty>>(from validator in _rules
+                                                          where validator.GetType() != typeof (Required<T, TProperty>)
+                                                          select validator);
+                _rules = newList;
 
                 if (value)
                 {

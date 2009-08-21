@@ -104,6 +104,9 @@
     <Compile Include="..\SpecExpress\Rules\Boolean\IsTrue.cs">
       <Link>Rules\Boolean\IsTrue.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CheckForEach.cs">
+      <Link>Rules\Collection\CheckForEach.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\Collection\Contains.cs">
       <Link>Rules\Collection\Contains.cs</Link>
     </Compile>

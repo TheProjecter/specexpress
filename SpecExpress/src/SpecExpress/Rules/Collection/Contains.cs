@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.Collection
 {
-    public class Contains<T>: RuleValidator<T,IEnumerable>
+    public class Contains<T, TProperty> : RuleValidator<T, TProperty> where TProperty:IEnumerable
     {
         private object _contains;
 
@@ -24,7 +24,7 @@ namespace SpecExpress.Rules.Collection
             get { return new object[] {_contains}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, IEnumerable> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
             bool contains = false;
 

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
 namespace SpecExpress.Rules.Collection
 {
-    public class CheckForEach<T> : RuleValidator<T, IEnumerable>
+    public class CheckForEach<T, TProperty> : RuleValidator<T, TProperty> where TProperty : IEnumerable
     {
         private Predicate<object> _forEachPredicate;
         private string _errorMessageTemplate;
@@ -21,7 +22,7 @@ namespace SpecExpress.Rules.Collection
             get { return new object[]{}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, IEnumerable> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
             StringBuilder sb = new StringBuilder();
             foreach (var value in context.PropertyValue)

@@ -15,7 +15,7 @@ namespace SpecExpress.Test.RuleValidatorTests
         public bool Contains_IsValid(string lookingFor)
         {
             //Create Validator
-            var validator = new Contains<Contact>(lookingFor);
+            var validator = new Contains<Contact,IEnumerable>(lookingFor);
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases();
 
             //Validate the validator only, return true of no error returned
@@ -27,7 +27,7 @@ namespace SpecExpress.Test.RuleValidatorTests
         public bool Contains_Expression_IsValid(string lookingFor)
         {
             //Create Validator - Aliases must contain FirstName
-            var validator = new Contains<Contact>(c => c.FirstName);
+            var validator = new Contains<Contact,IEnumerable>(c => c.FirstName);
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases();
             context.Instance.FirstName = lookingFor;
 

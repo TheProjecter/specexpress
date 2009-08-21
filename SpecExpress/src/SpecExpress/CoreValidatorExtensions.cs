@@ -130,17 +130,24 @@ namespace SpecExpress
         #endregion
 
         #region Collection
-        public static ActionJoinBuilder<T, IEnumerable> Contains<T>(this IRuleBuilder<T, IEnumerable> expression, object valueToLookFor)
+        public static ActionJoinBuilder<T, TProperty> Contains<T, TProperty>(this IRuleBuilder<T, TProperty> expression, object valueToLookFor) where TProperty : IEnumerable
         {
-            expression.RegisterValidator(new Rules.Collection.Contains<T>(valueToLookFor));
+            expression.RegisterValidator(new Rules.Collection.Contains<T, TProperty>(valueToLookFor));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, IEnumerable> Contains<T>(this IRuleBuilder<T, IEnumerable> expression, Expression<Func<T, IEnumerable>> valueToLookFor)
+        public static ActionJoinBuilder<T, TProperty> Contains<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, IEnumerable>> valueToLookFor) where TProperty:IEnumerable
         {
-            expression.RegisterValidator(new Rules.Collection.Contains<T>(valueToLookFor));
+            expression.RegisterValidator(new Rules.Collection.Contains<T, TProperty>(valueToLookFor));
             return expression.JoinBuilder;
         }
+
+        public static ActionJoinBuilder<T, TProperty> CheckForEach<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Predicate<object> predicate, string messageTemplate) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CheckForEach<T, TProperty>(predicate, messageTemplate));
+            return expression.JoinBuilder;
+        }
+
         #endregion
 
         #region IComparable

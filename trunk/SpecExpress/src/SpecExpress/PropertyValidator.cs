@@ -39,19 +39,33 @@ namespace SpecExpress
                 if (bodyExp.NodeType == ExpressionType.Call)
                 {
                     MethodCallExpression exp = (MethodCallExpression) Property.Body;
-                    foreach (var argument in exp.Arguments)
-                    {
-                        if (argument.NodeType == ExpressionType.MemberAccess)
-                        {
-                            return ((MemberExpression) (argument)).Member;
-                            break;
-                        }
-                    }
+                    return GetFirstMemberCallFromCallArguments(exp);
                 }
 
                 return null;
             }
             protected set { }
+        }
+
+        private MemberInfo GetFirstMemberCallFromCallArguments(MethodCallExpression exp)
+        {
+            foreach (var argument in exp.Arguments)
+            {
+                if (argument.NodeType == ExpressionType.MemberAccess)
+                {
+                    return ((MemberExpression)(argument)).Member;
+                    break;
+                }
+                else if (argument.NodeType == ExpressionType.Call)
+                {
+                    MemberInfo info = GetFirstMemberCallFromCallArguments(argument as MethodCallExpression);
+                    if (info != null)
+                    {
+                        return info;
+                    }
+                }
+            }
+            return null;
         }
 
         public string PropertyNameOverride { get; set; }

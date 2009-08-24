@@ -33,7 +33,14 @@ namespace SpecExpress.Rules.Collection
                 }
             }
 
-            return ValidationResultFactory.Create(this, context, Parameters, sb.ToString());            
+            if (sb.Length > 0)
+            {
+                return ValidationResultFactory.Create(this, context, Parameters, sb.ToString());                            
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private string CreateErrorMessage(object value)

@@ -162,13 +162,13 @@ namespace SpecExpress.Test.DSLTests
             Check(c => c.contacts).Required().And.Contains(new Contact());
 
             // CheckForEach
-            Check(c => c.contacts).Required().And.CheckForEach(c => ((Contact)c).Active,
+            Check(c => c.contacts).Required().And.ForEach(c => ((Contact)c).Active,
                                                                "Contact {FirstName} {LastName} should be active.");
 
             // CheckForEach with Linq
             Check(c => from contact in c.contacts where contact.Active select new {BirthDate = contact.DateOfBirth})
                 .Optional().And
-                .CheckForEach(generic => /* what to cast generic to since its generic? */ true, "Some Error");
+                .ForEach(generic => /* what to cast generic to since its generic? */ true, "Some Error");
         }
 
         /// <summary>

@@ -87,7 +87,7 @@ namespace SpecExpressTest
             spec.Check(
                 c => from contact in c.contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
                 .Optional().And
-                .CheckForEach(c => ((Contact) c).Active,"All contacts under age of 20 must be active.");
+                .ForEach(c => ((Contact) c).Active,"All contacts under age of 20 must be active.");
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);

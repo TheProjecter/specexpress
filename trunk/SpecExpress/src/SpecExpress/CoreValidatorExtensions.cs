@@ -142,9 +142,9 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> CheckForEach<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Predicate<object> predicate, string messageTemplate) where TProperty : IEnumerable
+        public static ActionJoinBuilder<T, TProperty> ForEach<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Predicate<object> predicate, string messageTemplate) where TProperty : IEnumerable
         {
-            expression.RegisterValidator(new Rules.Collection.CheckForEach<T, TProperty>(predicate, messageTemplate));
+            expression.RegisterValidator(new Rules.Collection.ForEach<T, TProperty>(predicate, messageTemplate));
             return expression.JoinBuilder;
         }
 

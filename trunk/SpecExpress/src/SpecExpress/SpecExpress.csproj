@@ -60,7 +60,7 @@
     <Compile Include="DSL\RuleBuilder.cs" />
     <Compile Include="Rules\Boolean\IsFalse.cs" />
     <Compile Include="Rules\Boolean\IsTrue.cs" />
-    <Compile Include="Rules\Collection\CheckForEach.cs" />
+    <Compile Include="Rules\Collection\ForEach.cs" />
     <Compile Include="Rules\Collection\Contains.cs" />
     <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\IsInPast.cs" />

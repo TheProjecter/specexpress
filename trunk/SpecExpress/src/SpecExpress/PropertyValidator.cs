@@ -26,8 +26,32 @@ namespace SpecExpress
 
         public MemberInfo PropertyInfo
         {
-            get { return ((MemberExpression) (Property.Body)).Member; }
-            set { }
+            get
+            {
+                //ToDo: Are all bases covered for ExpressionType (MemberAccess / Call)?  What are we missing?
+                var bodyExp = Property.Body;
+
+                if (bodyExp.NodeType == ExpressionType.MemberAccess )
+                {
+                    return ((MemberExpression) (bodyExp)).Member;
+                }
+
+                if (bodyExp.NodeType == ExpressionType.Call)
+                {
+                    MethodCallExpression exp = (MethodCallExpression) Property.Body;
+                    foreach (var argument in exp.Arguments)
+                    {
+                        if (argument.NodeType == ExpressionType.MemberAccess)
+                        {
+                            return ((MemberExpression) (argument)).Member;
+                            break;
+                        }
+                    }
+                }
+
+                return null;
+            }
+            protected set { }
         }
 
         public string PropertyNameOverride { get; set; }

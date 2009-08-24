@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using SpecExpress;
 using SpecExpress.Rules.DateValidators;
 using SpecExpress.Test.Entities;
+using SpecExpressTest.Entities;
 
 namespace SpecExpressTest
 {
@@ -11,7 +13,7 @@ namespace SpecExpressTest
     public class CustomerSpecTest
     {
         [Test]
-        public void OptionalTest1()
+        public void CustomerName_OptionalAndLength_IsValid()
         {
             var customer = new Customer();
 
@@ -23,7 +25,7 @@ namespace SpecExpressTest
         }
 
         [Test]
-        public void OptionalTest2()
+        public void CustomerName_OptionalAndLength_IsNotValid()
         {
             var customer = new Customer();
 
@@ -36,7 +38,7 @@ namespace SpecExpressTest
         }
 
         [Test]
-        public void RequiredTest1()
+        public void CustomerName_Required_IsNotValid()
         {
             var customer = new Customer();
 
@@ -48,7 +50,7 @@ namespace SpecExpressTest
         }
 
         [Test]
-        public void RequiredTest2()
+        public void CustomerName_RequiredAndLength_NullValue_IsNotValid()
         {
             var customer = new Customer();
 
@@ -61,12 +63,31 @@ namespace SpecExpressTest
         }
 
         [Test]
-        public void RequiredTest3()
+        public void CustomerName_RequiredAndLength_InvalidLength_IsNotValid()
         {
             var customer = new Customer {Name = "X"};
 
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.IsNotEmpty(notification);
+            Assert.AreEqual(1, notification.Count);
+        }
+
+        [Test]
+        public void CustomerContacts_Lambda_IsNotValid()
+        {
+            var contact1 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-19)};
+            var contact2 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-22)};
+            var customer = new Customer() {contacts = new Contact[] {contact1,contact2}};
+
+            var spec = new CustomerSpecification();
+            
+            spec.Check(
+                c => from contact in c.contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
+                .Optional().And
+                .CheckForEach(c => ((Contact) c).Active,"All contacts under age of 20 must be active.");
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);

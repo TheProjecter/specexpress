@@ -91,7 +91,21 @@ namespace SpecExpress
                 return null;
             }
 
-            return Property.Compile().DynamicInvoke(new[] {instance});
+            try
+            {
+                return Property.Compile().DynamicInvoke(new[] {instance});
+            }
+            catch (TargetInvocationException err)
+            {
+                if (err.InnerException is NullReferenceException)
+                {
+                    return null;  
+                }
+                else
+                {
+                    throw;
+                }
+            }
         }
     }
 

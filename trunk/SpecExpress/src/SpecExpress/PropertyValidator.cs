@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -230,9 +231,28 @@ namespace SpecExpress
                 list.AddRange(
                     specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
             }
-            
-        
-            
+
+            //Validate each item in a Collection if a registered specification is found
+            //if there aren't already errors, the value is a collection and it's not a string, then iterate over
+            //each item, looking for a registered specification
+            if (!list.Any() && context.PropertyValue is IEnumerable && !(context.PropertyValue is string))
+            {
+                //Object being validated is a collection.
+                //Check if the type in the collection has a Specification
+                IEnumerator enumerator = ((IEnumerable)context.PropertyValue).GetEnumerator();
+
+                while (enumerator.MoveNext())
+                {
+                    if (ValidationContainer.Registry.ContainsKey(enumerator.Current.GetType()))
+                    {
+                        //Spec found, use it to validate
+                        var specification = ValidationContainer.Registry[enumerator.Current.GetType()];
+                        //Add any errors to the existing list of errors
+                        list.AddRange(
+                                specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
+                    }
+                }
+            }
 
             // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
             if (list.Any() && Child != null)

@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using SpecExpress.Rules.StringValidators;
+using SpecExpress.Test.Entities;
 using SpecExpressTest.Entities;
 
 namespace SpecExpress.Test
@@ -35,5 +36,52 @@ namespace SpecExpress.Test
                         Is.EqualTo("'Last Name' must be between 1 and 5 characters. You entered 0 characters."));
             Assert.That(result.First().Property.Name, Is.EqualTo("LastName"));
         }
+
+        [Test]
+        public void Validate_OptionalNestedProperty_WithNullValue_IsValid()
+        {
+            var customer = new Customer();
+
+            ValidationContainer.AddSpecification<Customer>( spec => spec.Check(cust => cust.Address.Street).Optional().And
+                                                                        .MaxLength(255));
+
+            var results = ValidationContainer.Validate(customer);
+
+            Assert.That(results.Errors, Is.Empty);
+
+        }
+
+
+        [Test]
+        public void Validate_OptionalCollection_Using_Registered_Specification()
+        {
+            //Build test data
+            var customer = new Customer() { Name = "TestCustomer"};
+            var validContact = new Contact() {FirstName = "Johnny B", LastName = "Good"};
+            var invalidContact = new Contact() { FirstName = "Baddy"};
+
+            customer.Contacts = new List<Contact>() {validContact, invalidContact};
+
+            //Build specifications
+            ValidationContainer.AddSpecification<Customer>(spec =>
+                                                               {
+                                                                   spec.Check(cust => cust.Name).Required();
+                                                                   spec.Check(cust => cust.Contacts).Required();
+                                                               });
+
+            ValidationContainer.AddSpecification<Contact>(spec =>
+                                                              {
+                                                                  spec.Check(c => c.FirstName).Required();
+                                                                  spec.Check(c => c.LastName).Required();
+                                                              });
+
+
+            //Validate
+            var results = ValidationContainer.Validate(customer);
+
+            Assert.That(results.Errors.Count, Is.AtLeast(1));
+
+        }
+
     }
 }

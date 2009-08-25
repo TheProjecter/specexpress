@@ -7,7 +7,6 @@ namespace SpecExpress.Test.Domain.Specifications
         public CustomerSpecification()
         {
             Check(c => c.Name).Required();
-
             Check(c => c.PrimaryContact).Required();
         }
     }

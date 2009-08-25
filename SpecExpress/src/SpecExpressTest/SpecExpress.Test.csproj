@@ -99,6 +99,7 @@
     <Compile Include="RuleValidatorTests\IComparableValidatorTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RuleValidatorTests\RequiredTests.cs" />
     <Compile Include="RuleValidatorTests\StringValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>

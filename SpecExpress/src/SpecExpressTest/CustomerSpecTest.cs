@@ -80,12 +80,12 @@ namespace SpecExpressTest
         {
             var contact1 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-19)};
             var contact2 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-22)};
-            var customer = new Customer() {contacts = new Contact[] {contact1,contact2}};
+            var customer = new Customer() {Contacts = new Contact[] {contact1,contact2}};
 
             var spec = new CustomerSpecification();
             
             spec.Check(
-                c => from contact in c.contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
+                c => from contact in c.Contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
                 .Optional().And
                 .ForEach(c => ((Contact) c).Active,"All contacts under age of 20 must be active.");
 
@@ -146,6 +146,19 @@ namespace SpecExpressTest
             List<ValidationResult> notifications = spec.Validate(customer);
 
             Assert.IsEmpty(notifications);
+        }
+
+        [Test]
+        public void When_Customer_Contacts_IsInitializeButEmpty_And_DefinedRequired_IsInvalid()
+        {
+            var customer = new Customer { Contacts = new List<Contact>() };
+
+            var spec = new CustomerSpecification();
+            spec.Check(cust => cust.Contacts).Required();
+
+            List<ValidationResult> notifications = spec.Validate(customer);
+
+            Assert.IsNotEmpty(notifications);
         }
 
         

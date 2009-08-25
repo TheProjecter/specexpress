@@ -15,6 +15,6 @@ namespace SpecExpress.Test.Entities
         public int Max { get; set;}
         public int Min { get; set; }
         public string NamePattern { get; set; }
-        public IEnumerable<Contact> contacts { get; set;}
+        public IEnumerable<Contact> Contacts { get; set;}
     }
 }

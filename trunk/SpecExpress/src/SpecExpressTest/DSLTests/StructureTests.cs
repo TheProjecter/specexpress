@@ -161,17 +161,17 @@ namespace SpecExpress.Test.DSLTests
         public void CollectionRules()
         {
             // Contains
-            Check(c => c.contacts).Required().And.Contains(new Contact());
+            Check(c => c.Contacts).Required().And.Contains(new Contact());
 
             // CheckForEach
-            Check(c => c.contacts).Required().And.ForEach(c => ((Contact)c).Active,
+            Check(c => c.Contacts).Required().And.ForEach(c => ((Contact)c).Active,
                                                                "Contact {FirstName} {LastName} should be active.");
 
-            Check(c => c.contacts).Required().And.ForEach(c => ((Contact)c).Active, MessageStoreFactory.GetMessageStore().GetMessageTemplate("AllContactActive"));
+            Check(c => c.Contacts).Required().And.ForEach(c => ((Contact)c).Active, MessageStoreFactory.GetMessageStore().GetMessageTemplate("AllContactActive"));
             
 
             // CheckForEach with Linq
-            Check(c => from contact in c.contacts where contact.Active select new {BirthDate = contact.DateOfBirth})
+            Check(c => from contact in c.Contacts where contact.Active select new {BirthDate = contact.DateOfBirth})
                 .Optional().And
                 .ForEach(generic => /* what to cast generic to since its generic? */ true, "Some Error");
         }

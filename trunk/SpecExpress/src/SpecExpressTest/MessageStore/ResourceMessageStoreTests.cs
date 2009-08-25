@@ -32,7 +32,7 @@ namespace SpecExpress.Test
 
             //string errorMessage = messageStore.GetFormattedDefaultMessage(ruleValidator.GetType().Name, context, ruleValidator.Parameters);
             var messageService = new MessageService();
-            var errorMessage = messageService.GetDefaultMessage(new MessageContext(context, ruleValidator.GetType()), ruleValidator.Parameters);
+            var errorMessage = messageService.GetDefaultMessage(new MessageContext(context, ruleValidator.GetType(), null, null), ruleValidator.Parameters);
 
             Assert.That(errorMessage, Is.Not.Null.Or.Empty);
 

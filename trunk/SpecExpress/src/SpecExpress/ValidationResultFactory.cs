@@ -9,13 +9,15 @@ namespace SpecExpress
 {
     internal static class ValidationResultFactory
     {
-        public static ValidationResult Create(RuleValidator validator, RuleValidatorContext context, object[] parameters, string customMessage)
+        public static ValidationResult Create(RuleValidator validator, RuleValidatorContext context, object[] parameters, string customMessage, string messageStore, object messageKey)
         {
             string message = string.Empty;
             var messageService = new MessageService();
+
             if (String.IsNullOrEmpty(customMessage))
             {
-                message = messageService.GetDefaultMessage(new MessageContext(context,validator.GetType()), parameters);
+                var messageContext = new MessageContext(context, validator.GetType(), messageStore, messageKey);
+                message = messageService.GetDefaultMessage(messageContext, parameters);
             }
             else
             {

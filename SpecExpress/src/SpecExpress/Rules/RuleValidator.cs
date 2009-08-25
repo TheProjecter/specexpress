@@ -9,8 +9,10 @@ namespace SpecExpress.Rules
     public abstract class RuleValidator
     {
         public string Message { get; set; }
+        public object MessageKey { get; set; }
+        public string MessageStoreName { get; set; }
         public abstract object[] Parameters { get; }
-
+       
 
         protected ValidationResult Evaluate(bool isValid, RuleValidatorContext context)
         {
@@ -20,7 +22,7 @@ namespace SpecExpress.Rules
             }
             else
             {
-                return ValidationResultFactory.Create(this, context, Parameters, Message);
+                return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName, MessageKey);
             }
         }
     }

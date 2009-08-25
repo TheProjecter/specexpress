@@ -25,7 +25,7 @@ namespace SpecExpress.DSL
         {
             //set error message for last rule added
             RuleValidator rule = _propertyValidator.Rules.Last();
-            rule.Message = MessageStoreFactory.GetMessageStore().GetMessageTemplate(messageKey);
+            rule.MessageKey = messageKey;
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
 

@@ -87,6 +87,11 @@
     <Compile Include="MessageStore\MessageServiceTests.cs" />
     <Compile Include="MessageStore\MessageStoreFactoryTests.cs" />
     <Compile Include="MessageStore\MessageTests.cs" />
+    <Compile Include="MessageStore\TestRuleErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestRuleErrorMessages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertyValidatorTests.cs" />
     <Compile Include="MessageStore\ResourceMessageStoreTests.cs" />
@@ -111,6 +116,12 @@
       <Project>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</Project>
       <Name>SpecExpress</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MessageStore\TestRuleErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestRuleErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

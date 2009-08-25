@@ -94,59 +94,59 @@ namespace SpecExpressTest
             Assert.AreEqual(1, notification.Count);
         }
 
-        [Test]
-        public void Test1()
-        {
-            var customer = new Customer {Name = "X"};
+        //[Test]
+        //public void Test1()
+        //{
+        //    var customer = new Customer {Name = "X"};
 
-            var spec = new CustomerSpecification();
-            spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
+        //    var spec = new CustomerSpecification();
+        //    spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
 
-            List<ValidationResult> notifications = spec.Validate(customer);
+        //    List<ValidationResult> notifications = spec.Validate(customer);
 
-            Assert.IsNotNull(notifications);
-            Assert.AreEqual(1, notifications.Count);
-            Assert.AreEqual("'Name' must be between 2 and 100 characters. You entered 1 characters.",
-                            notifications[0].Message);
-        }
+        //    Assert.IsNotNull(notifications);
+        //    Assert.AreEqual(1, notifications.Count);
+        //    Assert.AreEqual("'Name' must be between 2 and 100 characters. You entered 1 characters.",
+        //                    notifications[0].Message);
+        //}
 
-        [Test]
-        public void Test2()
-        {
-            var customer = new Customer {CustomerDate = new DateTime(2009, 3, 1)};
+        //[Test]
+        //public void Test2()
+        //{
+        //    var customer = new Customer {CustomerDate = new DateTime(2009, 3, 1)};
 
-            var spec = new CustomerSpecification();
-            spec.Check(cust => cust.CustomerDate).Required()
-                .And
-                .LessThan(new DateTime(2009, 1, 1))
-                .Or
-                .GreaterThan(new DateTime(2010, 1, 1));
+        //    var spec = new CustomerSpecification();
+        //    spec.Check(cust => cust.CustomerDate).Required()
+        //        .And
+        //        .LessThan(new DateTime(2009, 1, 1))
+        //        .Or
+        //        .GreaterThan(new DateTime(2010, 1, 1));
 
-            List<ValidationResult> notifications = spec.Validate(customer);
+        //    List<ValidationResult> notifications = spec.Validate(customer);
 
-            Assert.IsNotNull(notifications);
-            Assert.AreEqual(2, notifications.Count);
-            Assert.AreEqual(
-                "'Customer Date' must be less than 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM.",
-                notifications[0].Message);
-        }
+        //    Assert.IsNotNull(notifications);
+        //    Assert.AreEqual(2, notifications.Count);
+        //    Assert.AreEqual(
+        //        "'Customer Date' must be less than 1/1/2009 12:00:00 AM. You entered 3/1/2009 12:00:00 AM.",
+        //        notifications[0].Message);
+        //}
 
-        [Test]
-        public void Test3()
-        {
-            var customer = new Customer {CustomerDate = new DateTime(2010, 3, 1)};
+        //[Test]
+        //public void Test3()
+        //{
+        //    var customer = new Customer {CustomerDate = new DateTime(2010, 3, 1)};
 
-            var spec = new CustomerSpecification();
-            spec.Check(cust => cust.CustomerDate).Required()
-                .And
-                .LessThan(new DateTime(2009, 1, 1))
-                .Or
-                .GreaterThan(new DateTime(2010, 1, 1));
+        //    var spec = new CustomerSpecification();
+        //    spec.Check(cust => cust.CustomerDate).Required()
+        //        .And
+        //        .LessThan(new DateTime(2009, 1, 1))
+        //        .Or
+        //        .GreaterThan(new DateTime(2010, 1, 1));
 
-            List<ValidationResult> notifications = spec.Validate(customer);
+        //    List<ValidationResult> notifications = spec.Validate(customer);
 
-            Assert.IsEmpty(notifications);
-        }
+        //    Assert.IsEmpty(notifications);
+        //}
 
         [Test]
         public void When_Customer_Contacts_IsInitializeButEmpty_And_DefinedRequired_IsInvalid()

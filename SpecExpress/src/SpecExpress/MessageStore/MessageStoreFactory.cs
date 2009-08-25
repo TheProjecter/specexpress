@@ -9,18 +9,26 @@ namespace SpecExpress.MessageStore
 
         public static IMessageStore GetMessageStore()
         {
-            if (_messageStore == null)
+            if (ServiceLocator != null)
             {
-                if (ServiceLocator != null)
-                {
-                    _messageStore = ServiceLocator.GetInstance<IMessageStore>();
-                }
-                else
-                {
-                    _messageStore = new DefaultMessageStore(RuleErrorMessages.ResourceManager);
-                }
+                _messageStore = ServiceLocator.GetInstance<IMessageStore>();
+            }
+            else
+            {
+                _messageStore = new DefaultMessageStore(RuleErrorMessages.ResourceManager);
+            }
+            
+            return _messageStore;
+        }
+
+        public static IMessageStore GetMessageStore(string key)
+        {
+            if (ServiceLocator != null)
+            {
+                _messageStore = ServiceLocator.GetInstance<IMessageStore>(key);
             }
             return _messageStore;
         }
+
     }
 }

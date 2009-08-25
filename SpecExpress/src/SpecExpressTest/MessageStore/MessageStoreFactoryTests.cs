@@ -42,5 +42,10 @@ namespace SpecExpress.Test
         {
             return "A rule is broken!";
         }
+
+        public string GetMessageTemplate(object key)
+        {
+            return "A rule is broken!";
+        }
     }
 }

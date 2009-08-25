@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using SpecExpress.MessageStore;
 
 namespace SpecExpress.Rules.Collection
 {
@@ -16,6 +17,7 @@ namespace SpecExpress.Rules.Collection
             _forEachPredicate = forEachPredicate;
             _errorMessageTemplate = errorMessageTemplate;
         }
+
 
         public override object[] Parameters
         {

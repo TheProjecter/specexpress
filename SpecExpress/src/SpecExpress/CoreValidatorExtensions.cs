@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using SpecExpress.DSL;
 using SpecExpress.Rules;
+using SpecExpress.Rules.Collection;
 using SpecExpress.Rules.DateValidators;
 using SpecExpress.Rules.IComparableValidators;
 using SpecExpress.Rules.StringValidators;

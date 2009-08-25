@@ -1,4 +1,5 @@
 using System.Linq;
+using SpecExpress.MessageStore;
 using SpecExpress.Rules;
 
 namespace SpecExpress.DSL
@@ -12,12 +13,21 @@ namespace SpecExpress.DSL
             _propertyValidator = propertyValidator;
         }
 
-        public IAndOr<T, TProperty> Message(string errorMessage)
+        public IAndOr<T, TProperty> Message(string message)
         {
             //set error message for last rule added
             RuleValidator rule = _propertyValidator.Rules.Last();
-            rule.Message = errorMessage;
+            rule.Message = message;
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
+
+        public IAndOr<T, TProperty> MessageKey<TMessage>(TMessage messageKey)
+        {
+            //set error message for last rule added
+            RuleValidator rule = _propertyValidator.Rules.Last();
+            rule.Message = MessageStoreFactory.GetMessageStore().GetMessageTemplate(messageKey);
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        }
+
     }
 }

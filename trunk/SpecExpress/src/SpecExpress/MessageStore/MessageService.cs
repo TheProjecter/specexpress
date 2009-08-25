@@ -11,8 +11,15 @@ namespace SpecExpress.MessageStore
     {
         public string GetDefaultMessage(MessageContext context , object[] parameters)
         {
+            return GetDefaultMessage(context, parameters, null);
+        }
+
+        public string GetDefaultMessage(MessageContext context, object[] parameters, object key)
+        {
             IMessageStore messageStore = MessageStoreFactory.GetMessageStore();
-            string messsageTemplate = messageStore.GetMessageTemplate(context);
+            
+            string messsageTemplate = key == null ? messageStore.GetMessageTemplate(context) : messageStore.GetMessageTemplate(key);
+          
             return FormatMessage(messsageTemplate, context.RuleContext, parameters);
         }
 

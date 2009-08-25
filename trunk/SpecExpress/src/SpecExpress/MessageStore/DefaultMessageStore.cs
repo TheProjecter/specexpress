@@ -27,10 +27,8 @@ namespace SpecExpress.MessageStore
         }
 
         public string GetMessageTemplate(object key)
-        {
-            //Use Name of the Rule Validator as the Key to get the error message format string
-            //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
-            string keyName = key as string;
+        {   
+            string keyName = key as string; 
 
             if (keyName == null)
             {

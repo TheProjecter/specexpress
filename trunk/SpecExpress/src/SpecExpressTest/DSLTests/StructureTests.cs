@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using SpecExpress.MessageStore;
+using SpecExpress.Rules.Collection;
 using SpecExpress.Test.Entities;
 using SpecExpressTest.Entities;
 
@@ -164,6 +166,9 @@ namespace SpecExpress.Test.DSLTests
             // CheckForEach
             Check(c => c.contacts).Required().And.ForEach(c => ((Contact)c).Active,
                                                                "Contact {FirstName} {LastName} should be active.");
+
+            Check(c => c.contacts).Required().And.ForEach(c => ((Contact)c).Active, MessageStoreFactory.GetMessageStore().GetMessageTemplate("AllContactActive"));
+            
 
             // CheckForEach with Linq
             Check(c => from contact in c.contacts where contact.Active select new {BirthDate = contact.DateOfBirth})

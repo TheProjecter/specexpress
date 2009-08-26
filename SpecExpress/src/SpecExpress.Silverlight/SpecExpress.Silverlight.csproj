@@ -77,9 +77,6 @@
     <Compile Include="..\SpecExpress\Enums\ValidationLevelType.cs">
       <Link>Enums\ValidationLevelType.cs</Link>
     </Compile>
-    <Compile Include="..\SpecExpress\MessageStore\DefaultMessageStore.cs">
-      <Link>MessageStore\DefaultMessageStore.cs</Link>
-    </Compile>
     <Compile Include="..\SpecExpress\MessageStore\IMessageStore.cs">
       <Link>MessageStore\IMessageStore.cs</Link>
     </Compile>
@@ -91,6 +88,9 @@
     </Compile>
     <Compile Include="..\SpecExpress\MessageStore\MessageStoreFactory.cs">
       <Link>MessageStore\MessageStoreFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\MessageStore\ResourceMessageStore.cs">
+      <Link>MessageStore\ResourceMessageStore.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\MessageStore\RuleErrorMessages.Designer.cs">
       <Link>MessageStore\RuleErrorMessages.Designer.cs</Link>
@@ -179,8 +179,8 @@
     <Compile Include="..\SpecExpress\Util\StringExtensions.cs">
       <Link>Util\StringExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\SpecExpress\ValidationContainer.cs">
-      <Link>ValidationContainer.cs</Link>
+    <Compile Include="..\SpecExpress\ValidationCatalog.cs">
+      <Link>ValidationCatalog.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\ValidationNotification.cs">
       <Link>ValidationNotification.cs</Link>

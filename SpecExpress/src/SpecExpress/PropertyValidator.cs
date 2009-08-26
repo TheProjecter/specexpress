@@ -223,10 +223,10 @@ namespace SpecExpress
             //Check if this Property Type has a Registered specification to validate with and the instance of the property
             //isn't already invalid. For example if a property is required and the object is null, then 
             //don't continue validating the object
-            if (!list.Any() && ValidationContainer.Registry.ContainsKey(typeof(TProperty)))
+            if (!list.Any() && ValidationCatalog.Registry.ContainsKey(typeof(TProperty)))
             {
                 //Spec found, use it to validate
-                Specification specification = ValidationContainer.Registry[typeof(TProperty)];
+                Specification specification = ValidationCatalog.Registry[typeof(TProperty)];
                 //Add any errors to the existing list of errors
                 list.AddRange(
                     specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
@@ -243,10 +243,10 @@ namespace SpecExpress
 
                 while (enumerator.MoveNext())
                 {
-                    if (ValidationContainer.Registry.ContainsKey(enumerator.Current.GetType()))
+                    if (ValidationCatalog.Registry.ContainsKey(enumerator.Current.GetType()))
                     {
                         //Spec found, use it to validate
-                        var specification = ValidationContainer.Registry[enumerator.Current.GetType()];
+                        var specification = ValidationCatalog.Registry[enumerator.Current.GetType()];
                         //Add any errors to the existing list of errors
                         list.AddRange(
                                 specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());

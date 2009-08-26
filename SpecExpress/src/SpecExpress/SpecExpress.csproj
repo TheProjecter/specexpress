@@ -51,7 +51,7 @@
     <Compile Include="MessageStore\MessageContext.cs" />
     <Compile Include="MessageStore\MessageService.cs" />
     <Compile Include="MessageStore\MessageStoreFactory.cs" />
-    <Compile Include="MessageStore\DefaultMessageStore.cs" />
+    <Compile Include="MessageStore\ResourceMessageStore.cs" />
     <Compile Include="MessageStore\RuleErrorMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -85,7 +85,7 @@
     <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
-    <Compile Include="ValidationContainer.cs" />
+    <Compile Include="ValidationCatalog.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="DSL\WithBuilder.cs" />
     <Compile Include="Enums\ValidationLevelType.cs" />

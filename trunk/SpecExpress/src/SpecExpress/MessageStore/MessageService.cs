@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SpecExpress.Rules;
+using SpecExpress.Util;
 
 namespace SpecExpress.MessageStore
 {
@@ -52,7 +53,7 @@ namespace SpecExpress.MessageStore
             RuleValidatorContext currentContext = context;
             do
             {
-                propertyNameNodes.Add(currentContext.PropertyName);
+                propertyNameNodes.Add(currentContext.PropertyName.SplitPascalCase());
                 currentContext = currentContext.Parent;
             } while (currentContext != null);
 

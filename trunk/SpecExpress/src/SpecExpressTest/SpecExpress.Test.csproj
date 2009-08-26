@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="RuleValidatorTests\RequiredTests.cs" />
     <Compile Include="RuleValidatorTests\StringValidatorTests.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecExpress.Test.Domain\SpecExpress.Test.Domain.csproj">

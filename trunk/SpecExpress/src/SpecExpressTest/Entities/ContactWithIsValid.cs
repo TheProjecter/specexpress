@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using SpecExpress.Rules.DateValidators;
 using SpecExpressTest.Entities;
@@ -16,7 +16,7 @@ namespace SpecExpress.Test.Entities
 
         public bool IsValid()
         {
-            ValidationContainer.AddSpecification<Contact>(x =>
+            ValidationCatalog.AddSpecification<Contact>(x =>
                                                               {
                                                                   x.Check(contact => contact.LastName).Required();
                                                                   x.Check(contact => contact.FirstName).Required();
@@ -25,7 +25,7 @@ namespace SpecExpress.Test.Entities
                                                               });
 
             //Validate
-            Errors = ValidationContainer.Validate(this);
+            Errors = ValidationCatalog.Validate(this);
             return Errors.IsValid;
         }
     }

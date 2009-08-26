@@ -14,13 +14,13 @@ namespace SpecExpress.Test
         [SetUp]
         public void Setup()
         {
-            ValidationContainer.ResetRegistries();
+            ValidationCatalog.ResetRegistries();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ValidationContainer.ResetRegistries();
+            ValidationCatalog.ResetRegistries();
         }
 
         #endregion
@@ -30,11 +30,11 @@ namespace SpecExpress.Test
         {
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
             //Set Assemblies to scan for Specifications
-            ValidationContainer.Scan(x => x.AddAssembly(assembly));
-            Assert.That(ValidationContainer.Registry, Is.Not.Empty);
+            ValidationCatalog.Scan(x => x.AddAssembly(assembly));
+            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
 
-            ValidationContainer.ResetRegistries();
-            Assert.That(ValidationContainer.Registry, Is.Empty);
+            ValidationCatalog.ResetRegistries();
+            Assert.That(ValidationCatalog.Registry, Is.Empty);
             
         }
 
@@ -44,10 +44,10 @@ namespace SpecExpress.Test
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
 
             //Set Assemblies to scan for Specifications
-            ValidationContainer.Scan(x => x.AddAssembly(assembly));
+            ValidationCatalog.Scan(x => x.AddAssembly(assembly));
 
-            Assert.That(ValidationContainer.Registry, Is.Not.Empty);
-            Assert.That(ValidationContainer.Registry[typeof (Address)], Is.Not.Null);
+            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
+            Assert.That(ValidationCatalog.Registry[typeof (Address)], Is.Not.Null);
         }
 
         [Test]
@@ -58,9 +58,9 @@ namespace SpecExpress.Test
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
 
             //Set Assemblies to scan for Specifications
-            ValidationContainer.Scan(x => x.AddAssembly(assembly));
+            ValidationCatalog.Scan(x => x.AddAssembly(assembly));
             //Get the specification for Address from the Registry
-            Specification spec = ValidationContainer.Registry[typeof (Address)];
+            Specification spec = ValidationCatalog.Registry[typeof (Address)];
 
             //In the Address Specification, find PropertyValidator for Street Property
             IEnumerable<PropertyValidator> streetPropertyValidators =
@@ -70,13 +70,13 @@ namespace SpecExpress.Test
 
             PropertyValidator streetPropertyValidator = streetPropertyValidators.First();
 
-            Assert.That(ValidationContainer.Validate(testAddress).IsValid, Is.True);
+            Assert.That(ValidationCatalog.Validate(testAddress).IsValid, Is.True);
 
             //Add some additional rules that will break the test Address object
-            ValidationContainer.AddSpecification<Address>(
+            ValidationCatalog.AddSpecification<Address>(
                 x => x.Check(address => address.Street).Required().And.LengthBetween(5, 40));
 
-            Assert.That(ValidationContainer.Validate(testAddress).IsValid, Is.False);
+            Assert.That(ValidationCatalog.Validate(testAddress).IsValid, Is.False);
         }
     }
 }

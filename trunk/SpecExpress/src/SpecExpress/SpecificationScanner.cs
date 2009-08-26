@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -53,7 +53,7 @@ namespace SpecExpress
                 catch
                 {
                 }
-                if (assembly != null && assembly != typeof(ValidationContainer).Assembly)
+                if (assembly != null && assembly != typeof(ValidationCatalog).Assembly)
                 {
                     AddAssembly(assembly);
                 }

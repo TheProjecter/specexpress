@@ -32,7 +32,7 @@ namespace SampleSilverlightApp
             PropertyInfo propertyInfo = typeof(T).GetProperty(propertyName);
             TProperty currentValue = (TProperty)propertyInfo.GetValue(entity, null);
             propertyInfo.SetValue(entity, value, null);
-            var results = ValidationContainer.Validate(entity);
+            var results = ValidationCatalog.Validate(entity);
             if (!results.IsValid)
             {
                 StringBuilder sb = new StringBuilder();

@@ -10,6 +10,22 @@ namespace SpecExpress.Test
     [TestFixture]
     public class PropertyValidatorTests
     {
+        #region Setup/Teardown
+
+        [SetUp]
+        public void Setup()
+        {
+            ValidationCatalog.ResetRegistries();
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            ValidationCatalog.ResetRegistries();
+        }
+
+        #endregion
+
         [Test]
         public void Validate_OptionalProperty_WithNoValue_IsValid()
         {
@@ -42,10 +58,10 @@ namespace SpecExpress.Test
         {
             var customer = new Customer();
 
-            ValidationContainer.AddSpecification<Customer>( spec => spec.Check(cust => cust.Address.Street).Optional().And
+            ValidationCatalog.AddSpecification<Customer>( spec => spec.Check(cust => cust.Address.Street).Optional().And
                                                                         .MaxLength(255));
 
-            var results = ValidationContainer.Validate(customer);
+            var results = ValidationCatalog.Validate(customer);
 
             Assert.That(results.Errors, Is.Empty);
 
@@ -63,13 +79,13 @@ namespace SpecExpress.Test
             customer.Contacts = new List<Contact>() {validContact, invalidContact};
 
             //Build specifications
-            ValidationContainer.AddSpecification<Customer>(spec =>
+            ValidationCatalog.AddSpecification<Customer>(spec =>
                                                                {
                                                                    spec.Check(cust => cust.Name).Required();
                                                                    spec.Check(cust => cust.Contacts).Required();
                                                                });
 
-            ValidationContainer.AddSpecification<Contact>(spec =>
+            ValidationCatalog.AddSpecification<Contact>(spec =>
                                                               {
                                                                   spec.Check(c => c.FirstName).Required();
                                                                   spec.Check(c => c.LastName).Required();
@@ -77,7 +93,7 @@ namespace SpecExpress.Test
 
 
             //Validate
-            var results = ValidationContainer.Validate(customer);
+            var results = ValidationCatalog.Validate(customer);
 
             Assert.That(results.Errors.Count, Is.AtLeast(1));
 

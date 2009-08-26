@@ -22,7 +22,7 @@ namespace SpecExpress.Test
         [Test]
         public void GetMessageStore_ReturnsDefaultMessageStore()
         {
-            Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(DefaultMessageStore)));
+            Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(ResourceMessageStore)));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace SpecExpress.Test
                                                                                {
                                                                                    ResourceManager resourceManager = TestRuleErrorMessages.ResourceManager;
                                                                                    var messageStore =
-                                                                                       new DefaultMessageStore(
+                                                                                       new ResourceMessageStore(
                                                                                            resourceManager);
                                                                                    return messageStore;
                                                                                }).WithName("MyMessageStore");

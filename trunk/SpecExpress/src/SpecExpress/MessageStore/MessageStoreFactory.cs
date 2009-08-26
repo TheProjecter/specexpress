@@ -15,7 +15,7 @@ namespace SpecExpress.MessageStore
             }
             else
             {
-                _messageStore = new DefaultMessageStore(RuleErrorMessages.ResourceManager);
+                _messageStore = new ResourceMessageStore(RuleErrorMessages.ResourceManager);
             }
             
             return _messageStore;

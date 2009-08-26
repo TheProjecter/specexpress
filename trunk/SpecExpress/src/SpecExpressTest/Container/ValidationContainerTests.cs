@@ -23,7 +23,7 @@ namespace SpecExpress.Test
         public void ValidationContainer_Initialize()
         {
             //Create Rules Adhoc
-            ValidationContainer.AddSpecification<Contact>(x =>
+            ValidationCatalog.AddSpecification<Contact>(x =>
                                                               {
                                                                   x.Check(contact => contact.LastName).Required();
                                                                   x.Check(contact => contact.FirstName).Required();
@@ -38,7 +38,7 @@ namespace SpecExpress.Test
             emptyContact.LastName = null;
 
             //Validate
-            ValidationNotification notification = ValidationContainer.Validate(emptyContact);
+            ValidationNotification notification = ValidationCatalog.Validate(emptyContact);
 
             Assert.That(notification.Errors, Is.Not.Empty);
         }

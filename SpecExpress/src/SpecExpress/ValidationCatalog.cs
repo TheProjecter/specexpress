@@ -6,6 +6,8 @@ namespace SpecExpress
 {
     public static class ValidationCatalog
     {
+        public static bool ValidateObjectGraph { get; set; }
+
         public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
 
         /// <summary>

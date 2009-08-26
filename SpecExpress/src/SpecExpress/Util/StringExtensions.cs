@@ -10,7 +10,8 @@ namespace SpecExpress.Util
             {
                 return input;
             }
-            return Regex.Replace(input, "([A-Z])", " $1").Trim();
+            //return Regex.Replace(input, "([A-Z])", " $1").Trim().Replace("  ", " ");
+            return Regex.Replace(input, "([A-Z][A-Z]*)", " $1").Trim().Replace("  ", " ");
         }
     }
 }

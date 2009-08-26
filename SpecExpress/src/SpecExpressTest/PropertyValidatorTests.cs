@@ -92,6 +92,8 @@ namespace SpecExpress.Test
                                                               });
 
 
+            ValidationCatalog.ValidateObjectGraph = true;
+
             //Validate
             var results = ValidationCatalog.Validate(customer);
 

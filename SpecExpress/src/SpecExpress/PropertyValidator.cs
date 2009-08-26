@@ -19,10 +19,7 @@ namespace SpecExpress
         }
 
         public abstract List<RuleValidator> Rules { get; }
-
-
         public Type PropertyType { get; private set; }
-
         public Type EntityType { get; private set; }
 
         public MemberInfo PropertyInfo
@@ -45,43 +42,18 @@ namespace SpecExpress
 
                 return null;
             }
+
             protected set { }
         }
 
-        private MemberInfo GetFirstMemberCallFromCallArguments(MethodCallExpression exp)
-        {
-            foreach (var argument in exp.Arguments)
-            {
-                if (argument.NodeType == ExpressionType.MemberAccess)
-                {
-                    return ((MemberExpression)(argument)).Member;
-                    break;
-                }
-                else if (argument.NodeType == ExpressionType.Call)
-                {
-                    MemberInfo info = GetFirstMemberCallFromCallArguments(argument as MethodCallExpression);
-                    if (info != null)
-                    {
-                        return info;
-                    }
-                }
-            }
-            return null;
-        }
-
         public string PropertyNameOverride { get; set; }
-
         public ValidationLevelType Level { get; set; }
-
         public bool PropertyValueRequired { get; protected set; }
-
         public PropertyValidator Child { get; set; }
-
         public PropertyValidator Parent { get; set; }
-
         public LambdaExpression Property { get; set; }
+        
         public abstract void AddRule(RuleValidator ruleValidator);
-
         public abstract List<ValidationResult> Validate(object instance);
         public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
 
@@ -107,6 +79,27 @@ namespace SpecExpress
                     throw;
                 }
             }
+        }
+
+        private MemberInfo GetFirstMemberCallFromCallArguments(MethodCallExpression exp)
+        {
+            foreach (var argument in exp.Arguments)
+            {
+                if (argument.NodeType == ExpressionType.MemberAccess)
+                {
+                    return ((MemberExpression)(argument)).Member;
+                    break;
+                }
+                else if (argument.NodeType == ExpressionType.Call)
+                {
+                    MemberInfo info = GetFirstMemberCallFromCallArguments(argument as MethodCallExpression);
+                    if (info != null)
+                    {
+                        return info;
+                    }
+                }
+            }
+            return null;
         }
     }
 
@@ -220,9 +213,34 @@ namespace SpecExpress
             List<ValidationResult> list =
                 _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 
-            //Check if this Property Type has a Registered specification to validate with and the instance of the property
-            //isn't already invalid. For example if a property is required and the object is null, then 
-            //don't continue validating the object
+            if (ValidationCatalog.ValidateObjectGraph)
+            {
+                //Check if this Property Type has a Registered specification to validate with and the instance of the property
+                //isn't already invalid. For example if a property is required and the object is null, then 
+                //don't continue validating the object
+                ValidateObjectGraph(context, list);
+            }
+            
+
+            // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
+            if (list.Any() && Child != null)
+            {
+                List<ValidationResult> orList = Child.Validate(instance);
+                if (orList.Any())
+                {
+                    list.AddRange(orList);
+                }
+                else
+                {
+                    list.Clear();
+                }
+            }
+
+            return list;
+        }
+
+        private void ValidateObjectGraph(RuleValidatorContext<T, TProperty> context, List<ValidationResult> list)
+        {
             if (!list.Any() && ValidationCatalog.Registry.ContainsKey(typeof(TProperty)))
             {
                 //Spec found, use it to validate
@@ -249,26 +267,10 @@ namespace SpecExpress
                         var specification = ValidationCatalog.Registry[enumerator.Current.GetType()];
                         //Add any errors to the existing list of errors
                         list.AddRange(
-                                specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
+                            specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
                     }
                 }
             }
-
-            // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
-            if (list.Any() && Child != null)
-            {
-                List<ValidationResult> orList = Child.Validate(instance);
-                if (orList.Any())
-                {
-                    list.AddRange(orList);
-                }
-                else
-                {
-                    list.Clear();
-                }
-            }
-
-            return list;
         }
     }
 }

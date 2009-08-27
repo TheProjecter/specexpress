@@ -63,7 +63,7 @@ namespace SpecExpress.Test
         {
             var registry = new Registry();
 
-            registry.InstanceOf<IMessageStore>().Is.ConstructedBy(context =>
+            registry.InstanceOf<IMessageStore>().Is.ConstructedBy(context => 
                                                                                {
                                                                                    ResourceManager resourceManager = TestRuleErrorMessages.ResourceManager;
                                                                                    var messageStore =

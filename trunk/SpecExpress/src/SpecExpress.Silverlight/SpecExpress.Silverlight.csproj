@@ -119,6 +119,9 @@
     <Compile Include="..\SpecExpress\Rules\GeneralValidators\Required.cs">
       <Link>Rules\GeneralValidators\Required.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\GeneralValidators\SpecificationRule.cs">
+      <Link>Rules\GeneralValidators\SpecificationRule.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\IComparableValidators\Between.cs">
       <Link>Rules\IComparableValidators\Between.cs</Link>
     </Compile>

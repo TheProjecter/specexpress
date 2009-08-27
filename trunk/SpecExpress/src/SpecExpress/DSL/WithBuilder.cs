@@ -1,6 +1,7 @@
 using System.Linq;
 using SpecExpress.MessageStore;
 using SpecExpress.Rules;
+using SpecExpress.Rules.GeneralValidators;
 
 namespace SpecExpress.DSL
 {
@@ -28,6 +29,30 @@ namespace SpecExpress.DSL
             rule.MessageKey = messageKey;
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
+
+        /// <summary>
+        /// Sets Specification used to validate this Property to the Default
+        /// </summary>
+        /// <returns></returns>
+        public IAndOr<T, TProperty> Specification()
+        {  
+            var specRule = new SpecificationRule<T, TProperty>();
+            _propertyValidator.AddRule(specRule);
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        }
+
+        /// <summary>
+        /// Sets Specification used to validate this Property to the Default
+        /// </summary>
+        /// <returns></returns>
+        public IAndOr<T, TProperty> Specification(SpecificationBase<TProperty> specification)
+        {
+            var specRule = new SpecificationRule<T, TProperty>(specification);
+            _propertyValidator.AddRule(specRule);
+            
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        }
+
 
     }
 }

@@ -21,6 +21,7 @@ namespace SpecExpress
         public abstract List<RuleValidator> Rules { get; }
         public Type PropertyType { get; private set; }
         public Type EntityType { get; private set; }
+        public Specification CustomSpecification { get; set; }
 
         public MemberInfo PropertyInfo
         {
@@ -200,6 +201,8 @@ namespace SpecExpress
             _rules.Add(ruleValidator);
         }
 
+       
+
         public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
         {
             if (_rules == null || !_rules.Any())
@@ -220,6 +223,7 @@ namespace SpecExpress
                 //don't continue validating the object
                 ValidateObjectGraph(context, list);
             }
+
             
 
             // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.

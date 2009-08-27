@@ -9,8 +9,7 @@ namespace SpecExpress
         private readonly String _message;
         private readonly MemberInfo _property;
         private readonly object _target;
-        private readonly IEnumerable<ValidationResult> _nestedValidationResults;
-        
+      
         public ValidationResult(MemberInfo property, string errorMessage, object target)
         {
             _property = property;
@@ -23,7 +22,7 @@ namespace SpecExpress
             _property = property;
             _message = message;
             _target = target;
-            _nestedValidationResults = nestedValidationResults;
+            NestedValdiationResults = nestedValidationResults;
         }
 
         public MemberInfo Property
@@ -44,6 +43,9 @@ namespace SpecExpress
         {
             return Message;
         }
+
+        public IEnumerable<ValidationResult> NestedValdiationResults {get;set;}
+
     }
 
 

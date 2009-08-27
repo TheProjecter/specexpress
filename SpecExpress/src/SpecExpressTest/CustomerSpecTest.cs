@@ -84,6 +84,7 @@ namespace SpecExpressTest
 
             var spec = new CustomerSpecification();
             
+            
             spec.Check(
                 c => from contact in c.Contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
                 .Optional().And

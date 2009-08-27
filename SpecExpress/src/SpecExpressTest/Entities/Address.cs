@@ -9,6 +9,8 @@ namespace SpecExpressTest.Entities
         public string Province { get; set; }
         public string Country { get; set; }
         public List<string> CountryList { get; set; }
+        public string PostalCode { get; set; }
+
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())

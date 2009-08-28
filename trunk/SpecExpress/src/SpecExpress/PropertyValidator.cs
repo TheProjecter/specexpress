@@ -201,8 +201,6 @@ namespace SpecExpress
             _rules.Add(ruleValidator);
         }
 
-       
-
         public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
         {
             if (_rules == null || !_rules.Any())
@@ -211,36 +209,41 @@ namespace SpecExpress
                     "No rules exist for this Property. This is because the rules are improperly configured.");
             }
 
-            var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
-
-            List<ValidationResult> list =
-                _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
-
-            if (ValidationCatalog.ValidateObjectGraph)
+            if (Condition == null || (Condition != null && Condition(instance)))
             {
-                //Check if this Property Type has a Registered specification to validate with and the instance of the property
-                //isn't already invalid. For example if a property is required and the object is null, then 
-                //don't continue validating the object
-                ValidateObjectGraph(context, list);
+                var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
+
+                List<ValidationResult> list =
+                    _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+
+                if (ValidationCatalog.ValidateObjectGraph)
+                {
+                    //Check if this Property Type has a Registered specification to validate with and the instance of the property
+                    //isn't already invalid. For example if a property is required and the object is null, then 
+                    //don't continue validating the object
+                    ValidateObjectGraph(context, list);
+                }
+
+                // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
+                if (list.Any() && Child != null)
+                {
+                    List<ValidationResult> orList = Child.Validate(instance);
+                    if (orList.Any())
+                    {
+                        list.AddRange(orList);
+                    }
+                    else
+                    {
+                        list.Clear();
+                    }
+                }
+
+                return list;
             }
-
-            
-
-            // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
-            if (list.Any() && Child != null)
+            else
             {
-                List<ValidationResult> orList = Child.Validate(instance);
-                if (orList.Any())
-                {
-                    list.AddRange(orList);
-                }
-                else
-                {
-                    list.Clear();
-                }
+                return new List<ValidationResult>();
             }
-
-            return list;
         }
 
         private void ValidateObjectGraph(RuleValidatorContext<T, TProperty> context, List<ValidationResult> list)

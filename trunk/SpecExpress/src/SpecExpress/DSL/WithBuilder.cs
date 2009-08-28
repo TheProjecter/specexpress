@@ -46,8 +46,9 @@ namespace SpecExpress.DSL
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
         /// <returns></returns>
-        public IAndOr<T, TProperty> Specification(SpecificationBase<TProperty> specification)
+        public IAndOr<T, TProperty> Specification<TSpecType>() where TSpecType:SpecificationBase<TProperty>, new()
         {
+            TSpecType specification = new TSpecType();
             var specRule = new SpecificationRule<T, TProperty>(specification);
             _propertyValidator.AddRule(specRule);
             

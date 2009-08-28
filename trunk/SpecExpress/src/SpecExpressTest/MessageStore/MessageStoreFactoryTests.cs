@@ -3,7 +3,7 @@ using System.Resources;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using SpecExpress.MessageStore;
-using SpecExpress.Test.MessageStore;
+using SpecExpressTest.MessageStore;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.ServiceLocatorAdapter;

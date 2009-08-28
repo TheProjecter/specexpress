@@ -129,7 +129,7 @@ namespace SpecExpress.Test.DSLTests
             // IsInSet
             Check(c => c.Name).Required().And.IsInSet(new string[] { "Option1", "Option2" });
             Check(c => c.Name).Required().And.IsInSet(new List<string>(new string[]{ "Option1", "Option2" }));
-            Check(c => c.Address.Country).Required().And.IsInSet(c => c.Address.CountryList);
+            Check(c => c.Address.Country.Id).Required().And.IsInSet(c => c.Address.CountryList);
 
             // LengthBetween
             Check(c => c.Name).Required().And.LengthBetween(0, 100);

@@ -7,7 +7,7 @@ namespace SpecExpressTest.Entities
         public string Street { get; set; }
         public string City { get; set; }
         public string Province { get; set; }
-        public string Country { get; set; }
+        public Country Country { get; set; }
         public List<string> CountryList { get; set; }
         public string PostalCode { get; set; }
 

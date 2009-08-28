@@ -53,7 +53,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             //Don't implicitly validate object graph
             ValidationCatalog.ValidateObjectGraph = false;
 
-            var customer = new Customer { Name = "SampleCustomer", Address = new Address() { Country = "DE", Street = "1234 Offenbacher Strasse"} };
+            var customer = new Customer { Name = "SampleCustomer", Address = new Address() { Country = new Country() {Id = "DE", Name = "Germany"}, Street = "1234 Offenbacher Strasse"} };
 
             //Add Specification for Customer for international addresses
             ValidationCatalog.RegisterSpecification(new InternationalAddressSpecification());
@@ -80,8 +80,8 @@ namespace SpecExpress.Test.RuleValidatorTests
                 }, 
                 Address = new Address() 
                 { 
-                    Country = "DE", Street = "1234 Offenbacher Strasse" 
-                } };
+                    Country = new Country(){Id = "DE", Name = "Germany"}, Street = "1234 Offenbacher Strasse"} 
+                };
 
             ValidationCatalog.RegisterSpecification(new CustomerAddressSpecification());
 

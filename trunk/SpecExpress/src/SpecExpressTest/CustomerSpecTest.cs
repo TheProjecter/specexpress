@@ -95,6 +95,20 @@ namespace SpecExpressTest
             Assert.AreEqual(1, notification.Count);
         }
 
+        [Test]
+        public void CustomerAddressCountry_Required_IsValid()
+        {
+            var customer = new Customer() {Address = new Address() {Country = new Country()}};
+
+            var spec = new CustomerSpecification();
+            spec.Check(cust => cust.Address.Country.Name).Required();
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.That(notification,Is.Not.Empty);
+            Assert.That(notification.Count,Is.EqualTo(1));
+            Assert.That(notification[0].Message,Is.EqualTo("Address Country Name is Required."));
+        }
+
         //[Test]
         //public void Test1()
         //{

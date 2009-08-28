@@ -14,5 +14,6 @@ namespace SpecExpress.Test.Domain.Entities
         public int NumberOfDependents { get; set; }
         public List<Address> Addresses { get; set; }
         public Address PrimaryAddress { get; set; }
+        public Project DefaultProject { get; set; }
     }
 }

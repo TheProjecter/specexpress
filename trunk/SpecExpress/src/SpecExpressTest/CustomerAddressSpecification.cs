@@ -2,6 +2,8 @@
 using SpecExpress.Test;
 using SpecExpress.Test.Entities;
 using System.Linq;
+using SpecExpressTest.Entities;
+
 
 namespace SpecExpressTest
 {
@@ -11,6 +13,15 @@ namespace SpecExpressTest
         {
             Check(c => c.Name).Required();
             Check(c => c.Address).Required().With.Specification<AddressSpecification>();
+
+            //Check(c => c.Contacts).Required().With.ForEachSpecification<Contact>(spec =>
+            //                                                                         {
+            //                                                                             spec.Check(c => c.FirstName).
+            //                                                                                 Required();
+            //                                                                             spec.Check(c => c.LastName).
+            //                                                                                 Required();
+            //                                                                         });
+                                                                                      
 
             Check(c => c.Contacts.First()).Required().With.Specification(spec =>
                 {

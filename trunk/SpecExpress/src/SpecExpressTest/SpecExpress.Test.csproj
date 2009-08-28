@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="AddressSpecification.cs" />
     <Compile Include="Container\ComplexTypesTests.cs" />
+    <Compile Include="ContactSpecification.cs" />
     <Compile Include="CustomerAddressSpecification.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="InternationalAddressSpecification.cs" />

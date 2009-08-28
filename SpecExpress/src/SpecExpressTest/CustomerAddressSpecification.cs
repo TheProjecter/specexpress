@@ -14,8 +14,8 @@ namespace SpecExpressTest
 
             Check(c => c.Contacts.First()).Required().With.Specification(spec =>
                 {
-                    spec.Check(address => address.LastName).Required();
-                    spec.Check(address => address.FirstName).Required();
+                    spec.Check(contact => contact.LastName).Required();
+                    spec.Check(contact => contact.FirstName).Required();
                 });
         }
     }

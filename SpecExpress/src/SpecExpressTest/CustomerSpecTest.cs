@@ -80,7 +80,7 @@ namespace SpecExpressTest
         {
             var contact1 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-19)};
             var contact2 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-22)};
-            var customer = new Customer() {Contacts = new Contact[] {contact1,contact2}};
+            var customer = new Customer() {Contacts = new List<Contact> {contact1,contact2}};
 
             var spec = new CustomerSpecification();
             

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SpecExpress.Test.Entities;
 using SpecExpressTest;
 using SpecExpressTest.Entities;
+using System.Collections.Generic;
 
 namespace SpecExpress.Test.RuleValidatorTests
 {
@@ -66,6 +67,31 @@ namespace SpecExpress.Test.RuleValidatorTests
             Assert.That(results.Errors.First().NestedValdiationResults, Is.Not.Empty);
 
         }
+
+        [Test]
+        public void SpecificationExpression()
+        {
+
+            var customer = new Customer { 
+                Name = "SampleCustomer", 
+                Contacts = new List<Contact>() 
+                { 
+                    new Contact() {LastName = "Smith"}
+                }, 
+                Address = new Address() 
+                { 
+                    Country = "DE", Street = "1234 Offenbacher Strasse" 
+                } };
+
+            ValidationCatalog.RegisterSpecification(new CustomerAddressSpecification());
+
+            var results = ValidationCatalog.Validate(customer);
+
+            Assert.That(results.Errors, Is.Not.Empty);
+
+
+        }
+
 
 
 

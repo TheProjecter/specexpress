@@ -10,13 +10,13 @@ namespace SpecExpress
 {
     public class SpecificationScanner
     {
-        private readonly IList<Specification> _specifications = new List<Specification>();
+        private readonly List<Type> _specifications = new List<Type>();
 
-        internal IList<Specification> FoundSpecifications
+        internal IList<Type> FoundSpecifications
         {
             get { return _specifications; }
         }
-
+        
         public void TheCallingAssembly()
         {
             Assembly callingAssembly = findTheCallingAssembly();
@@ -29,7 +29,7 @@ namespace SpecExpress
 
         public void AddAssembly(Assembly assembly)
         {
-            registerAssemblies(new List<Assembly>() { assembly });            
+            scanAssembliesForSpecifications(new List<Assembly>() { assembly });            
         }
 
 
@@ -49,11 +49,7 @@ namespace SpecExpress
             List<Assembly> assemblies = r.Where<Assembly>(assembly => assembly != null && assembly != typeof(ValidationCatalog).Assembly)
                 .ToList<Assembly>();
 
-            registerAssemblies(assemblies);
-
-
-                 
-
+            scanAssembliesForSpecifications(assemblies);
         }
 
         private Assembly findTheCallingAssembly()
@@ -75,7 +71,7 @@ namespace SpecExpress
             return callingAssembly;
         }
 
-        private void registerAssemblies(List<Assembly> assemblies)
+        private void scanAssembliesForSpecifications(List<Assembly> assemblies)
         {
             //Find all types in all assemblies that inherit from Specification
             IEnumerable<Type> specs = from a in assemblies
@@ -84,12 +80,36 @@ namespace SpecExpress
                         where typeof(Specification).IsAssignableFrom(type)
                         select type;
 
-            //For each type, instantiate it and add it to the collection of specs found
-            specs.ToList<Type>().ForEach(spec => 
-                {
-                    object o = Activator.CreateInstance(spec);
-                    _specifications.Add(o as Specification);
-                });
+            _specifications.AddRange(specs);
+
+            //registerSpecifications(specs);
         }
+
+        //private void registerSpecifications(IEnumerable<Type> specs)
+        //{
+        //    List<Type> delayedSpecs = new List<Type>();
+
+        //    //For each type, instantiate it and add it to the collection of specs found
+        //    specs.ToList<Type>().ForEach(spec => 
+        //                                     {
+        //                                         try
+        //                                         {
+        //                                             object o = Activator.CreateInstance(spec);
+        //                                             _specifications.Add(o as Specification);
+        //                                         }
+        //                                         catch (System.Reflection.TargetInvocationException)
+        //                                         {
+        //                                             //Can't create the object because it has a specification that hasn't been loaded yet
+        //                                             //save it for the next pass
+        //                                             delayedSpecs.Add(spec);
+        //                                             //throw;
+        //                                         }
+        //                                     });
+            
+        //    registerSpecifications(delayedSpecs);
+
+                                                 
+                                                 
+        //}
     }
 }

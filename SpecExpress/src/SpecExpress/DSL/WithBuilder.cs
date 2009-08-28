@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using SpecExpress.MessageStore;
 using SpecExpress.Rules;
@@ -55,6 +56,8 @@ namespace SpecExpress.DSL
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
 
+        
+
         /// <summary>
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
@@ -72,7 +75,30 @@ namespace SpecExpress.DSL
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
 
-        
+        //public IAndOr<T, TProperty> ForEachSpecification<TCollectionType, TCollectionSpecType>()
+        //    where TCollectionSpecType : SpecificationBase<TCollectionType>, new()
+        ////where TProperty : IEnumerable
+        //{
+        //    var specification = new TCollectionSpecType();
+        //    var specRule = new SpecificationRule<T, TCollectionType>(specification);
+        //    _propertyValidator.AddRule(specRule);
+
+        //    return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        //}
+
+        //public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<SpecificationBase<TCollectionType>> rules)
+        //{
+        //    var specification = new SpecificationExpression<TCollectionType>();
+        //    rules(specification);
+
+        //    var specRule = new SpecificationRule<T, TCollectionType>(specification);
+
+
+        //    _propertyValidator.AddRule(specRule);
+
+        //    return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        //}
+
 
     }
 }

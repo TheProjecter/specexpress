@@ -57,7 +57,7 @@ namespace SpecExpress.Test.RuleValidatorTests
 
             //Add Specification for Customer for international addresses
             ValidationCatalog.RegisterSpecification(new InternationalAddressSpecification());
-            ValidationCatalog.AddSpecification<Customer>(spec => spec.Check(c => c.Address).Required().With.Specification(new InternationalAddressSpecification()));
+            ValidationCatalog.AddSpecification<Customer>(spec => spec.Check(c => c.Address).Required().With.Specification<InternationalAddressSpecification>());
 
             //Validate Customer
             var results = ValidationCatalog.Validate(customer);

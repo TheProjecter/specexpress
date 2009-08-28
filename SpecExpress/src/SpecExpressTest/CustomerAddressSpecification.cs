@@ -10,7 +10,7 @@ namespace SpecExpressTest
         public CustomerAddressSpecification()
         {
             Check(c => c.Name).Required();
-            Check(c => c.Address).Required().With.Specification(new AddressSpecification());
+            Check(c => c.Address).Required().With.Specification<AddressSpecification>();
 
             Check(c => c.Contacts.First()).Required().With.Specification(spec =>
                 {

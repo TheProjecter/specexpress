@@ -71,7 +71,7 @@ namespace SpecExpress
             }
             catch (TargetInvocationException err)
             {
-                if (err.InnerException is NullReferenceException)
+                if (err.InnerException is NullReferenceException || err.InnerException is ArgumentNullException)
                 {
                     return null;  
                 }

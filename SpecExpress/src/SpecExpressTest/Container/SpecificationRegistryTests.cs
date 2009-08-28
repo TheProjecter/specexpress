@@ -78,5 +78,18 @@ namespace SpecExpress.Test
 
             Assert.That(ValidationCatalog.Validate(testAddress).IsValid, Is.False);
         }
+
+        //[Test]
+        //public void Scan_PathForSpecification_SpecsFound()
+        //{
+        //    //Set Assemblies to scan for Specifications
+        //    ValidationCatalog.Scan(x => x.AddAssembliesFromPath(@"C:\Dev\SpecExpress\trunk\SpecExpress\src\SpecExpressTest\bin\Debug"));
+
+        //    Assert.That(ValidationCatalog.Registry.Any(), Is.True);
+        //}
+
+
+       
+
     }
 }

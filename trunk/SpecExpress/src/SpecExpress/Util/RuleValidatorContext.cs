@@ -25,7 +25,7 @@ namespace SpecExpress.Rules
                                     RuleValidatorContext parentContext)
         {
             PropertyName = String.IsNullOrEmpty(validator.PropertyNameOverride)
-                               ? validator.PropertyInfo.Name.SplitPascalCase()
+                               ? validator.PropertyName.SplitPascalCase()
                                : validator.PropertyNameOverride;
             PropertyValue = (TProperty) validator.GetValueForProperty(instance);
             PropertyInfo = validator.PropertyInfo;

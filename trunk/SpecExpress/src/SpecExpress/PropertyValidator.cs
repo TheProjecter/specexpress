@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using SpecExpress.Enums;
 using SpecExpress.Rules;
 using SpecExpress.Rules.General;
+using SpecExpress.Util;
 
 namespace SpecExpress
 {
@@ -48,6 +50,34 @@ namespace SpecExpress
         }
 
         public string PropertyNameOverride { get; set; }
+        public string PropertyName
+        {
+            get
+            {  
+                Expression body = Property.Body;
+                var propertyNameNode = new List<string>();
+
+                //The expression is a function, so use the return value type as the Property Name
+                //ie, Contacts.First() would return Contact
+                if (body.NodeType == ExpressionType.Call)
+                {   
+                    propertyNameNode.Add(body.Type.Name); 
+                }
+                else
+                {
+                    //Expression is a list of Properties, so get each into a string List
+                    while (body is MemberExpression)
+                    {
+                        var member = ((MemberExpression)(body)).Member;
+                        propertyNameNode.Add(member.Name);
+                        body = ((MemberExpression)(body)).Expression;
+                    }
+                }
+
+                return propertyNameNode.ToReverseString();
+            }
+        }
+
         public ValidationLevelType Level { get; set; }
         public bool PropertyValueRequired { get; protected set; }
         public PropertyValidator Child { get; set; }

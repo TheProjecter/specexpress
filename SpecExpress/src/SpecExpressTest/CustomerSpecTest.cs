@@ -106,7 +106,7 @@ namespace SpecExpressTest
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.That(notification,Is.Not.Empty);
             Assert.That(notification.Count,Is.EqualTo(1));
-            Assert.That(notification[0].Message,Is.EqualTo("Address Country Name is Required."));
+            Assert.That(notification[0].Message,Is.EqualTo("Address Country Name is required."));
         }
 
         //[Test]

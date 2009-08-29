@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SpecExpress.Util;
+using System.Collections.Generic;
 
 namespace SpecExpress.Test
 {
@@ -30,6 +31,15 @@ namespace SpecExpress.Test
         public bool SplitPascalCase(string input, string output)
         {
             return input.SplitPascalCase() == output;
+        }
+
+        [Test]
+        public void AppendPropertyNames()
+        {
+            var names = new List<string>() {"Name", "Country", "Address"};
+
+            Assert.That(names.ToReverseString(), Is.EqualTo("Address Country Name"));
+
         }
 
     }

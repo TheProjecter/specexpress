@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Reflection;
 using NUnit.Framework;
 using SpecExpress.Rules.DateValidators;
 using SpecExpressTest.Entities;
@@ -41,6 +43,18 @@ namespace SpecExpress.Test
             ValidationNotification notification = ValidationCatalog.Validate(emptyContact);
 
             Assert.That(notification.Errors, Is.Not.Empty);
+        }
+
+        [Test]
+        [ExpectedException(typeof(SpecExpressConfigurationError))]
+        public void AssertConfigurationValid_IsInvalid()
+        {
+            //Set Assemblies to scan for Specifications
+            Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
+            ValidationCatalog.Scan(x => x.AddAssembly(assembly));
+            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
+
+            ValidationCatalog.AssertConfigurationIsValid();
         }
     }
 }

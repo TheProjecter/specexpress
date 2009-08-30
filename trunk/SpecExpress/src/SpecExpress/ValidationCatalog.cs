@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -25,7 +26,7 @@ namespace SpecExpress
         }
 
         /// <summary>
-        /// Configures Assemblies to scan to register Specifications used by Validate(object)
+        /// Configure the scanning of Assemblies containing Specifications used by Validate(object)
         /// </summary>
         /// <param name="configuration"></param>
         public static void Scan(Action<SpecificationScanner> configuration)
@@ -45,6 +46,11 @@ namespace SpecExpress
         public static ValidationNotification Validate(object instance)
         {
             //Guard for null
+            if (instance == null)
+            {
+                throw new ArgumentNullException("Validate requires a non-null instance.");
+            }
+            
             if (!Registry.Any())
             {
                 throw new ArgumentNullException("No Specifications found.");
@@ -56,33 +62,35 @@ namespace SpecExpress
             }
 
             Specification spec = Registry[instance.GetType()];
-
-            if (spec == null)
-            {
-                throw new ArgumentException("No Specification found for type " + instance.GetType());
-            }
-
-            //Group
-
+            
             return new ValidationNotification {Errors = spec.Validate(instance)};
         }
 
         public static void ResetRegistries()
         {
-            Registry = new Dictionary<Type, Specification>();
+            Registry.Clear();
         }
 
         public static void RegisterSpecification<TEntity>(SpecificationBase<TEntity> expression)
         {
             RegisterSpecificationWithRegistry(expression);
-            //registerFoundSpecifications(new List<Specification> {expression});
         }
 
-        public static void AssertConfigurationIsValid()
+        public static void  AssertConfigurationIsValid()
         {
-            //TODO: implement
             //Look for PropertyValidators with no Rules
-
+            var invalidPropertyValidators = from r in Registry.Values
+                                            from v in r.PropertyValidators
+                                            where v.Rules == null || !v.Rules.Any()
+                                            select
+                                                r.GetType().Name + " is invalid because it has no rules defined for property '" +
+                                                v.PropertyName + "'.";
+            
+            if (invalidPropertyValidators.Any())
+            {
+                var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
+                throw new SpecExpressConfigurationError(errorString);
+            }                               
         }
 
         public static Specification GetSpecificationFromRegistry<TType>() 
@@ -100,43 +108,9 @@ namespace SpecExpress
         }
 
 
-
-        //private static void registerFoundSpecifications(IList<Specification> specifications)
-        //{
-        //    foreach (Specification incomingSpecification in specifications)
-        //    {
-        //        //TODO: this assumes the Spec directly inherits from SpecificationBase
-        //        Type typeForSpec = incomingSpecification.GetType().BaseType.GetGenericArguments().FirstOrDefault();
-
-        //        //if (Registry.ContainsKey(typeForSpec))
-        //        //{
-        //        //    //Add rules for all PropertyValidators to the Rules for existing Property Validators
-        //        //    incomingSpecification.PropertyValidators.ForEach(pv =>
-        //        //                                                         {
-        //        //                                                             //find the matching propertyValidator
-        //        //                                                             IEnumerable<PropertyValidator> p =
-        //        //                                                                 from propertyValidators in
-        //        //                                                                     Registry[typeForSpec].
-        //        //                                                                     PropertyValidators
-        //        //                                                                 where
-        //        //                                                                     propertyValidators.PropertyInfo ==
-        //        //                                                                     pv.PropertyInfo
-        //        //                                                                 select propertyValidators;
-
-        //        //                                                             //Add all the rules on the incoming PropertyValidator to the matching existing PropertyValidator Rules
-        //        //                                                             pv.Rules.ForEach(r => p.First().AddRule(r));
-        //        //                                                         });
-        //        //}
-        //        //else
-        //        //{
-        //        Registry.Add(typeForSpec, incomingSpecification);
-        //        //}
-        //    }
-        //}
-
         private static void CreateAndRegisterSpecificationsWithRegistry(IEnumerable<Type> specs)
         {
-            List<Type> delayedSpecs = new List<Type>();
+            var delayedSpecs = new List<Type>();
 
             //For each type, instantiate it and add it to the collection of specs found
             specs.ToList<Type>().ForEach(spec =>
@@ -146,7 +120,6 @@ namespace SpecExpress
                     var s = Activator.CreateInstance(spec) as Specification;
 
                     RegisterSpecificationWithRegistry(s);
-                    //_specifications.Add(o as Specification);
                 }
                 catch (System.Reflection.TargetInvocationException)
                 {
@@ -156,14 +129,11 @@ namespace SpecExpress
                 }
             });
 
-            
+            //Process any specification that couldn't be reloaded
             if (delayedSpecs.Any())
             {
                 CreateAndRegisterSpecificationsWithRegistry(delayedSpecs); 
             }
-
-
-
         }
 
         private static void RegisterSpecificationWithRegistry(Specification spec)

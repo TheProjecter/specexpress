@@ -48,11 +48,13 @@
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\Customer.cs" />
     <Compile Include="Entities\Project.cs" />
+    <Compile Include="Entities\Widget.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\AddressSpecification.cs" />
     <Compile Include="Specifications\ContactSpecification.cs" />
     <Compile Include="Specifications\CustomerSpecification.cs" />
     <Compile Include="Specifications\ProjectSpecification.cs" />
+    <Compile Include="Specifications\WidgetSpecification.cs" />
     <Compile Include="Values\Address.cs" />
   </ItemGroup>
   <ItemGroup>

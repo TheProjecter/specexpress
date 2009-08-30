@@ -35,7 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\IoC\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.TeamSystem.Data.UnitTesting, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -86,6 +89,7 @@
     <Compile Include="Rules\StringValidators\IsInSet.cs" />
     <Compile Include="Rules\StringValidators\LengthBetween.cs" />
     <Compile Include="Rules\StringValidators\MinLength.cs" />
+    <Compile Include="SpecExpressConfigurationError.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationCatalog.cs" />

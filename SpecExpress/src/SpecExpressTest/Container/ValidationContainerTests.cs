@@ -3,6 +3,7 @@ using System.Collections;
 using System.Reflection;
 using NUnit.Framework;
 using SpecExpress.Rules.DateValidators;
+using SpecExpress.Test.Domain.Specifications;
 using SpecExpressTest.Entities;
 
 namespace SpecExpress.Test
@@ -52,9 +53,19 @@ namespace SpecExpress.Test
             //Set Assemblies to scan for Specifications
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
-            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
+            Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Not.Empty);
 
             ValidationCatalog.AssertConfigurationIsValid();
+        }
+
+        [Test]
+        public void When_multiple_specifications_defined_with_default_spec_defined_return_default()
+        {
+            Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
+            ValidationCatalog.Scan(x => x.AddAssembly(assembly));
+
+            var spec = ValidationCatalog.GetSpecification<SpecExpress.Test.Domain.Entities.Contact>();
+            Assert.That( spec.GetType(), Is.EqualTo( typeof (ContactSpecification) ));
         }
     }
 }

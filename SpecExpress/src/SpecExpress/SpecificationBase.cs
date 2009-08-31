@@ -11,6 +11,10 @@ namespace SpecExpress
     {
         private List<PropertyValidator> _propertyValidators = new List<PropertyValidator>();
 
+        public abstract Type ForType { get; }
+
+        public bool DefaultForType { get; private set; }
+
         public List<PropertyValidator> PropertyValidators
         {
             get { return _propertyValidators; }
@@ -21,10 +25,22 @@ namespace SpecExpress
         {
             return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
         }
+
+        public void IsDefaultForType()
+        {
+            DefaultForType = true;
+        }
     }
 
     public abstract class SpecificationBase<T> : Specification
     {
+        public override Type ForType
+        {
+            get
+            {
+                 return this.GetType().BaseType.GetGenericArguments().FirstOrDefault();
+            }
+        }
         #region Check
 
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,

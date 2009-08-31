@@ -278,10 +278,10 @@ namespace SpecExpress
 
         private void ValidateObjectGraph(RuleValidatorContext<T, TProperty> context, List<ValidationResult> list)
         {
-            if (!list.Any() && ValidationCatalog.Registry.ContainsKey(typeof(TProperty)))
+            if (!list.Any() && ValidationCatalog.TryGetSpecification(typeof(TProperty)) != null)
             {
                 //Spec found, use it to validate
-                Specification specification = ValidationCatalog.Registry[typeof(TProperty)];
+                Specification specification = ValidationCatalog.GetSpecification(typeof (TProperty));
                 //Add any errors to the existing list of errors
                 list.AddRange(
                     specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
@@ -298,10 +298,10 @@ namespace SpecExpress
 
                 while (enumerator.MoveNext())
                 {
-                    if (ValidationCatalog.Registry.ContainsKey(enumerator.Current.GetType()))
+                    if (ValidationCatalog.TryGetSpecification( enumerator.Current.GetType()) != null)
                     {
                         //Spec found, use it to validate
-                        var specification = ValidationCatalog.Registry[enumerator.Current.GetType()];
+                        var specification = ValidationCatalog.GetSpecification( enumerator.Current.GetType());
                         //Add any errors to the existing list of errors
                         list.AddRange(
                             specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());

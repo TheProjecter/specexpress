@@ -2,12 +2,10 @@
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class ContactSpecification : SpecificationBase<Contact>
+    public class DeleteContactSpecification : SpecificationBase<Contact>
     {
-        public ContactSpecification()
+        public DeleteContactSpecification()
         {
-            IsDefaultForType();
-
             Check(c => c.FirstName).Required();
             Check(c => c.LastName).Required();
             Check(c => c.Addresses).Required();

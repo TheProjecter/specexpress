@@ -31,10 +31,10 @@ namespace SpecExpress.Test
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
             //Set Assemblies to scan for Specifications
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
-            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
+            Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Not.Empty);
 
             ValidationCatalog.ResetRegistries();
-            Assert.That(ValidationCatalog.Registry, Is.Empty);
+            Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Empty);
             
         }
 
@@ -46,8 +46,8 @@ namespace SpecExpress.Test
             //Set Assemblies to scan for Specifications
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
 
-            Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
-            Assert.That(ValidationCatalog.Registry[typeof (Address)], Is.Not.Null);
+            //Assert.That(ValidationCatalog.Registry, Is.Not.Empty);
+            Assert.That(ValidationCatalog.GetSpecification<Address>(), Is.Not.Null);
         }
 
         //[Test]
@@ -88,7 +88,7 @@ namespace SpecExpress.Test
             
             //ValidationCatalog.Scan(x => x.AddAssembliesFromPath(@"C:\Dev\SpecExpress\trunk\SpecExpress\src\SpecExpressTest\bin\Debug"));
 
-            Assert.That(ValidationCatalog.Registry.Any(), Is.True);
+            Assert.That(ValidationCatalog.GetAllSpecifications().Any(), Is.True);
         }
 
 

@@ -15,5 +15,6 @@ namespace SpecExpress.Test.Domain.Entities
         public List<Address> Addresses { get; set; }
         public Address PrimaryAddress { get; set; }
         public Project DefaultProject { get; set; }
+        public bool Active { get; set; }
     }
 }

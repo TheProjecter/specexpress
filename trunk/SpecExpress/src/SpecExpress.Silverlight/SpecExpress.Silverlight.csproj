@@ -164,6 +164,9 @@
     <Compile Include="..\SpecExpress\Rules\StringValidators\Numeric.cs">
       <Link>Rules\StringValidators\Numeric.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\SpecExpressConfigurationError.cs">
+      <Link>SpecExpressConfigurationError.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\SpecificationBase.cs">
       <Link>SpecificationBase.cs</Link>
     </Compile>

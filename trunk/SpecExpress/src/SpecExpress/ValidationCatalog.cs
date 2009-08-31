@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.Practices.ServiceLocation;
 
 namespace SpecExpress
 {
@@ -9,7 +11,9 @@ namespace SpecExpress
     {
         public static bool ValidateObjectGraph { get; set; }
 
-        public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
+        //public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
+
+        private static IList<Specification> _registry = new List<Specification>();
 
         /// <summary>
         /// Add Specifications dynamically without a SpecificationBase
@@ -45,30 +49,25 @@ namespace SpecExpress
         /// <returns></returns>
         public static ValidationNotification Validate(object instance)
         {
+            Type type = instance.GetType();
+            var spec = GetSpecification(instance.GetType());
+            return Validate(instance, spec);
+        }
+
+        public static ValidationNotification Validate(object instance, Specification specification)
+        {
             //Guard for null
             if (instance == null)
             {
                 throw new ArgumentNullException("Validate requires a non-null instance.");
             }
-            
-            if (!Registry.Any())
-            {
-                throw new ArgumentNullException("No Specifications found.");
-            }
 
-            if (!Registry.ContainsKey(instance.GetType()))
-            {
-                throw new NullReferenceException("No Specification registered for type" + instance.GetType());
-            }
-
-            Specification spec = Registry[instance.GetType()];
-            
-            return new ValidationNotification {Errors = spec.Validate(instance)};
+            return new ValidationNotification { Errors = specification.Validate(instance) }; 
         }
 
         public static void ResetRegistries()
         {
-            Registry.Clear();
+            _registry.Clear();
         }
 
         public static void RegisterSpecification<TEntity>(SpecificationBase<TEntity> expression)
@@ -76,37 +75,96 @@ namespace SpecExpress
             RegisterSpecificationWithRegistry(expression);
         }
 
-        public static void  AssertConfigurationIsValid()
+        public static void AssertConfigurationIsValid()
         {
+            //Look for multiple specifications for a type where no default is defined.
+            //TODO: Implement multispec check
+
             //Look for PropertyValidators with no Rules
-            var invalidPropertyValidators = from r in Registry.Values
+            var invalidPropertyValidators = from r in _registry
                                             from v in r.PropertyValidators
                                             where v.Rules == null || !v.Rules.Any()
                                             select
                                                 r.GetType().Name + " is invalid because it has no rules defined for property '" +
                                                 v.PropertyName + "'.";
-            
+
             if (invalidPropertyValidators.Any())
             {
                 var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
                 throw new SpecExpressConfigurationError(errorString);
-            }                               
+            }
         }
 
-        public static Specification GetSpecificationFromRegistry<TType>() 
+        #region Container
+
+        public static Specification TryGetSpecification(Type type)
         {
-            if (Registry.ContainsKey(typeof(TType)) )
+            var specs = from r in _registry
+                        where r.ForType == type
+                        select r;
+
+            //No Specs found for type
+            if (!specs.ToList().Any())
             {
-                return Registry[typeof(TType)];
+                return null;
             }
-            else
+
+            //If more than one spec was found for type
+            if (specs.ToList().Count > 1)
             {
-                //
-                throw new InvalidOperationException("No Specification found for Type " + typeof (TType).ToString());
+                //try to return the default
+                var defaultSpecs =  from s in specs
+                       where s.DefaultForType
+                       select s;
+
+                //No default specs defined
+                if (!defaultSpecs.Any())
+                {   
+                    throw new ActivationException("Multiple Specifications found and none are defined as default.");
+                }
+
+                //Multiple specs defined as Default
+                if (defaultSpecs.Count() > 1)
+                {
+                    throw new ActivationException("Multiple Specifications found and multiple are defined as default.");
+                }
+
+                return defaultSpecs.First();
             }
-            
+
+            return specs.First();
         }
 
+        public static Specification GetSpecification(Type type)
+        {
+            var spec =  TryGetSpecification(type);
+            if (spec == null)
+            {
+                throw new ActivationException("No Specification for type " + type + " was found.");
+            }
+
+            return spec;
+        }
+
+        public static SpecificationBase<TType> GetSpecification<TType>()
+        {
+            return GetSpecification(typeof(TType)) as SpecificationBase<TType>;
+        }
+
+        public static SpecificationBase<TType> TryGetSpecification<TType>()
+        {
+            return TryGetSpecification(typeof(TType)) as SpecificationBase<TType>;
+        }
+
+        public static IList<Specification> GetAllSpecifications()
+        {
+            return _registry;
+        }
+
+        
+        #endregion
+
+        #region Registration
 
         private static void CreateAndRegisterSpecificationsWithRegistry(IEnumerable<Type> specs)
         {
@@ -132,7 +190,7 @@ namespace SpecExpress
             //Process any specification that couldn't be reloaded
             if (delayedSpecs.Any())
             {
-                CreateAndRegisterSpecificationsWithRegistry(delayedSpecs); 
+                CreateAndRegisterSpecificationsWithRegistry(delayedSpecs);
             }
         }
 
@@ -140,10 +198,12 @@ namespace SpecExpress
         {
             if (spec != null)
             {
-                //TODO: this assumes the Spec directly inherits from SpecificationBase
-                Type typeForSpec = spec.GetType().BaseType.GetGenericArguments().FirstOrDefault();
-                Registry.Add(typeForSpec, spec); 
+                _registry.Add(spec);
             }
         }
+
+
+        #endregion
+
     }
 }

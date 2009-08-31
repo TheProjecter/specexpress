@@ -29,8 +29,9 @@ namespace SpecExpress.Rules.GeneralValidators
         {
             //When a Specificiation class is being instantiated during the registration process,
             //The specification for this rule may not be in the registry yet
-            var specification = ValidationCatalog.Registry[typeof(TProperty)];
-            _specification = specification as SpecificationBase<TProperty>;
+            //var specification = ValidationCatalog.Registry[typeof(TProperty)];
+             _specification = ValidationCatalog.GetSpecification<TProperty>();
+            //_specification = specification as SpecificationBase<TProperty>;
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)

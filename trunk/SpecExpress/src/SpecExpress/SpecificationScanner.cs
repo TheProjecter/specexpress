@@ -81,35 +81,6 @@ namespace SpecExpress
                         select type;
 
             _specifications.AddRange(specs);
-
-            //registerSpecifications(specs);
         }
-
-        //private void registerSpecifications(IEnumerable<Type> specs)
-        //{
-        //    List<Type> delayedSpecs = new List<Type>();
-
-        //    //For each type, instantiate it and add it to the collection of specs found
-        //    specs.ToList<Type>().ForEach(spec => 
-        //                                     {
-        //                                         try
-        //                                         {
-        //                                             object o = Activator.CreateInstance(spec);
-        //                                             _specifications.Add(o as Specification);
-        //                                         }
-        //                                         catch (System.Reflection.TargetInvocationException)
-        //                                         {
-        //                                             //Can't create the object because it has a specification that hasn't been loaded yet
-        //                                             //save it for the next pass
-        //                                             delayedSpecs.Add(spec);
-        //                                             //throw;
-        //                                         }
-        //                                     });
-            
-        //    registerSpecifications(delayedSpecs);
-
-                                                 
-                                                 
-        //}
     }
 }

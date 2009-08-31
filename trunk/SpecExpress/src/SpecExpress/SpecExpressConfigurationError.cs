@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 
 namespace SpecExpress
-{
-    [Serializable]
-    public class SpecExpressConfigurationError : ApplicationException
+{ 
+    public class SpecExpressConfigurationError : Exception
     {
         public SpecExpressConfigurationError(string message)
             : base(message)

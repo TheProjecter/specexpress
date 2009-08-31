@@ -20,7 +20,11 @@ namespace SpecExpress
             PropertyType = propertyType;
         }
 
+        public abstract void AddRule(RuleValidator ruleValidator);
+        public abstract List<ValidationResult> Validate(object instance);
+        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
         public abstract List<RuleValidator> Rules { get; }
+
         public Type PropertyType { get; private set; }
         public Type EntityType { get; private set; }
         public Specification CustomSpecification { get; set; }
@@ -84,10 +88,6 @@ namespace SpecExpress
         public PropertyValidator Parent { get; set; }
         public LambdaExpression Property { get; set; }
         
-        public abstract void AddRule(RuleValidator ruleValidator);
-        public abstract List<ValidationResult> Validate(object instance);
-        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
-
         public object GetValueForProperty(object instance)
         {
             if (instance == null)

@@ -70,6 +70,7 @@
     <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\IsInPast.cs" />
     <Compile Include="Rules\DateValidators\IsInFuture.cs" />
+    <Compile Include="Rules\GeneralValidators\ForEachSpecificationRule.cs" />
     <Compile Include="Rules\GeneralValidators\Required.cs" />
     <Compile Include="Rules\GeneralValidators\SpecificationRule.cs" />
     <Compile Include="Rules\IComparableValidators\Between.cs">

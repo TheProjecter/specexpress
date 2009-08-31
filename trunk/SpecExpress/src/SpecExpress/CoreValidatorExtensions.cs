@@ -137,7 +137,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> Contains<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, IEnumerable>> valueToLookFor) where TProperty:IEnumerable
+        public static ActionJoinBuilder<T, TProperty> Contains<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, IEnumerable>> valueToLookFor) where TProperty : IEnumerable
         {
             expression.RegisterValidator(new Rules.Collection.Contains<T, TProperty>(valueToLookFor));
             return expression.JoinBuilder;

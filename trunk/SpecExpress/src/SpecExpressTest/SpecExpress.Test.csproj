@@ -104,6 +104,7 @@
     <Compile Include="Container\ValidationContainerTests.cs" />
     <Compile Include="RuleValidatorTests\BooleanTests.cs" />
     <Compile Include="RuleValidatorTests\CollectionTests.cs" />
+    <Compile Include="RuleValidatorTests\ForEachSpecificationRuleTests.cs" />
     <Compile Include="RuleValidatorTests\CustomRuleTests.cs" />
     <Compile Include="RuleValidatorTests\DateTimeValidatorTests.cs" />
     <Compile Include="RuleValidatorTests\IComparableValidatorTests.cs">

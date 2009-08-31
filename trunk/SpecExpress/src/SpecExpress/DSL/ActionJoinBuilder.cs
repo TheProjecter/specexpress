@@ -1,4 +1,6 @@
-﻿namespace SpecExpress.DSL
+﻿using System.Collections;
+
+namespace SpecExpress.DSL
 {
     /// <summary>
     /// Used to filter out Methods from RuleBuilder that aren't valid for next State
@@ -10,10 +12,21 @@
         WithBuilder<T, TProperty> With { get; }
     }
 
+    public interface IWithForCollections<T, TProperty> where TProperty : IEnumerable
+    {
+        WithBuilderForCollections<T, TProperty> With { get; }
+    }
+
     public interface IAndOr<T, TProperty>
     {
         RuleBuilder<T, TProperty> And { get; }
         RuleBuilder<T, TProperty> Or { get; }
+    }
+
+    public interface IAndOrForCollections<T, TProperty> where TProperty : IEnumerable
+    {
+        RuleBuilderForCollections<T, TProperty> And { get; }
+        RuleBuilderForCollections<T, TProperty> Or { get; }
     }
 
     public class ActionJoinBuilder<T, TProperty> : IWith<T, TProperty>, IAndOr<T, TProperty>
@@ -53,4 +66,43 @@
 
         #endregion
     }
+
+    public class ActionJoinBuilderForCollections<T, TProperty> : IWithForCollections<T, TProperty>, IAndOrForCollections<T, TProperty> where TProperty :IEnumerable
+    {
+        private readonly PropertyValidator<T, TProperty> _propertyValidator;
+
+        public ActionJoinBuilderForCollections(PropertyValidator<T, TProperty> propertyValidator)
+        {
+            _propertyValidator = propertyValidator;
+        }
+
+        #region IAndOr<T,TProperty> Members
+
+        public RuleBuilderForCollections<T, TProperty> And
+        {
+            get { return new RuleBuilderForCollections<T, TProperty>(_propertyValidator); }
+        }
+
+        public RuleBuilderForCollections<T, TProperty> Or
+        {
+            get
+            {
+                var orExpression = new PropertyValidator<T, TProperty>(_propertyValidator);
+                _propertyValidator.Child = orExpression;
+                return new RuleBuilderForCollections<T, TProperty>(_propertyValidator.Child);
+            }
+        }
+
+        #endregion
+
+        #region IWithForCollections<T,TProperty> Members
+
+        public WithBuilderForCollections<T, TProperty> With
+        {
+            get { return new WithBuilderForCollections<T, TProperty>(_propertyValidator); }
+        }
+
+        #endregion
+    }
+
 }

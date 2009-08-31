@@ -116,6 +116,9 @@
     <Compile Include="..\SpecExpress\Rules\DateValidators\IsInPast.cs">
       <Link>Rules\DateValidators\IsInPast.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\GeneralValidators\ForEachSpecificationRule.cs">
+      <Link>Rules\GeneralValidators\ForEachSpecificationRule.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\GeneralValidators\Required.cs">
       <Link>Rules\GeneralValidators\Required.cs</Link>
     </Compile>

@@ -46,6 +46,8 @@ namespace SpecExpress.Test
         {
             MessageStoreFactory.ServiceLocator = CreateCustomMessageStore();
 
+            var stores = MessageStoreFactory.ServiceLocator.GetAllInstances<IMessageStore>();
+
             var messageTemplate = MessageStoreFactory.GetMessageStore().GetMessageTemplate("MaxLength");
 
             Assert.That(messageTemplate, Is.EqualTo("{PropertyName} must be less than {0} characters. You entered {PropertyValue}."));
@@ -79,6 +81,13 @@ namespace SpecExpress.Test
                                                                                            resourceManager);
                                                                                    return messageStore;
                                                                                }).WithName("MyMessageStore");
+
+
+            registry.ForRequestedType<IMessageStore>().TheDefault.Is.ConstructedBy( context => {
+                                                                                                   return new ResourceMessageStore(); 
+            })
+            ;
+            
             
             IContainer container = new Container(registry);
             return new StructureMapServiceLocator(container);

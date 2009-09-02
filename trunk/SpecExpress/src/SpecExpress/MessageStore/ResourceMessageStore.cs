@@ -11,9 +11,21 @@ namespace SpecExpress.MessageStore
     {
         private ResourceManager _resource;
 
+        /// <summary>
+        /// Create ResourceMessageStore with specified Resource File
+        /// </summary>
+        /// <param name="resourceManager"></param>
         public ResourceMessageStore(ResourceManager resourceManager)
         {
             _resource = resourceManager;
+        }
+
+        /// <summary>
+        /// Created ResourceMessageStore with Default Resource File
+        /// </summary>
+        public ResourceMessageStore()
+        {
+            _resource = RuleErrorMessages.ResourceManager;
         }
 
         #region IMessageStore Members

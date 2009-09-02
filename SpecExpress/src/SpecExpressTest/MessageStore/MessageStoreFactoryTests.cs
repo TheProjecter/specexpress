@@ -41,7 +41,15 @@ namespace SpecExpress.Test
             Assert.That(messageTemplate, Is.EqualTo(TestRuleErrorMessages.TestRule));
         }
 
+        [Test]
+        public void GetMessageStore_StructureMapServiceLocator_DefaultStore_MaxLength_ReturnsCustomMessageStore()
+        {
+            MessageStoreFactory.ServiceLocator = CreateCustomMessageStore();
 
+            var messageTemplate = MessageStoreFactory.GetMessageStore().GetMessageTemplate("MaxLength");
+
+            Assert.That(messageTemplate, Is.EqualTo("{PropertyName} must be less than {0} characters. You entered {PropertyValue}."));
+        }
 
         /// <summary>
         /// Create a ServiceLocator for StructureMap

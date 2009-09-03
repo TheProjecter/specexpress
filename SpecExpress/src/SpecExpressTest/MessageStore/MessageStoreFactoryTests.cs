@@ -28,7 +28,7 @@ namespace SpecExpress.Test
         [Test]
         public void GetCustomMessageStore_ReturnsNamedMessageStore()
         {
-            ValidationCatalog.Configure( x => x.AddMessageStore(new ResourceMessageStore(TestRuleErrorMessages.ResourceManager), "MyMessageStore"));
+            ValidationCatalog.Configure(x => x.AddMessageStore(new ResourceMessageStore(TestRuleErrorMessages.ResourceManager), "MyMessageStore"));
             Assert.That(MessageStoreFactory.GetMessageStore("MyMessageStore"), Is.InstanceOf(typeof(ResourceMessageStore)));
 
         }
@@ -40,7 +40,7 @@ namespace SpecExpress.Test
 
             Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(SimpleMessageStore)));
 
-
+        }
     }
 
 
@@ -57,3 +57,4 @@ namespace SpecExpress.Test
         }
     }
 }
+    

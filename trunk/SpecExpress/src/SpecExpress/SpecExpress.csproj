@@ -94,6 +94,7 @@
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationCatalog.cs" />
+    <Compile Include="ValidationCatalogConfiguration.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="DSL\WithBuilder.cs" />
     <Compile Include="Enums\ValidationLevelType.cs" />

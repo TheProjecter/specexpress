@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.Practices.ServiceLocation;
+using SpecExpress.MessageStore;
 
 namespace SpecExpress
 {
@@ -12,6 +13,8 @@ namespace SpecExpress
         public static bool ValidateObjectGraph { get; set; }
 
         //public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
+
+        public static ValidationCatalogConfiguration Configuration = buildDefaultValidationConfiguration();
 
         private static IList<Specification> _registry = new List<Specification>();
 
@@ -41,6 +44,13 @@ namespace SpecExpress
             CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
         }
 
+        public static void Configure(Action<ValidationCatalogConfiguration> action)
+        {
+            //Should these rules be "disposable"? ie, not added to registry?
+            action(Configuration);
+            
+        }
+
 
         /// <summary>
         /// Evaluate an object against it's matching Specification and returns any broken rules.
@@ -68,6 +78,11 @@ namespace SpecExpress
         public static void ResetRegistries()
         {
             _registry.Clear();
+        }
+
+        public static void ResetConfiguration()
+        {
+            Configuration = buildDefaultValidationConfiguration();
         }
 
         public static void RegisterSpecification<TEntity>(SpecificationBase<TEntity> expression)
@@ -202,6 +217,15 @@ namespace SpecExpress
             }
         }
 
+        private static ValidationCatalogConfiguration buildDefaultValidationConfiguration()
+        {
+            return new ValidationCatalogConfiguration()
+            {
+                DefaultMessageStore = new ResourceMessageStore(RuleErrorMessages.ResourceManager),
+                ValidateObjectGraph = false
+            };
+            
+        }
 
         #endregion
 

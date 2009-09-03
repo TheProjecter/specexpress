@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Reflection;
 using NUnit.Framework;
+using SpecExpress.MessageStore;
 using SpecExpress.Rules.DateValidators;
 using SpecExpress.Test.Domain.Specifications;
 using SpecExpressTest.Entities;
@@ -67,5 +68,14 @@ namespace SpecExpress.Test
             var spec = ValidationCatalog.GetSpecification<SpecExpress.Test.Domain.Entities.Contact>();
             Assert.That( spec.GetType(), Is.EqualTo( typeof (ContactSpecification) ));
         }
+
+
+        [Test]
+        public void When_configuring_Catalog_and_using_default_configuration()
+        {
+            Assert.That(  ValidationCatalog.Configuration.DefaultMessageStore.GetType(), Is.EqualTo(typeof(ResourceMessageStore)));
+            Assert.That(ValidationCatalog.Configuration.ValidateObjectGraph, Is.False);
+        }
+
     }
 }

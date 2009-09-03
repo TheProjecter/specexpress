@@ -16,7 +16,7 @@ namespace SpecExpress.Test
         [TearDown]
         public void Teardown()
         {
-            MessageStoreFactory.ServiceLocator = null;
+            ValidationCatalog.ResetConfiguration();
         }
 
         [Test]
@@ -26,72 +26,20 @@ namespace SpecExpress.Test
         }
 
         [Test]
-        public void GetMessageStore_StructureMapServiceLocator_ReturnsSimpleMessageStore()
+        public void GetCustomMessageStore_ReturnsNamedMessageStore()
         {
-            MessageStoreFactory.ServiceLocator = CreateServiceLocator();
+            ValidationCatalog.Configure( x => x.AddMessageStore(new ResourceMessageStore(TestRuleErrorMessages.ResourceManager), "MyMessageStore"));
+            Assert.That(MessageStoreFactory.GetMessageStore("MyMessageStore"), Is.InstanceOf(typeof(ResourceMessageStore)));
+
         }
 
         [Test]
-        public void GetMessageStore_StructureMapServiceLocator_ReturnsCustomMessageStore()
+        public void GetMessageStore_ReturnsOverriddenDefaultMessageStore()
         {
-            MessageStoreFactory.ServiceLocator = CreateCustomMessageStore();
+            ValidationCatalog.Configure(x => x.DefaultMessageStore = new SimpleMessageStore());
 
-            var messageTemplate = MessageStoreFactory.GetMessageStore("MyMessageStore").GetMessageTemplate("TestRule");
+            Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(SimpleMessageStore)));
 
-            Assert.That(messageTemplate, Is.EqualTo(TestRuleErrorMessages.TestRule));
-        }
-
-        [Test]
-        public void GetMessageStore_StructureMapServiceLocator_DefaultStore_MaxLength_ReturnsCustomMessageStore()
-        {
-            MessageStoreFactory.ServiceLocator = CreateCustomMessageStore();
-
-            var stores = MessageStoreFactory.ServiceLocator.GetAllInstances<IMessageStore>();
-
-            var messageTemplate = MessageStoreFactory.GetMessageStore().GetMessageTemplate("MaxLength");
-
-            Assert.That(messageTemplate, Is.EqualTo("{PropertyName} must be less than {0} characters. You entered {PropertyValue}."));
-        }
-
-        /// <summary>
-        /// Create a ServiceLocator for StructureMap
-        /// </summary>
-        /// <returns>StructureMapServiceLocator</returns>
-        private IServiceLocator CreateServiceLocator()
-        {
-            Registry registry = new Registry();
-            registry.ForRequestedType<IMessageStore>().TheDefaultIsConcreteType<SimpleMessageStore>();
-            IContainer container = new Container(registry);
-            return new StructureMapServiceLocator(container);
-        }
-
-        /// <summary>
-        /// Create a ServiceLocator for StructureMap
-        /// </summary>
-        /// <returns>StructureMapServiceLocator</returns>
-        private IServiceLocator CreateCustomMessageStore()
-        {
-            var registry = new Registry();
-
-            registry.InstanceOf<IMessageStore>().Is.ConstructedBy(context => 
-                                                                               {
-                                                                                   ResourceManager resourceManager = TestRuleErrorMessages.ResourceManager;
-                                                                                   var messageStore =
-                                                                                       new ResourceMessageStore(
-                                                                                           resourceManager);
-                                                                                   return messageStore;
-                                                                               }).WithName("MyMessageStore");
-
-
-            registry.ForRequestedType<IMessageStore>().TheDefault.Is.ConstructedBy( context => {
-                                                                                                   return new ResourceMessageStore(); 
-            })
-            ;
-            
-            
-            IContainer container = new Container(registry);
-            return new StructureMapServiceLocator(container);
-        }
 
     }
 

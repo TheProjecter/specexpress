@@ -191,6 +191,9 @@
     <Compile Include="..\SpecExpress\ValidationCatalog.cs">
       <Link>ValidationCatalog.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\ValidationCatalogConfiguration.cs">
+      <Link>ValidationCatalogConfiguration.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\ValidationNotification.cs">
       <Link>ValidationNotification.cs</Link>
     </Compile>

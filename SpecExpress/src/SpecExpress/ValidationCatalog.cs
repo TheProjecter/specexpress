@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.Practices.ServiceLocation;
 using SpecExpress.MessageStore;
 
 namespace SpecExpress
@@ -135,13 +134,13 @@ namespace SpecExpress
                 //No default specs defined
                 if (!defaultSpecs.Any())
                 {   
-                    throw new ActivationException("Multiple Specifications found and none are defined as default.");
+                    throw new ApplicationException("Multiple Specifications found and none are defined as default.");
                 }
 
                 //Multiple specs defined as Default
                 if (defaultSpecs.Count() > 1)
                 {
-                    throw new ActivationException("Multiple Specifications found and multiple are defined as default.");
+                    throw new ApplicationException("Multiple Specifications found and multiple are defined as default.");
                 }
 
                 return defaultSpecs.First();
@@ -155,7 +154,7 @@ namespace SpecExpress
             var spec =  TryGetSpecification(type);
             if (spec == null)
             {
-                throw new ActivationException("No Specification for type " + type + " was found.");
+                throw new ApplicationException("No Specification for type " + type + " was found.");
             }
 
             return spec;

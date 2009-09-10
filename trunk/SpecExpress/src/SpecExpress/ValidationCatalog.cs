@@ -74,7 +74,7 @@ namespace SpecExpress
             return new ValidationNotification { Errors = specification.Validate(instance) }; 
         }
 
-        public static void ResetRegistries()
+        public static void Reset()
         {
             _registry.Clear();
         }

@@ -14,13 +14,13 @@ namespace SpecExpress.Test
         [SetUp]
         public void Setup()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
         }
 
         #endregion
@@ -33,7 +33,7 @@ namespace SpecExpress.Test
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
             Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Not.Empty);
 
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
             Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Empty);
             
         }

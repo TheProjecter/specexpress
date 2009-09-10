@@ -16,13 +16,13 @@ namespace SpecExpress.Test.RuleValidatorTests
         [SetUp]
         public void Setup()
         {
-             ValidationCatalog.ResetRegistries();
+             ValidationCatalog.Reset();
         }
 
         [TearDown]
         public void TearDown()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
         }
 
         #endregion

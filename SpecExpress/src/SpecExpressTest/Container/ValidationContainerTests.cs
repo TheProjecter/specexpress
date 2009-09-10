@@ -21,6 +21,13 @@ namespace SpecExpress.Test
             //ValidationContainer.Scan(x => x.TheCallingAssembly());
         }
 
+        [TearDown]
+        public void Teardown()
+        {
+            //Reset Catalog
+            ValidationCatalog.Reset();
+        }
+
         #endregion
 
         [Test]

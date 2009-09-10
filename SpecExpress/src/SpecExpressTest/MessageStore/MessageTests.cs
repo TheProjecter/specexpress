@@ -13,7 +13,7 @@ namespace SpecExpress.Test
         [SetUp]
         public void Setup()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
         }
 
         [TearDown]

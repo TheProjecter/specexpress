@@ -14,7 +14,7 @@ namespace SpecExpress.Test
         [SetUp]
         public void Setup()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
 
             //Load specifications
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
@@ -24,7 +24,7 @@ namespace SpecExpress.Test
         [TearDown]
         public void TearDown()
         {
-            ValidationCatalog.ResetRegistries();
+            ValidationCatalog.Reset();
         }
 
         #endregion

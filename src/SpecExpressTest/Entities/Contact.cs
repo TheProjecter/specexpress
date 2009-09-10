@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using SpecExpress.Test.Entities;
+
 
 namespace SpecExpressTest.Entities
 {
@@ -14,5 +16,6 @@ namespace SpecExpressTest.Entities
         public List<string> Aliases { get; set; }
         public bool Active { get; set; }
         public string NamePattern { get; set; }
+        public Customer Parent { get; set; }
     }
 }

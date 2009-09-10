@@ -10,7 +10,7 @@ namespace SpecExpress.Rules.GeneralValidators
 {
     public class ForEachSpecificationRule<T, TProperty> : RuleValidator<T, TProperty>
     {
-        protected Specification SpecificationForRule;
+        protected SpecificationRule<T, TProperty> SpecificationForRule;
         public override object[] Parameters
         {
             get { return new object[] { }; }
@@ -20,9 +20,9 @@ namespace SpecExpress.Rules.GeneralValidators
         /// Validate using designated specification
         /// </summary>
         /// <param name="specification"></param>
-        public ForEachSpecificationRule(Specification specification)
+        public ForEachSpecificationRule(SpecificationBase<TProperty> specification)
         {
-            SpecificationForRule = specification;
+            SpecificationForRule = new SpecificationRule<T, TProperty>(specification);
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace SpecExpress.Rules.GeneralValidators
         /// </summary>
         public ForEachSpecificationRule(Type collectionType)
         {
-            SpecificationForRule = ValidationCatalog.GetSpecification(collectionType);
+            SpecificationForRule = new SpecificationRule<T, TProperty>(collectionType);
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
@@ -46,10 +46,13 @@ namespace SpecExpress.Rules.GeneralValidators
             }
 
 
+            //IMPLEMENT
             int index = 1;
             foreach (var item in propertyEnumerable)
             {
-                var itemErrors = SpecificationForRule.Validate(item);
+                var itemContext = RuleValidatorContext.CreateFromParentContext(item, context);
+
+                var itemErrors = SpecificationForRule.Validate(itemContext);
                 if (itemErrors.Any())
                 {
                     var itemError = ValidationResultFactory.Create(this, context, Parameters, item.GetType().Name + " " + index + " in {PropertyName} is invalid.", MessageStoreName, MessageKey);

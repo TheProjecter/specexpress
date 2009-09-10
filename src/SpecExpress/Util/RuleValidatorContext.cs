@@ -4,12 +4,43 @@ using SpecExpress.Util;
 
 namespace SpecExpress.Rules
 {
-    public abstract class RuleValidatorContext
+    public class RuleValidatorContext
     {
         public RuleValidatorContext Parent { get; internal set; }
         public string PropertyName { get; protected set; }
         public object PropertyValue { get; protected set; }
         public MemberInfo PropertyInfo { get; set; }
+        public PropertyValidator ParentPropertyValidator { get; protected set; }
+
+        protected object Instance { get; set; }
+       
+        public RuleValidatorContext(object instance, PropertyValidator validator, RuleValidatorContext parentContext)
+        {
+            ParentPropertyValidator = validator;
+            PropertyName = String.IsNullOrEmpty(validator.PropertyNameOverride)
+                              ? validator.PropertyName.SplitPascalCase()
+                              : validator.PropertyNameOverride;
+            PropertyValue = validator.GetValueForProperty(instance);
+            PropertyInfo = validator.PropertyInfo;
+            Parent = parentContext;
+            Instance = instance;
+        }
+
+        public RuleValidatorContext(object instance, string propertyName, object propertyValue, MemberInfo propertyInfo,
+                                    RuleValidatorContext parentContext)
+        {
+            ParentPropertyValidator = new PropertyValidator(propertyValue.GetType(), propertyInfo.ReflectedType); //remove abstract from PropertyValidator
+            PropertyName = propertyName;
+            PropertyValue = propertyValue;
+            PropertyInfo = propertyInfo;
+            Parent = parentContext;
+            Instance = instance;
+        }
+
+        public static RuleValidatorContext CreateFromParentContext(object instance, RuleValidatorContext parent)
+        {
+            return new RuleValidatorContext(instance, parent.ParentPropertyValidator, parent);
+        }
     }
 
     /// <summary>
@@ -19,28 +50,16 @@ namespace SpecExpress.Rules
     /// <typeparam name="TProperty"></typeparam>
     public class RuleValidatorContext<T, TProperty> : RuleValidatorContext
     {
-        protected T _instance;
-
         public RuleValidatorContext(T instance, PropertyValidator<T, TProperty> validator,
-                                    RuleValidatorContext parentContext)
-        {
-            PropertyName = String.IsNullOrEmpty(validator.PropertyNameOverride)
-                               ? validator.PropertyName.SplitPascalCase()
-                               : validator.PropertyNameOverride;
-            PropertyValue = (TProperty) validator.GetValueForProperty(instance);
-            PropertyInfo = validator.PropertyInfo;
-            Parent = parentContext;
-            _instance = instance;
+                                    RuleValidatorContext parentContext) : base(instance, validator, parentContext)
+        {  
+            
         }
 
         public RuleValidatorContext(T instance, string propertyName, TProperty propertyValue, MemberInfo propertyInfo,
-                                    RuleValidatorContext parentContext)
+                                    RuleValidatorContext parentContext) : base(instance, propertyName, propertyValue, propertyInfo, parentContext )
         {
-            PropertyName = propertyName;
-            PropertyValue = propertyValue;
-            PropertyInfo = propertyInfo;
-            Parent = parentContext;
-            _instance = instance;
+           
         }
 
         public new TProperty PropertyValue
@@ -49,9 +68,9 @@ namespace SpecExpress.Rules
             set { base.PropertyValue = value; }
         }
 
-        public T Instance
+        public new T Instance
         {
-            get { return _instance; }
+            get { return (T)Instance; }
         }
     }
 }

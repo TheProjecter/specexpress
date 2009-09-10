@@ -80,7 +80,7 @@ namespace SpecExpress
 
         public List<ValidationResult> Validate(T instance)
         {
-            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+            return Validate(instance);
         }
 
         private PropertyValidator<T, TProperty> registerValidator<TProperty>(Expression<Func<T, TProperty>> expression)

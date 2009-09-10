@@ -101,5 +101,41 @@ namespace SpecExpress.Test
 
         }
 
+        [Test]
+        public void Validate_ComplexTypes_Autowireup_RecursiveRelationship_Throws_StackOverflow()
+        {
+            //Build test data
+            var customer = new Customer() { Name = "TestCustomer" };
+            
+            var validContact = new Contact() { FirstName = "Johnny B", LastName = "Good", Parent = customer};
+            var invalidContact = new Contact() { FirstName = "Baddy", Parent = customer };
+
+            customer.Contacts = new List<Contact>() { validContact, invalidContact };
+
+            //Build specifications
+            ValidationCatalog.AddSpecification<Customer>(spec =>
+            {
+                spec.Check(cust => cust.Name).Required();
+                spec.Check(cust => cust.Contacts).Required();
+            });
+
+            ValidationCatalog.AddSpecification<Contact>(spec =>
+            {
+                spec.Check(c => c.FirstName).Required();
+                spec.Check(c => c.LastName).Required();
+                spec.Check(c => c.Parent).Required(); //recursive
+            });
+
+
+            ValidationCatalog.ValidateObjectGraph = true;
+
+            //Validate
+            var results = ValidationCatalog.Validate(customer);
+
+            Assert.That(results.Errors.Count, Is.AtLeast(1));
+
+        }
+
+
     }
 }

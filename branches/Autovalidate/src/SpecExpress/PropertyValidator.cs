@@ -15,7 +15,9 @@ namespace SpecExpress
 {
     public abstract class PropertyValidator
     {
-        protected PropertyValidator(Type entityType, Type propertyType)
+        private List<int> _validatedObjects = new List<int>();
+
+        internal PropertyValidator(Type entityType, Type propertyType)
         {
             EntityType = entityType;
             PropertyType = propertyType;
@@ -133,6 +135,16 @@ namespace SpecExpress
             }
             return null;
         }
+
+        internal void AddValidatedObject(object o)
+        {
+            _validatedObjects.Add(o.GetHashCode());
+        }
+
+        internal List<int> ValidatedObjectHashCodes
+        {
+            get { return _validatedObjects; }
+        }
     }
 
     public abstract class PropertyValidator<T> : PropertyValidator
@@ -150,7 +162,33 @@ namespace SpecExpress
 
         public override List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContext)
         {
-            return Validate((T) instance, parentRuleContext);
+            //Check if this object has been already validated up the heirarchy
+
+            var pv = Parent;
+            bool objectAlreadyValidated = false;
+
+            while (pv != null)
+            {
+                var found = from hashcode in pv.ValidatedObjectHashCodes
+                            where hashcode == instance.GetHashCode()
+                            select hashcode;
+                if (found.Any())
+                {
+                    objectAlreadyValidated = true;
+                }
+
+                pv = pv.Parent;
+            }
+
+            if (!objectAlreadyValidated)
+            {
+                return Validate((T) instance, parentRuleContext);
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         public override List<ValidationResult> Validate(object instance)
@@ -243,17 +281,16 @@ namespace SpecExpress
             if (Condition == null || (Condition != null && Condition(instance)))
             {
                 var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
-                var list = new List<ValidationResult>();
-
-                if (ValidationCatalog.ValidateObjectGraph)
+               
+                if (ValidationCatalog.ValidateObjectGraph && context.PropertyValue != null)
                 {
                     //Check if this Property Type has a Registered specification to validate with and the instance of the property
                     //isn't already invalid. For example if a property is required and the object is null, then 
                     //don't continue validating the object
-                    ValidateObjectGraph(context, list);
+                    AddRulesForKnownTypes(context.PropertyValue);
                 }
 
-                list =
+                List<ValidationResult> list =
                     _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 
 
@@ -279,54 +316,34 @@ namespace SpecExpress
             }
         }
 
-        private void ValidateObjectGraph(RuleValidatorContext<T, TProperty> context, List<ValidationResult> list)
+        private void AddRulesForKnownTypes(object propertyValue)
         {
-            if (!list.Any() && ValidationCatalog.TryGetSpecification(typeof(TProperty)) != null)
+            if (ValidationCatalog.TryGetSpecification(PropertyType) != null)
             {
+                //This is a known type, add a SpecificationRule to validate specification using the Default Specification
                 _rules.Add(new SpecificationRule<T, TProperty>());
-                ////Spec found, use it to validate
-                //Specification specification = ValidationCatalog.GetSpecification(typeof (TProperty));
-                ////Add any errors to the existing list of errors
-                //list.AddRange(
-                //    specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
+              
             }
 
             //Validate each item in a Collection if a registered specification is found
             //if there aren't already errors, the value is a collection and it's not a string, then iterate over
             //each item, looking for a registered specification
-            if (!list.Any() && context.PropertyValue is IEnumerable && !(context.PropertyValue is string))
+            if (propertyValue is IEnumerable && !(propertyValue is string))
             {
-                //TODO: check if each item in the collection is the same type
-
-               
-
-                //Object being validated is a collection.
-                //Check if the type in the collection has a Specification
-                IEnumerator enumerator = ((IEnumerable)context.PropertyValue).GetEnumerator();
-                enumerator.MoveNext();
-                Type collectionType = enumerator.Current.GetType();
-
-                if (ValidationCatalog.TryGetSpecification(collectionType) != null)
+                //Get the type of the first object in the collection
+                IEnumerator enumerator = ((IEnumerable)propertyValue).GetEnumerator();
+                //Check if collection is empty
+                if (enumerator.MoveNext())
                 {
-                    //Add ForEachSpecificationRule Rule for this property and call validate
-                    _rules.Add(new ForEachSpecificationRule<T, TProperty>(collectionType));
+                    Type collectionType = enumerator.Current.GetType();
+
+                    //Check if the type in the collection is a known type
+                    if (ValidationCatalog.TryGetSpecification(collectionType) != null)
+                    {
+                        //Add ForEachSpecificationRule Rule for this property
+                        _rules.Add(new ForEachSpecificationRule<T, TProperty>(collectionType));
+                    }
                 }
-
-              
-
-
-
-                //while (enumerator.MoveNext())
-                //{
-                //    if (ValidationCatalog.TryGetSpecification( enumerator.Current.GetType()) != null)
-                //    {
-                //        //Spec found, use it to validate
-                //        var specification = ValidationCatalog.GetSpecification( enumerator.Current.GetType());
-                //        //Add any errors to the existing list of errors
-                //        list.AddRange(
-                //            specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
-                //    }
-                //}
             }
         }
     }

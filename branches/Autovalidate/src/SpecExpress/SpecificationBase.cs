@@ -41,6 +41,7 @@ namespace SpecExpress
                  return this.GetType().BaseType.GetGenericArguments().FirstOrDefault();
             }
         }
+
         #region Check
 
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,

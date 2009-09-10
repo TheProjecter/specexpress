@@ -8,9 +8,9 @@ using System.Text;
 
 namespace SpecExpress.Rules.GeneralValidators
 {
-    public class ForEachSpecificationRule<T, TProperty, TCollectionType> : RuleValidator<T, TProperty> 
+    public class ForEachSpecificationRule<T, TProperty> : RuleValidator<T, TProperty>
     {
-        private SpecificationBase<TCollectionType> _specification;
+        protected Specification SpecificationForRule;
         public override object[] Parameters
         {
             get { return new object[] { }; }
@@ -20,41 +20,25 @@ namespace SpecExpress.Rules.GeneralValidators
         /// Validate using designated specification
         /// </summary>
         /// <param name="specification"></param>
-        public ForEachSpecificationRule(SpecificationBase<TCollectionType> specification)
+        public ForEachSpecificationRule(Specification specification)
         {
-            _specification = specification;
+            SpecificationForRule = specification;
         }
 
         /// <summary>
         /// Validation Property with default Specification from Registry
         /// </summary>
-        public ForEachSpecificationRule()
+        public ForEachSpecificationRule(Type collectionType)
         {
-            _specification = ValidationCatalog.GetSpecification<TCollectionType>();
+            SpecificationForRule = ValidationCatalog.GetSpecification(collectionType);
         }
-
-        //public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
-        //{
-        //    var list =  _specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList();
-            
-        //    ValidationResult result = null;
-
-        //    if (list.Any())
-        //    {
-        //        result = ValidationResultFactory.Create(this, context, Parameters, "{PropertyName} is invalid.", MessageStoreName, MessageKey);
-        //        result.NestedValdiationResults = list;
-        //    }
-
-        //    return result;
-        //}
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
             ValidationResult collectionValidationResult = null;
-            ////StringBuilder sb = new StringBuilder();
             var itemsNestedValidationResult = new List<ValidationResult>();
 
-            var propertyEnumerable = ( (IEnumerable)(context.PropertyValue));
+            var propertyEnumerable = ((IEnumerable)(context.PropertyValue));
 
             if (propertyEnumerable == null)
             {
@@ -64,8 +48,8 @@ namespace SpecExpress.Rules.GeneralValidators
 
             int index = 1;
             foreach (var item in propertyEnumerable)
-            {  
-                var itemErrors = _specification.Validate(item);
+            {
+                var itemErrors = SpecificationForRule.Validate(item);
                 if (itemErrors.Any())
                 {
                     var itemError = ValidationResultFactory.Create(this, context, Parameters, item.GetType().Name + " " + index + " in {PropertyName} is invalid.", MessageStoreName, MessageKey);
@@ -83,34 +67,27 @@ namespace SpecExpress.Rules.GeneralValidators
             }
 
             return collectionValidationResult;
+        }
+    }
 
-            //if (sb.Length > 0)
-            //{
-            //    listValidationResult = ValidationResultFactory.Create(this, context, Parameters, "{PropertyName} is invalid.", MessageStoreName, MessageKey);
-            //    listValidationResult.NestedValdiationResults = list;
-            //}
-            //else
-            //{
-            //    return null;
-            //}
+
+    public class ForEachSpecificationRule<T, TProperty, TCollectionType> : ForEachSpecificationRule<T, TProperty>
+    {
+        /// <summary>
+        /// Validate using designated specification
+        /// </summary>
+        /// <param name="specification"></param>
+        public ForEachSpecificationRule(SpecificationBase<TCollectionType> specification) : base(specification)
+        {
+            
         }
 
-        //private string CreateErrorMessage(object value)
-        //{
-        //    string message = _errorMessageTemplate;
-        //    Type valueType = value.GetType();
-        //    var valueProperties = valueType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-        //    foreach (var property in valueProperties)
-        //    {
-        //        string propertySearchString = "{" + property.Name + "}";
-        //        if (message.Contains(propertySearchString))
-        //        {
-        //            message = message.Replace(propertySearchString, property.GetValue(value, null).ToString());
-        //        }
-        //    }
-
-        //    return message;
-        //}
+        /// <summary>
+        /// Validation Property with default Specification from Registry
+        /// </summary>
+        public ForEachSpecificationRule() :base(typeof(TCollectionType))
+        {
+            
+        }
     }
 }

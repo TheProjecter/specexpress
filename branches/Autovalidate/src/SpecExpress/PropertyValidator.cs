@@ -8,6 +8,7 @@ using System.Text;
 using SpecExpress.Enums;
 using SpecExpress.Rules;
 using SpecExpress.Rules.General;
+using SpecExpress.Rules.GeneralValidators;
 using SpecExpress.Util;
 
 namespace SpecExpress
@@ -242,9 +243,7 @@ namespace SpecExpress
             if (Condition == null || (Condition != null && Condition(instance)))
             {
                 var context = new RuleValidatorContext<T, TProperty>(instance, this, parentRuleContext);
-
-                List<ValidationResult> list =
-                    _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+                var list = new List<ValidationResult>();
 
                 if (ValidationCatalog.ValidateObjectGraph)
                 {
@@ -253,6 +252,10 @@ namespace SpecExpress
                     //don't continue validating the object
                     ValidateObjectGraph(context, list);
                 }
+
+                list =
+                    _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+
 
                 // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
                 if (list.Any() && Child != null)
@@ -280,11 +283,12 @@ namespace SpecExpress
         {
             if (!list.Any() && ValidationCatalog.TryGetSpecification(typeof(TProperty)) != null)
             {
-                //Spec found, use it to validate
-                Specification specification = ValidationCatalog.GetSpecification(typeof (TProperty));
-                //Add any errors to the existing list of errors
-                list.AddRange(
-                    specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
+                _rules.Add(new SpecificationRule<T, TProperty>());
+                ////Spec found, use it to validate
+                //Specification specification = ValidationCatalog.GetSpecification(typeof (TProperty));
+                ////Add any errors to the existing list of errors
+                //list.AddRange(
+                //    specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList());
             }
 
             //Validate each item in a Collection if a registered specification is found
@@ -292,21 +296,37 @@ namespace SpecExpress
             //each item, looking for a registered specification
             if (!list.Any() && context.PropertyValue is IEnumerable && !(context.PropertyValue is string))
             {
+                //TODO: check if each item in the collection is the same type
+
+               
+
                 //Object being validated is a collection.
                 //Check if the type in the collection has a Specification
                 IEnumerator enumerator = ((IEnumerable)context.PropertyValue).GetEnumerator();
+                enumerator.MoveNext();
+                Type collectionType = enumerator.Current.GetType();
 
-                while (enumerator.MoveNext())
+                if (ValidationCatalog.TryGetSpecification(collectionType) != null)
                 {
-                    if (ValidationCatalog.TryGetSpecification( enumerator.Current.GetType()) != null)
-                    {
-                        //Spec found, use it to validate
-                        var specification = ValidationCatalog.GetSpecification( enumerator.Current.GetType());
-                        //Add any errors to the existing list of errors
-                        list.AddRange(
-                            specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
-                    }
+                    //Add ForEachSpecificationRule Rule for this property and call validate
+                    _rules.Add(new ForEachSpecificationRule<T, TProperty>(collectionType));
                 }
+
+              
+
+
+
+                //while (enumerator.MoveNext())
+                //{
+                //    if (ValidationCatalog.TryGetSpecification( enumerator.Current.GetType()) != null)
+                //    {
+                //        //Spec found, use it to validate
+                //        var specification = ValidationCatalog.GetSpecification( enumerator.Current.GetType());
+                //        //Add any errors to the existing list of errors
+                //        list.AddRange(
+                //            specification.PropertyValidators.SelectMany(x => x.Validate(enumerator.Current, context)).ToList());
+                //    }
+                //}
             }
         }
     }

@@ -22,7 +22,7 @@ namespace SpecExpress
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="rules"></param>
-        public static void AddSpecification<TEntity>(Action<SpecificationBase<TEntity>> rules)
+        public static void AddSpecification<TEntity>(Action<Validates<TEntity>> rules)
         {
             //Should these rules be "disposable"? ie, not added to registry?
             var specification = new SpecificationExpression<TEntity>();
@@ -84,7 +84,7 @@ namespace SpecExpress
             Configuration = buildDefaultValidationConfiguration();
         }
 
-        public static void RegisterSpecification<TEntity>(SpecificationBase<TEntity> expression)
+        public static void RegisterSpecification<TEntity>(Validates<TEntity> expression)
         {
             RegisterSpecificationWithRegistry(expression);
         }
@@ -133,14 +133,14 @@ namespace SpecExpress
 
                 //No default specs defined
                 if (!defaultSpecs.Any())
-                {   
-                    throw new ApplicationException("Multiple Specifications found and none are defined as default.");
+                {
+                    throw new SpecExpressConfigurationError("Multiple Specifications found and none are defined as default.");
                 }
 
                 //Multiple specs defined as Default
                 if (defaultSpecs.Count() > 1)
                 {
-                    throw new ApplicationException("Multiple Specifications found and multiple are defined as default.");
+                    throw new SpecExpressConfigurationError("Multiple Specifications found and multiple are defined as default.");
                 }
 
                 return defaultSpecs.First();
@@ -154,20 +154,20 @@ namespace SpecExpress
             var spec =  TryGetSpecification(type);
             if (spec == null)
             {
-                throw new ApplicationException("No Specification for type " + type + " was found.");
+                throw new SpecExpressConfigurationError("No Specification for type " + type + " was found.");
             }
 
             return spec;
         }
 
-        public static SpecificationBase<TType> GetSpecification<TType>()
+        public static Validates<TType> GetSpecification<TType>()
         {
-            return GetSpecification(typeof(TType)) as SpecificationBase<TType>;
+            return GetSpecification(typeof(TType)) as Validates<TType>;
         }
 
-        public static SpecificationBase<TType> TryGetSpecification<TType>()
+        public static Validates<TType> TryGetSpecification<TType>()
         {
-            return TryGetSpecification(typeof(TType)) as SpecificationBase<TType>;
+            return TryGetSpecification(typeof(TType)) as Validates<TType>;
         }
 
         public static IList<Specification> GetAllSpecifications()

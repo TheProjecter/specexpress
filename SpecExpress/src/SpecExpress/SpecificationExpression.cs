@@ -1,6 +1,6 @@
-﻿namespace SpecExpress
+namespace SpecExpress
 {
-    internal class SpecificationExpression<T> : SpecificationBase<T>
+    internal class SpecificationExpression<T> : Validates<T>
     {
     }
 }

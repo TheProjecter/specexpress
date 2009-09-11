@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ namespace SpecExpress.Rules.GeneralValidators
 {
     public class SpecificationRule<T, TProperty> : RuleValidator<T, TProperty>
     {
-        private SpecificationBase<TProperty> _specification;
+        private Validates<TProperty> _specification;
         public override object[] Parameters
         {
             get { return new object[] { }; }
@@ -17,7 +17,7 @@ namespace SpecExpress.Rules.GeneralValidators
         /// Validate using designated specification
         /// </summary>
         /// <param name="specification"></param>
-        public SpecificationRule(SpecificationBase<TProperty> specification)
+        public SpecificationRule(Validates<TProperty> specification)
         {
             _specification = specification;
         }

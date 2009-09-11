@@ -85,6 +85,7 @@
     <Compile Include="Rules\StringValidators\LengthBetween.cs" />
     <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecExpressConfigurationError.cs" />
+    <Compile Include="Specification.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="ValidationCatalog.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Util\ExpressionExtensions.cs" />
     <Compile Include="Util\StringExtensions.cs" />
     <Compile Include="Util\RuleValidatorContext.cs" />
-    <Compile Include="SpecificationBase.cs" />
+    <Compile Include="Validates.cs" />
     <Compile Include="ValidationResult.cs" />
     <Compile Include="PropertyValidator.cs" />
     <Compile Include="ValidationResultFactory.cs" />

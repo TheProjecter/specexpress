@@ -170,8 +170,8 @@
     <Compile Include="..\SpecExpress\SpecExpressConfigurationError.cs">
       <Link>SpecExpressConfigurationError.cs</Link>
     </Compile>
-    <Compile Include="..\SpecExpress\SpecificationBase.cs">
-      <Link>SpecificationBase.cs</Link>
+    <Compile Include="..\SpecExpress\Specification.cs">
+      <Link>Specification.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\SpecificationExpression.cs">
       <Link>SpecificationExpression.cs</Link>
@@ -187,6 +187,9 @@
     </Compile>
     <Compile Include="..\SpecExpress\Util\StringExtensions.cs">
       <Link>Util\StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\Validates.cs">
+      <Link>Validates.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\ValidationCatalog.cs">
       <Link>ValidationCatalog.cs</Link>

@@ -10,7 +10,7 @@ namespace SpecExpress.Rules.GeneralValidators
 {
     public class ForEachSpecificationRule<T, TProperty, TCollectionType> : RuleValidator<T, TProperty> 
     {
-        private SpecificationBase<TCollectionType> _specification;
+        private Validates<TCollectionType> _specification;
         public override object[] Parameters
         {
             get { return new object[] { }; }
@@ -20,7 +20,7 @@ namespace SpecExpress.Rules.GeneralValidators
         /// Validate using designated specification
         /// </summary>
         /// <param name="specification"></param>
-        public ForEachSpecificationRule(SpecificationBase<TCollectionType> specification)
+        public ForEachSpecificationRule(Validates<TCollectionType> specification)
         {
             _specification = specification;
         }

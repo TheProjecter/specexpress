@@ -2,7 +2,7 @@
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class CustomerSpecification : SpecificationBase<Customer>
+    public class CustomerSpecification : Validates<Customer>
     {
         public CustomerSpecification()
         {

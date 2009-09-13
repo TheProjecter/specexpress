@@ -47,7 +47,7 @@ namespace SpecExpress.DSL
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
         /// <returns></returns>
-        public IAndOr<T, TProperty> Specification<TSpecType>() where TSpecType:SpecificationBase<TProperty>, new()
+        public IAndOr<T, TProperty> Specification<TSpecType>() where TSpecType:Validates<TProperty>, new()
         {
             TSpecType specification = new TSpecType();
             var specRule = new SpecificationRule<T, TProperty>(specification);
@@ -62,7 +62,7 @@ namespace SpecExpress.DSL
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
         /// <returns></returns>
-        public IAndOr<T, TProperty> Specification(Action<SpecificationBase<TProperty>> rules)
+        public IAndOr<T, TProperty> Specification(Action<Validates<TProperty>> rules)
         {   
             var specification = new SpecificationExpression<TProperty>();
             rules(specification);
@@ -82,7 +82,7 @@ namespace SpecExpress.DSL
         /// <typeparam name="TCollectionType"></typeparam>
         /// <param name="rules"></param>
         /// <returns></returns>
-        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<SpecificationBase<TCollectionType>> rules)
+        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<Validates<TCollectionType>> rules)
         {
             var specification = new SpecificationExpression<TCollectionType>();
             rules(specification);
@@ -102,7 +102,7 @@ namespace SpecExpress.DSL
         /// <typeparam name="TCollectionSpecType"></typeparam>
         /// <returns></returns>
         public IAndOr<T, TProperty> ForEachSpecification<TCollectionType, TCollectionSpecType>()
-            where TCollectionSpecType : SpecificationBase<TCollectionType>, new()
+            where TCollectionSpecType : Validates<TCollectionType>, new()
         {
             var specification = new TCollectionSpecType();
             var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>(specification);
@@ -167,7 +167,7 @@ namespace SpecExpress.DSL
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
         /// <returns></returns>
-        public IAndOrForCollections<T, TProperty> Specification<TSpecType>() where TSpecType : SpecificationBase<TProperty>, new()
+        public IAndOrForCollections<T, TProperty> Specification<TSpecType>() where TSpecType : Validates<TProperty>, new()
         {
             TSpecType specification = new TSpecType();
             var specRule = new SpecificationRule<T, TProperty>(specification);
@@ -182,7 +182,7 @@ namespace SpecExpress.DSL
         /// Sets Specification used to validate this Property to the Default
         /// </summary>
         /// <returns></returns>
-        public IAndOrForCollections<T, TProperty> Specification(Action<SpecificationBase<TProperty>> rules)
+        public IAndOrForCollections<T, TProperty> Specification(Action<Validates<TProperty>> rules)
         {
             var specification = new SpecificationExpression<TProperty>();
             rules(specification);
@@ -221,7 +221,7 @@ namespace SpecExpress.DSL
         /// <typeparam name="TCollectionType"></typeparam>
         /// <param name="rules"></param>
         /// <returns></returns>
-        public IAndOrForCollections<T, TProperty> ForEachSpecification<TCollectionType>(Action<SpecificationBase<TCollectionType>> rules)
+        public IAndOrForCollections<T, TProperty> ForEachSpecification<TCollectionType>(Action<Validates<TCollectionType>> rules)
         {
             var specification = new SpecificationExpression<TCollectionType>();
             rules(specification);

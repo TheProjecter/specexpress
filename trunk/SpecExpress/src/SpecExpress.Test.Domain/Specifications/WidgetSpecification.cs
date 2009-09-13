@@ -6,7 +6,7 @@ using SpecExpress.Test.Domain.Entities;
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class WidgetSpecification : SpecificationBase<Widget>
+    public class WidgetSpecification : Validates<Widget>
     {
         public WidgetSpecification()
         {

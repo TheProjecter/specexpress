@@ -3,7 +3,7 @@ using SpecExpress.Test.Domain.Values;
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class AddressSpecification : SpecificationBase<Address>
+    public class AddressSpecification : Validates<Address>
     {
         public AddressSpecification()
         {

@@ -6,7 +6,7 @@ using SpecExpressTest.Entities;
 
 namespace SpecExpressTest
 {
-    public class ContactSpecification : SpecificationBase<Contact>
+    public class ContactSpecification : Validates<Contact>
     {
         public ContactSpecification()
         {

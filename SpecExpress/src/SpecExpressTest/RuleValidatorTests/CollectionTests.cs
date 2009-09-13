@@ -8,7 +8,7 @@ using SpecExpressTest.Entities;
 namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
-    public class CollectionTests : SpecificationBase<Contact>
+    public class CollectionTests : Validates<Contact>
     {
         [TestCase("string1", Result = true, TestName = "CollectionContains")]
         [TestCase("string100", Result = false, TestName = "CollectionDoesNotContain")]

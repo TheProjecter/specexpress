@@ -2,7 +2,7 @@
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class ContactSpecification : SpecificationBase<Contact>
+    public class ContactSpecification : Validates<Contact>
     {
         public ContactSpecification()
         {

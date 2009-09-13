@@ -7,7 +7,7 @@ using SpecExpressTest.Entities;
 
 namespace SpecExpressTest
 {
-    public class CustomerAddressSpecification : SpecificationBase<Customer>
+    public class CustomerAddressSpecification : Validates<Customer>
     {
         public CustomerAddressSpecification()
         {

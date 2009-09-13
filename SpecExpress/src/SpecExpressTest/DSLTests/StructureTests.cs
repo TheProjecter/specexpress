@@ -13,7 +13,7 @@ namespace SpecExpress.Test.DSLTests
     /// This class is not actually a unit test but rather verifies that the format structure of the DSL does not change by
     /// making sure varients of the structure compile without issue.
     /// </summary>
-    public class StructureTests : SpecificationBase<Customer>
+    public class StructureTests : Validates<Customer>
     {
         /// <summary>
         /// Ensures that various Check statements compile:

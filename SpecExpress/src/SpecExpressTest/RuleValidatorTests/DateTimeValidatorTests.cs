@@ -8,7 +8,7 @@ using SpecExpress.Rules;
 namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
-    public class DateTimeValidatorTests : SpecificationBase<CalendarEvent>
+    public class DateTimeValidatorTests : Validates<CalendarEvent>
     {
         [TestCase("1/1/2009", "12/1/2009", Result = false, TestName = "DateOnlyPropertyValueIsBefore")]
         [TestCase("1/1/2010", "12/1/2009", Result = true, TestName = "DateOnlyPropertyValueIsAfter")]

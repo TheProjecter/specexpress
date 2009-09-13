@@ -8,7 +8,7 @@ using SpecExpress.Rules.IComparableValidators;
 namespace SpecExpress.Test.RuleValidatorTests
 {
     [TestFixture]
-    public class IComparableValidatorTests : SpecificationBase<Contact>
+    public class IComparableValidatorTests : Validates<Contact>
     {
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]

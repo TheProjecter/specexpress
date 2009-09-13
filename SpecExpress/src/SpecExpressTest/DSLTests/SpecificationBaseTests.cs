@@ -6,11 +6,11 @@ using SpecExpress.Test.Entities;
 namespace SpecExpress.Test.DSLTests
 {
     /// <summary>
-    /// Test Fixture for the SpecificationBase which confirms that it modifies the PropertyValidator appropriatly and
+    /// Test Fixture for the Validates which confirms that it modifies the PropertyValidator appropriatly and
     /// returns the next appropriate builder in the DSL.
     /// </summary>
     [TestFixture]
-    public class SpecificationBaseTests : SpecificationBase<Customer>
+    public class ValidatesTests : Validates<Customer>
     {
         #region Setup/Teardown
 

@@ -6,7 +6,7 @@ using SpecExpressTest.Entities;
 
 namespace SpecExpress.Test
 {
-    public class InternationalAddressSpecification : SpecificationBase<Address>
+    public class InternationalAddressSpecification : Validates<Address>
     {
         public InternationalAddressSpecification()
         {

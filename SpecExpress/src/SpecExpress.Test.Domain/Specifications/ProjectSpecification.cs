@@ -1,7 +1,7 @@
 using SpecExpress.Test.Domain.Entities;
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class ProjectSpecification : SpecificationBase<Project>
+    public class ProjectSpecification : Validates<Project>
     {
         public ProjectSpecification()
         {

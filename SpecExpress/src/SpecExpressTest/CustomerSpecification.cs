@@ -4,7 +4,7 @@ using SpecExpress.Test.Entities;
 
 namespace SpecExpressTest
 {
-    public class CustomerSpecification : SpecificationBase<Customer>
+    public class CustomerSpecification : Validates<Customer>
     {
         public CustomerSpecification()
         {

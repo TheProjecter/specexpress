@@ -2,7 +2,7 @@
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class DeleteContactSpecification : SpecificationBase<Contact>
+    public class DeleteContactSpecification : Validates<Contact>
     {
         public DeleteContactSpecification()
         {

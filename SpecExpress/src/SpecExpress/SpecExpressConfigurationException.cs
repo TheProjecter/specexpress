@@ -5,9 +5,9 @@ using System.Text;
 
 namespace SpecExpress
 { 
-    public class SpecExpressConfigurationError : Exception
+    public class SpecExpressConfigurationException : Exception
     {
-        public SpecExpressConfigurationError(string message)
+        public SpecExpressConfigurationException(string message)
             : base(message)
         {
 

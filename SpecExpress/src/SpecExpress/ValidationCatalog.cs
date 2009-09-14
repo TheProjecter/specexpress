@@ -105,7 +105,7 @@ namespace SpecExpress
             if (invalidPropertyValidators.Any())
             {
                 var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
-                throw new SpecExpressConfigurationError(errorString);
+                throw new SpecExpressConfigurationException(errorString);
             }
         }
 
@@ -134,13 +134,13 @@ namespace SpecExpress
                 //No default specs defined
                 if (!defaultSpecs.Any())
                 {
-                    throw new SpecExpressConfigurationError("Multiple Specifications found and none are defined as default.");
+                    throw new SpecExpressConfigurationException("Multiple Specifications found and none are defined as default.");
                 }
 
                 //Multiple specs defined as Default
                 if (defaultSpecs.Count() > 1)
                 {
-                    throw new SpecExpressConfigurationError("Multiple Specifications found and multiple are defined as default.");
+                    throw new SpecExpressConfigurationException("Multiple Specifications found and multiple are defined as default.");
                 }
 
                 return defaultSpecs.First();
@@ -154,7 +154,7 @@ namespace SpecExpress
             var spec =  TryGetSpecification(type);
             if (spec == null)
             {
-                throw new SpecExpressConfigurationError("No Specification for type " + type + " was found.");
+                throw new SpecExpressConfigurationException("No Specification for type " + type + " was found.");
             }
 
             return spec;

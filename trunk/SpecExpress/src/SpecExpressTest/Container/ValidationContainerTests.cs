@@ -19,6 +19,7 @@ namespace SpecExpress.Test
         {
             //Set Assemblies to scan for Specifications
             //ValidationContainer.Scan(x => x.TheCallingAssembly());
+            ValidationCatalog.Reset();
         }
 
         [TearDown]

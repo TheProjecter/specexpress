@@ -56,7 +56,7 @@ namespace SpecExpress.Test
         }
 
         [Test]
-        [ExpectedException(typeof(SpecExpressConfigurationError))]
+        [ExpectedException(typeof(SpecExpressConfigurationException))]
         public void AssertConfigurationValid_IsInvalid()
         {
             //Set Assemblies to scan for Specifications

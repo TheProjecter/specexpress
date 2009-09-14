@@ -139,11 +139,27 @@ namespace SpecExpress.Test.RuleValidatorTests
             //List
             var list = new List<string> {"US", "GB", "AU", "CA"};
             //Create Validator
-            var validator = new IsInSet<Contact>(list);
+            var validator = new Rules.GeneralValidators.IsInSet<Contact,string>(list);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
             return validator.Validate(context) == null;
 
+        }
+
+        [TestCase("US", Result = true, TestName = "InSet")]
+        [TestCase("zz", Result = false, TestName = "NotInSet")]
+        [TestCase("US ", Result = false, TestName = "ValidValue With whitespace")]
+        [TestCase("  ", Result = false, TestName = "Whitespace")]
+        [TestCase(null, Result = false, TestName = "Null")]
+        public bool IsInSet_Expression_GenericList_IsValid(string propertyValue)
+        {
+            //List
+            var list = new List<string> { "US", "GB", "AU", "CA" };
+            //Create Validator
+            var validator = new Rules.GeneralValidators.IsInSet<Contact,string>(c => list);
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
         }
 
         [TestCase("", Result = false, TestName = "Empty")]

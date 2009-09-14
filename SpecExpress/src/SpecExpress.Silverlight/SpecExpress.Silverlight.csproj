@@ -77,6 +77,9 @@
     <Compile Include="..\SpecExpress\Enums\ValidationLevelType.cs">
       <Link>Enums\ValidationLevelType.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Exceptions\ValidationCatalogException.cs">
+      <Link>Exceptions\ValidationCatalogException.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\MessageStore\IMessageStore.cs">
       <Link>MessageStore\IMessageStore.cs</Link>
     </Compile>
@@ -119,6 +122,9 @@
     <Compile Include="..\SpecExpress\Rules\GeneralValidators\ForEachSpecificationRule.cs">
       <Link>Rules\GeneralValidators\ForEachSpecificationRule.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\GeneralValidators\IsInSet.cs">
+      <Link>Rules\GeneralValidators\IsInSet.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\GeneralValidators\Required.cs">
       <Link>Rules\GeneralValidators\Required.cs</Link>
     </Compile>
@@ -148,9 +154,6 @@
     </Compile>
     <Compile Include="..\SpecExpress\Rules\StringValidators\Alpha.cs">
       <Link>Rules\StringValidators\Alpha.cs</Link>
-    </Compile>
-    <Compile Include="..\SpecExpress\Rules\StringValidators\IsInSet.cs">
-      <Link>Rules\StringValidators\IsInSet.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\Rules\StringValidators\LengthBetween.cs">
       <Link>Rules\StringValidators\LengthBetween.cs</Link>

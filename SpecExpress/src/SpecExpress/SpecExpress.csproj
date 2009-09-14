@@ -61,6 +61,7 @@
     <Compile Include="Rules\Boolean\IsTrue.cs" />
     <Compile Include="Rules\Collection\ForEach.cs" />
     <Compile Include="Rules\Collection\Contains.cs" />
+    <Compile Include="Rules\GeneralValidators\IsInSet.cs" />
     <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\IsInPast.cs" />
     <Compile Include="Rules\DateValidators\IsInFuture.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="Rules\StringValidators\Matches.cs" />
     <Compile Include="Rules\StringValidators\Numeric.cs" />
     <Compile Include="Rules\StringValidators\MaxLength.cs" />
-    <Compile Include="Rules\StringValidators\IsInSet.cs" />
     <Compile Include="Rules\StringValidators\LengthBetween.cs" />
     <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecExpressConfigurationError.cs" />

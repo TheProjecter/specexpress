@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using SpecExpress.Enums;
 using SpecExpress.Rules;
-using SpecExpress.Rules.General;
+using SpecExpress.Rules.GeneralValidators;
 using SpecExpress.Util;
 
 namespace SpecExpress

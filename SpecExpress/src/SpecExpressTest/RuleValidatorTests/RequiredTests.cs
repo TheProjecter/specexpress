@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using NUnit.Framework;
 using SpecExpress.Rules;
-using SpecExpress.Rules.Boolean;
-using SpecExpress.Rules.General;
+using SpecExpress.Rules.GeneralValidators;
 using SpecExpress.Test.Entities;
 using SpecExpressTest.Entities;
 

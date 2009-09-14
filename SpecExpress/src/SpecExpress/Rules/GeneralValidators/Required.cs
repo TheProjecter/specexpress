@@ -2,7 +2,7 @@ using System.Collections;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace SpecExpress.Rules.General
+namespace SpecExpress.Rules.GeneralValidators
 {
     public class Required<T, TProperty> : RuleValidator<T, TProperty>
     {

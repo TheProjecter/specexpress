@@ -6,6 +6,7 @@ using SpecExpress.DSL;
 using SpecExpress.Rules;
 using SpecExpress.Rules.Collection;
 using SpecExpress.Rules.DateValidators;
+using SpecExpress.Rules.GeneralValidators;
 using SpecExpress.Rules.IComparableValidators;
 using SpecExpress.Rules.StringValidators;
 
@@ -115,19 +116,6 @@ namespace SpecExpress
             expression.RegisterValidator(new Alpha<T>());
             return expression.JoinBuilder;
         }
-
-        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, IEnumerable<string> set)
-        {
-            expression.RegisterValidator(new IsInSet<T>(set));
-            return expression.JoinBuilder;
-        }
-
-        public static ActionJoinBuilder<T, string> IsInSet<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, IEnumerable<string>>> set)
-        {
-            expression.RegisterValidator(new IsInSet<T>(set));
-            return expression.JoinBuilder;
-        }
-
         #endregion
 
         #region Collection
@@ -257,6 +245,20 @@ namespace SpecExpress
             expression.RegisterValidator(new CustomRule<T, TProperty>(rule));
             //Custom messages can't derive what the Error Message is because each case is so generic
             expression.JoinBuilder.With.Message(message);
+            return expression.JoinBuilder;
+        }
+        #endregion
+
+        #region General
+        public static ActionJoinBuilder<T, TProperty> IsInSet<T, TProperty>(this IRuleBuilder<T, TProperty> expression, IEnumerable<TProperty> set)
+        {
+            expression.RegisterValidator(new IsInSet<T, TProperty>(set));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> IsInSet<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, IEnumerable<TProperty>>> set)
+        {
+            expression.RegisterValidator(new IsInSet<T, TProperty>(set));
             return expression.JoinBuilder;
         }
         #endregion

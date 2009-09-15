@@ -27,8 +27,6 @@ namespace SpecExpress.Rules.GeneralValidators
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
-            bool isInSet = false;
-
             if (_expression != null)
             {
                 _set = _expression.Invoke(context.Instance) as IEnumerable<TProperty>;                

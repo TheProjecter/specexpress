@@ -11,18 +11,33 @@ namespace SpecExpress.Rules
         public string Message { get; set; }
         public object MessageKey { get; set; }
         public string MessageStoreName { get; set; }
+        public bool Negate { get; set; }
         public abstract object[] Parameters { get; }
        
 
         protected ValidationResult Evaluate(bool isValid, RuleValidatorContext context)
         {
-            if (isValid)
+            if (Negate)
             {
-                return null;
+                if (!isValid)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName, MessageKey);
+                }
             }
             else
             {
-                return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName,MessageKey);
+                if (isValid)
+                {
+                    return null;
+                }
+                else
+                {
+                    return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName,MessageKey);
+                }
             }
         }
     }

@@ -77,9 +77,6 @@
     <Compile Include="..\SpecExpress\Enums\ValidationLevelType.cs">
       <Link>Enums\ValidationLevelType.cs</Link>
     </Compile>
-    <Compile Include="..\SpecExpress\Exceptions\ValidationCatalogException.cs">
-      <Link>Exceptions\ValidationCatalogException.cs</Link>
-    </Compile>
     <Compile Include="..\SpecExpress\MessageStore\IMessageStore.cs">
       <Link>MessageStore\IMessageStore.cs</Link>
     </Compile>
@@ -170,8 +167,8 @@
     <Compile Include="..\SpecExpress\Rules\StringValidators\Numeric.cs">
       <Link>Rules\StringValidators\Numeric.cs</Link>
     </Compile>
-    <Compile Include="..\SpecExpress\SpecExpressConfigurationError.cs">
-      <Link>SpecExpressConfigurationError.cs</Link>
+    <Compile Include="..\SpecExpress\SpecExpressConfigurationException.cs">
+      <Link>SpecExpressConfigurationException.cs</Link>
     </Compile>
     <Compile Include="..\SpecExpress\Specification.cs">
       <Link>Specification.cs</Link>
@@ -216,6 +213,9 @@
     <EmbeddedResource Include="..\SpecExpress\MessageStore\RuleErrorMessages.resx">
       <Link>MessageStore\RuleErrorMessages.resx</Link>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\v3.0\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

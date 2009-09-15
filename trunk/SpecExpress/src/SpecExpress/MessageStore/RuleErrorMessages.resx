@@ -168,6 +168,60 @@
   <data name="MinLength" xml:space="preserve">
     <value>{PropertyName} must be greater than {0} characters. You entered {PropertyValue}.</value>
   </data>
+  <data name="Not_Alpha" xml:space="preserve">
+    <value>{PropertyName} should not contain letters.</value>
+  </data>
+  <data name="Not_Between" xml:space="preserve">
+    <value>'{PropertyName}' must not be between {0} and {1}.  You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_Contains" xml:space="preserve">
+    <value>{PropertyName} contains {PropertyValue}.</value>
+  </data>
+  <data name="Not_EqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must not equal {0}.  You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_GreaterThan" xml:space="preserve">
+    <value>'{PropertyName}' must not be greater than {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_GreaterThanEqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must not be greater than or equal to {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_IsFalse" xml:space="preserve">
+    <value>{PropertyName} must not be false.</value>
+  </data>
+  <data name="Not_IsInFuture" xml:space="preserve">
+    <value>'{PropertyName} must not be in the future. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_IsInPast" xml:space="preserve">
+    <value>'{PropertyName} must not be in the past.  You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_IsInSet" xml:space="preserve">
+    <value>{PropertyName} is not a valid value.</value>
+  </data>
+  <data name="Not_IsTrue" xml:space="preserve">
+    <value>{PropertyName} must not be true.</value>
+  </data>
+  <data name="Not_LengthBetween" xml:space="preserve">
+    <value>'{PropertyName}' must not be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
+  </data>
+  <data name="Not_LessThan" xml:space="preserve">
+    <value>'{PropertyName}' must not be less than {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_LessThanEqualTo" xml:space="preserve">
+    <value>'{PropertyName}' must not be less than or equal to {0}. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_Matches" xml:space="preserve">
+    <value>The value in {PropertyName} must not meet the pattern of '{0}'.  You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_MaxLength" xml:space="preserve">
+    <value>{PropertyName} must not be less than {0} characters. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_MinLength" xml:space="preserve">
+    <value>{PropertyName} must not be greater than {0} characters. You entered {PropertyValue}.</value>
+  </data>
+  <data name="Not_Numeric" xml:space="preserve">
+    <value>{PropertyName} should not contain numbers.</value>
+  </data>
   <data name="Numeric" xml:space="preserve">
     <value>{PropertyName} should only contain numbers.</value>
   </data>

@@ -43,6 +43,8 @@ namespace SpecExpress.Test.DSLTests
                 .Or.IsInSet(new List<string>(new[] {"Msg", "Another"})).With.Message("Message");
 
             Check(c => c.Name).Optional().And.LengthBetween(0, 10);
+
+            Check(c => c.Name).Required().And.Not.LengthBetween(0, 10);
         }
 
 

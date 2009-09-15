@@ -26,17 +26,28 @@ namespace SpecExpress.DSL
     {
         private readonly PropertyValidator<T, TProperty> _propertyValidator;
         private readonly ActionJoinBuilder<T, TProperty> JoinBuilder;
+        private bool _negate = false;
 
         public RuleBuilder(PropertyValidator<T, TProperty> propertyValidator)
         {
             _propertyValidator = propertyValidator;
             JoinBuilder = new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
+        
+        public RuleBuilder<T, TProperty> Not
+        {
+            get
+            {
+                _negate = !_negate;
+                return this;
+            }
+        }
 
         #region IRuleBuilder<T,TProperty> Members
 
         RuleBuilder<T, TProperty> IRuleBuilder<T, TProperty>.RegisterValidator(RuleValidator<T, TProperty> validator)
         {
+            validator.Negate = _negate;    
             _propertyValidator.AddRule(validator);
             return this;
         }

@@ -35,6 +35,13 @@ namespace SpecExpress.MessageStore
             //Use Name of the Rule Validator as the Key to get the error message format string
             //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
             string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
+
+            // Prefix key with "Not_" for negated rule messages
+            if (context.Negate)
+            {
+                key = "Not_" + key;
+            }
+
             return GetMessageTemplate(key);
         }
 

@@ -76,6 +76,19 @@ namespace SpecExpressTest
         }
 
         [Test]
+        public void CustomerName_RequiredAndNotMinLength_InvalidLength_IsNotValid()
+        {
+            var customer = new Customer { Name = string.Empty.PadLeft(105,'X') };
+
+            var spec = new CustomerSpecification();
+            spec.Check(cust => cust.Name).Required().And.Not.MinLength(100);
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.IsNotEmpty(notification);
+            Assert.AreEqual(1, notification.Count);
+        }
+
+        [Test]
         public void CustomerContacts_Lambda_IsNotValid()
         {
             var contact1 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-19)};

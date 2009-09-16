@@ -36,7 +36,7 @@ namespace SpecExpress.Test
             var propertyValidator =
                 new PropertyValidator<Contact, string>(contact => contact.LastName);
 
-            propertyValidator.PropertyValueRequired = false;
+            propertyValidator.PropertyValueRequired = false; //Optional
 
             //add a single rule
             var lengthValidator = new LengthBetween<Contact>(1, 5);
@@ -45,12 +45,7 @@ namespace SpecExpress.Test
             //Validate
             List<ValidationResult> result = propertyValidator.Validate(emptyContact);
 
-            Assert.That(result, Is.Not.Empty);
-
-            Assert.That(result.First().Target, Is.EqualTo("0"));
-            Assert.That(result.First().Message,
-                        Is.EqualTo("'Last Name' must be between 1 and 5 characters. You entered 0 characters."));
-            Assert.That(result.First().Property.Name, Is.EqualTo("LastName"));
+            Assert.That(result, Is.Empty);
         }
 
         [Test]

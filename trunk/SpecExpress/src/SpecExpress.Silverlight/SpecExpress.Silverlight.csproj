@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\Collection\ForEach.cs" />
+    <Compile Include="Util\ObjectExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\SpecExpress\MessageStore\RuleErrorMessages.resx">

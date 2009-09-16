@@ -88,6 +88,7 @@
     <Compile Include="Specification.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
+    <Compile Include="Util\ObjectExtensions.cs" />
     <Compile Include="ValidationCatalog.cs" />
     <Compile Include="ValidationCatalogConfiguration.cs" />
     <Compile Include="ValidationNotification.cs" />

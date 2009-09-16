@@ -7,7 +7,7 @@ namespace SpecExpress.Rules.GeneralValidators
 {
     public class IsInSet<T, TProperty> : RuleValidator<T,TProperty>
     {
-        private CompiledExpression _expression;
+        private Func<T,IEnumerable<TProperty>> _expression;
         private IEnumerable<TProperty> _set;
 
         public IsInSet(IEnumerable<TProperty> set)
@@ -15,9 +15,9 @@ namespace SpecExpress.Rules.GeneralValidators
             _set = set;
         }
 
-        public IsInSet(Expression<Func<T,IEnumerable<TProperty>>> expression)
+        public IsInSet(Func<T,IEnumerable<TProperty>> expression)
         {
-            _expression = new CompiledExpression(expression);
+            _expression = expression;
         }
 
         public override object[] Parameters
@@ -29,10 +29,10 @@ namespace SpecExpress.Rules.GeneralValidators
         {
             if (_expression != null)
             {
-                _set = _expression.Invoke(context.Instance) as IEnumerable<TProperty>;                
+                _set = _expression.Invoke(context.Instance);                
             }
 
-            return Evaluate(_set.Contains(context.PropertyValue), context);
+            return Evaluate(context.PropertyValue != null && _set.Contains(context.PropertyValue), context);
         }
     }
 }

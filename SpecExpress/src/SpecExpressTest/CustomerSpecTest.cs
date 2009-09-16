@@ -27,7 +27,7 @@ namespace SpecExpressTest
         [Test]
         public void CustomerName_OptionalAndLength_IsNotValid()
         {
-            var customer = new Customer();
+            var customer = new Customer() { Name = "A"};
 
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.Name).Optional().And.LengthBetween(2, 100);

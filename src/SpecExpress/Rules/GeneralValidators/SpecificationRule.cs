@@ -5,6 +5,15 @@ using System.Text;
 
 namespace SpecExpress.Rules.GeneralValidators
 {
+    public class SpecificationRule: RuleValidator
+    {
+
+        public override object[] Parameters
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
     public class SpecificationRule<T, TProperty> : RuleValidator<T, TProperty>
     {
         private Specification _specification;

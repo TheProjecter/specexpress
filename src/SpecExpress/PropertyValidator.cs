@@ -13,20 +13,63 @@ using SpecExpress.Util;
 
 namespace SpecExpress
 {
-    public abstract class PropertyValidator
+    public class PropertyValidator
     {
         private List<int> _validatedObjects = new List<int>();
-
+        
         internal PropertyValidator(Type entityType, Type propertyType)
         {
             EntityType = entityType;
             PropertyType = propertyType;
+
+            Rules = new List<RuleValidator>();
         }
 
-        public abstract void AddRule(RuleValidator ruleValidator);
-        public abstract List<ValidationResult> Validate(object instance);
-        public abstract List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContexts);
-        public abstract List<RuleValidator> Rules { get; }
+        public List<RuleValidator> Rules
+        {
+            get; private set;
+        }
+
+        public void AddRule(RuleValidator ruleValidator)
+        {
+            Rules.Add(ruleValidator);
+        }
+
+        public List<ValidationResult> Validate(object instance)
+        {
+            return Validate(instance, null);
+        }
+
+        public List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContext)
+        {
+            //Check if this object has been already validated up the heirarchy
+
+            var pv = Parent;
+            bool objectAlreadyValidated = false;
+
+            while (pv != null)
+            {
+                var found = from hashcode in pv.ValidatedObjectHashCodes
+                            where hashcode == instance.GetHashCode()
+                            select hashcode;
+                if (found.Any())
+                {
+                    objectAlreadyValidated = true;
+                }
+
+                pv = pv.Parent;
+            }
+
+            if (!objectAlreadyValidated)
+            {
+                return Validate((T)instance, parentRuleContext);
+            }
+            else
+            {
+                return null;
+            }
+
+        }
 
         public Type PropertyType { get; private set; }
         public Type EntityType { get; private set; }
@@ -46,7 +89,7 @@ namespace SpecExpress
 
                 if (bodyExp.NodeType == ExpressionType.Call)
                 {
-                    MethodCallExpression exp = (MethodCallExpression) Property.Body;
+                    var exp = (MethodCallExpression) Property.Body;
                     return GetFirstMemberCallFromCallArguments(exp);
                 }
 
@@ -145,63 +188,63 @@ namespace SpecExpress
         {
             get { return _validatedObjects; }
         }
+
+        protected void AddRulesForKnownTypes(object propertyValue)
+        {
+            if (ValidationCatalog.TryGetSpecification(PropertyType) != null)
+            {
+                //This is a known type, add a SpecificationRule to validate specification using the Default Specification
+                Rules.Add(new SpecificationRule(PropertyType));
+
+            }
+
+            //Validate each item in a Collection if a registered specification is found
+            //if there aren't already errors, the value is a collection and it's not a string, then iterate over
+            //each item, looking for a registered specification
+            if (propertyValue is IEnumerable && !(propertyValue is string))
+            {
+                //Get the type of the first object in the collection
+                IEnumerator enumerator = ((IEnumerable)propertyValue).GetEnumerator();
+                //Check if collection is empty
+                if (enumerator.MoveNext())
+                {
+                    Type collectionType = enumerator.Current.GetType();
+
+                    //Check if the type in the collection is a known type
+                    if (ValidationCatalog.TryGetSpecification(collectionType) != null)
+                    {
+                        //Add ForEachSpecificationRule Rule for this property
+                        _rules.Add(new ForEachSpecificationRule<T, TProperty>(collectionType));
+                    }
+                }
+            }
+        }
+
     }
 
-    public abstract class PropertyValidator<T> : PropertyValidator
+    public class PropertyValidator<T> : PropertyValidator
     {
         protected PropertyValidator(Type propertyType) : base(typeof (T), propertyType)
         {
         }
 
-        public abstract List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext);
+        public List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
+        {
+            return Validate(instance, parentRuleContext);
+        }
 
         public List<ValidationResult> Validate(T instance)
         {
             return Validate(instance, null);
-        }
-
-        public override List<ValidationResult> Validate(object instance, RuleValidatorContext parentRuleContext)
-        {
-            //Check if this object has been already validated up the heirarchy
-
-            var pv = Parent;
-            bool objectAlreadyValidated = false;
-
-            while (pv != null)
-            {
-                var found = from hashcode in pv.ValidatedObjectHashCodes
-                            where hashcode == instance.GetHashCode()
-                            select hashcode;
-                if (found.Any())
-                {
-                    objectAlreadyValidated = true;
-                }
-
-                pv = pv.Parent;
-            }
-
-            if (!objectAlreadyValidated)
-            {
-                return Validate((T) instance, parentRuleContext);
-            }
-            else
-            {
-                return null;
-            }
-            
-        }
-
-        public override List<ValidationResult> Validate(object instance)
-        {
-            return Validate((T) instance, null);
         }
     }
 
     public class PropertyValidator<T, TProperty> : PropertyValidator<T>
     {
         private readonly bool _propertyValueRequired;
-        private List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
+        //private List<RuleValidator<T, TProperty>> _rules = new List<RuleValidator<T, TProperty>>();
 
+        #region Constuctors
         public PropertyValidator(Expression<Func<T, TProperty>> targetExpression)
             : base(targetExpression.Body.Type)
         {
@@ -216,12 +259,9 @@ namespace SpecExpress
             PropertyInfo = Parent.PropertyInfo;
             PropertyNameOverride = Parent.PropertyNameOverride;
             Property = parent.Property;
-        }
-
-        public override List<RuleValidator> Rules
-        {
-            get { return _rules.Select(x => x as RuleValidator).ToList(); }
-        }
+        } 
+        #endregion
+        
 
         public Predicate<T> Condition { get; set; }
 
@@ -260,14 +300,9 @@ namespace SpecExpress
             set { base.Parent = value; }
         }
 
-        public override void AddRule(RuleValidator ruleValidator)
-        {
-            _rules.Add(ruleValidator as RuleValidator<T, TProperty>);
-        }
-
         public void AddRule(RuleValidator<T, TProperty> ruleValidator)
         {
-            _rules.Add(ruleValidator);
+            AddRule(ruleValidator);
         }
 
         public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)

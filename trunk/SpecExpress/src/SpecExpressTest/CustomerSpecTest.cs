@@ -65,7 +65,7 @@ namespace SpecExpressTest
         [Test]
         public void CustomerName_RequiredAndLength_InvalidLength_IsNotValid()
         {
-            var customer = new Customer {Name = "X"};
+            var customer = new Customer { Name = "X" };
 
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.Name).Required().And.LengthBetween(2, 100);
@@ -78,7 +78,7 @@ namespace SpecExpressTest
         [Test]
         public void CustomerName_RequiredAndNotMinLength_InvalidLength_IsNotValid()
         {
-            var customer = new Customer { Name = string.Empty.PadLeft(105,'X') };
+            var customer = new Customer { Name = string.Empty.PadLeft(105, 'X') };
 
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.Name).Required().And.Not.MinLength(100);
@@ -91,17 +91,17 @@ namespace SpecExpressTest
         [Test]
         public void CustomerContacts_Lambda_IsNotValid()
         {
-            var contact1 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-19)};
-            var contact2 = new Contact() {DateOfBirth = DateTime.Now.AddYears(-22)};
-            var customer = new Customer() {Contacts = new List<Contact> {contact1,contact2}};
+            var contact1 = new Contact() { DateOfBirth = DateTime.Now.AddYears(-19) };
+            var contact2 = new Contact() { DateOfBirth = DateTime.Now.AddYears(-22) };
+            var customer = new Customer() { Contacts = new List<Contact> { contact1, contact2 } };
 
             var spec = new CustomerSpecification();
-            
-            
+
+
             spec.Check(
                 c => from contact in c.Contacts where contact.DateOfBirth < DateTime.Now.AddYears(-20) select contact)
                 .Optional().And
-                .ForEach(c => ((Contact) c).Active,"All contacts under age of 20 must be active.");
+                .ForEach(c => ((Contact)c).Active, "All contacts under age of 20 must be active.");
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);
@@ -111,15 +111,15 @@ namespace SpecExpressTest
         [Test]
         public void CustomerAddressCountry_Required_IsValid()
         {
-            var customer = new Customer() {Address = new Address() {Country = new Country()}};
+            var customer = new Customer() { Address = new Address() { Country = new Country() } };
 
             var spec = new CustomerSpecification();
             spec.Check(cust => cust.Address.Country.Name).Required();
 
             List<ValidationResult> notification = spec.Validate(customer);
-            Assert.That(notification,Is.Not.Empty);
-            Assert.That(notification.Count,Is.EqualTo(1));
-            Assert.That(notification[0].Message,Is.EqualTo("Address Country Name is required."));
+            Assert.That(notification, Is.Not.Empty);
+            Assert.That(notification.Count, Is.EqualTo(1));
+            Assert.That(notification[0].Message, Is.EqualTo("Address Country Name is required."));
         }
 
         //[Test]
@@ -189,6 +189,6 @@ namespace SpecExpressTest
             Assert.IsNotEmpty(notifications);
         }
 
-        
+
     }
 }

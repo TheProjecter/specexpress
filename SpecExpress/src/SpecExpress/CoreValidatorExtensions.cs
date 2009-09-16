@@ -256,7 +256,7 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> IsInSet<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, IEnumerable<TProperty>>> set)
+        public static ActionJoinBuilder<T, TProperty> IsInSet<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Func<T, IEnumerable<TProperty>> set)
         {
             expression.RegisterValidator(new IsInSet<T, TProperty>(set));
             return expression.JoinBuilder;

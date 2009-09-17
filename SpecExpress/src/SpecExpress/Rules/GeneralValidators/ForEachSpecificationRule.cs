@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using SpecExpress.Util;
 
 namespace SpecExpress.Rules.GeneralValidators
 {
@@ -51,8 +52,15 @@ namespace SpecExpress.Rules.GeneralValidators
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
             ValidationResult collectionValidationResult = null;
-            ////StringBuilder sb = new StringBuilder();
+
+            //Check if the Collection is null/default
+            if (context.PropertyValue.IsNullOrDefault())
+            {
+                return collectionValidationResult;
+            }
+            
             var itemsNestedValidationResult = new List<ValidationResult>();
+
 
             var propertyEnumerable = ( (IEnumerable)(context.PropertyValue));
 

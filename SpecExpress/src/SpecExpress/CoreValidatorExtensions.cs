@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using SpecExpress.DSL;
 using SpecExpress.Rules;
+using SpecExpress.Rules.Boolean;
 using SpecExpress.Rules.Collection;
 using SpecExpress.Rules.DateValidators;
 using SpecExpress.Rules.GeneralValidators;
@@ -116,6 +117,7 @@ namespace SpecExpress
             expression.RegisterValidator(new Alpha<T>());
             return expression.JoinBuilder;
         }
+
         #endregion
 
         #region Collection
@@ -231,12 +233,13 @@ namespace SpecExpress
             expression.RegisterValidator(new Rules.Boolean.IsTrue<T>());
             return expression.JoinBuilder;
         }
-
+        
         public static ActionJoinBuilder<T, bool> IsFalse<T>(this IRuleBuilder<T, bool> expression)
         {
             expression.RegisterValidator(new Rules.Boolean.IsFalse<T>());
             return expression.JoinBuilder;
         }
+        
         #endregion
 
         #region Custom

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using SpecExpress.MessageStore;
+using SpecExpress.Util;
 
 namespace SpecExpress.Rules.Collection
 {
@@ -27,6 +28,12 @@ namespace SpecExpress.Rules.Collection
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
             StringBuilder sb = new StringBuilder();
+
+            if (context.PropertyValue.IsNullOrDefault() )
+            {
+                return null;
+            }
+
             foreach (var value in context.PropertyValue)
             {
                 if (!_forEachPredicate(value))

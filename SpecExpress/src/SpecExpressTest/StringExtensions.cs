@@ -4,6 +4,11 @@ using System.Collections.Generic;
 
 namespace SpecExpress.Test
 {
+    public enum TestEnum
+    {
+        Red, Green
+    }
+
     [TestFixture]
     public class StringExtensions
     {
@@ -41,7 +46,6 @@ namespace SpecExpress.Test
             Assert.That(names.ToReverseString(), Is.EqualTo("Address Country Name"));
 
         }
-
     }
     
 }

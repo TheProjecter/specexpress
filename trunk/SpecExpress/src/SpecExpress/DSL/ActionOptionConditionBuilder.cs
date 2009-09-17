@@ -27,5 +27,12 @@ namespace SpecExpress.DSL
             _propertyValidator.Condition = conditionalExpression.Compile();
             return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
         }
+
+        public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression, string errorMessage)
+        {
+            _propertyValidator.Condition = conditionalExpression.Compile();
+
+            return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
+        }
     }
 }

@@ -74,6 +74,14 @@ namespace SpecExpress
             return new ValidationNotification { Errors = specification.Validate(instance) }; 
         }
 
+
+        public static ValidationNotification Validate<TSpec>(object instance) where TSpec: new()
+        {
+            var spec = new TSpec() as Specification;
+            return Validate(instance, spec);
+        }
+
+
         public static void Reset()
         {
             _registry.Clear();
@@ -182,6 +190,8 @@ namespace SpecExpress
 
         private static void CreateAndRegisterSpecificationsWithRegistry(IEnumerable<Type> specs)
         {
+            //TODO: This can result in a stackoverflow if a ForEachSpecification<Type> never finds a default spec for Type
+
             var delayedSpecs = new List<Type>();
 
             //For each type, instantiate it and add it to the collection of specs found
@@ -193,7 +203,7 @@ namespace SpecExpress
 
                     RegisterSpecificationWithRegistry(s);
                 }
-                catch (System.Reflection.TargetInvocationException)
+                catch (System.Reflection.TargetInvocationException te)
                 {
                     //Can't create the object because it has a specification that hasn't been loaded yet
                     //save it for the next pass

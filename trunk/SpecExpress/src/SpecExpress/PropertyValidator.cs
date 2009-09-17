@@ -235,8 +235,8 @@ namespace SpecExpress
         {
             if (_rules == null || !_rules.Any())
             {
-                throw new ArgumentException(
-                    "No rules exist for this Property. This is because the rules are improperly configured.");
+                throw new SpecExpressConfigurationException(
+                    "No rules exist for this Property" + PropertyName + " for type " + typeof(T).Name + ". This is because the rules are improperly configured.");
             }
 
             if ( Condition == null || (Condition != null && Condition(instance)))

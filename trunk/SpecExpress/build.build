@@ -1,0 +1,52 @@
+<project 
+	name="SpecExpress" 
+	default="build"
+	xmlns="http://nant.sourceforge.net/release/0.86-beta1/nant.xsd">
+	<description>
+		<![CDATA[
+			
+			Default Properties:
+				build.dir 	default: bin 		Output directory for compiled assemblies. This is checked back into source control
+				test.dir  	default: tmp-dir 	Staging directory for running test cases
+				lib.dir 	default:lib 		Directory for project references
+				
+				You can override by defining the property in this file
+		]]>	
+	</description>
+	
+	<include buildfile="build-common.xml"/>
+	
+	<!--Global Properties-->
+	<property name="build.debug" value="true" />	
+	<property name="build.number" value="0.1.0.0"/>
+
+	<target name="build"  depends="common.clean, common.init" >			
+						
+		<nant buildfile="build-project-common.xml">
+			<properties>
+				<property name="proj.name" value="SpecExpress" />				
+			</properties>
+		</nant>
+		
+		<nant buildfile="build-project-common.xml">
+			<properties>
+				<property name="proj.name" value="SpecExpress.Test.Domain" />
+						
+			</properties>
+		</nant>
+		
+		<nant buildfile="build-project-common.xml" target="build.test">
+			<properties>
+				<property name="proj.name" value="SpecExpress.Test" />	
+									
+			</properties>
+		</nant>
+		
+	</target>
+
+
+
+	
+	
+	
+</project>

@@ -9,7 +9,7 @@
 		description="Compile sources into a DLL">
 
 		<!--Gets build number from Teamcity if available-->
-		<property name="build.number" value="0.0.0.0" unless="${property::exists('build.number')}"/>		
+		<property name="build.number" value="0.0" unless="${property::exists('build.number')}"/>		
 
 		<csc target="library" debug="${build.debug}" output="${build.dir}/${proj.name}.dll" >			
 			<sources refid="project.sources" />
@@ -104,7 +104,7 @@
 	</target>
 	
 	
-	<target name="proj.assembly-info" description="creates assembly info file">
+	<target name="proj.assembly-info" description="creates assembly info file" depends="getSubversionRevision">
 		<asminfo output="src\${proj.name}\properties\AssemblyInfo.cs" language="CSharp">
 			<imports>
 				<import namespace="System" />
@@ -118,7 +118,7 @@
 				<attribute type="AssemblyProductAttribute" value="${proj.name}" />				
 				<attribute type="ComVisibleAttribute" value="false" />
 				<attribute type="CLSCompliantAttribute" value="true" />					
-				<attribute type="AssemblyVersionAttribute" value="${build.number}" />
+				<attribute type="AssemblyVersionAttribute" value="${build.number}.${svn.revision}" />
 				<attribute type="AssemblyDelaySignAttribute" value="false" />
 				<attribute type="AssemblyCopyrightAttribute" value="Copyright, Alan Baker 2009" />
 				<!--Fix this later: <attribute type="AssemblyKeyFileAttribute" value="..\SR.snk" />-->
@@ -127,6 +127,24 @@
 				<include name="System.EnterpriseServices.dll" />
 			</references>
 		</asminfo>
+	</target>
+	
+	<target name="getSubversionRevision">
+		<!-- Retrieve subversion revision number -->
+		<echo message="Retrieving Subversion revision number"/>
+		<property name="svn.revision" value="0" />
+		<exec
+			program="tools\svn\svn.exe"
+			commandline='log "src" --xml --limit 1'
+			output="${build.dir}\_revision.xml"
+			failonerror="false"/>
+		<xmlpeek
+			file="${build.dir}\_revision.xml"
+			xpath="/log/logentry/@revision"
+			property="svn.revision"
+			failonerror="false"/>
+		<echo message="Using Subversion revision number: ${svn.revision}"/>
+		
 	</target>
 		
 </project>

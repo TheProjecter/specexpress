@@ -4,10 +4,10 @@
 	<property name="build.is.personal" value="${property::exists('build.is.personal')}" unless="${property::exists('build.is.personal')}"/>
 	<property name="build.number" value="0.0.0.0" unless="${property::exists('build.number')}"/>
 	
-	<property name="vcs.username" value="appbuild" />
-	<property name="vcs.password" value="Password123" />
+	<!--
 	<property name="nant.onfailure" value="Failure" />
 	<property name="nant.onsuccess" value="Success" />
+	-->
 	
 	<!--Default lib folder, which can be overrode by calling script-->
 	<property name="lib.dir" value="lib"  unless="${property::exists('lib.dir')}"/>
@@ -31,27 +31,7 @@
 		<delete dir="${path::combine(teamcity.build.checkoutDir,'${build.dir}')}"  	if="${directory::exists(path::combine(teamcity.build.checkoutDir,'${build.dir}'))}" />
 	</target>
 	
-	<target name="Success" description="Executes on Success">
-	    <exec program="svn.exe"
-			  append = "true"
-			  basedir="tools\subversion"
-			  commandline="resolve ${build.dir} --accept working -R"
-	          if="${build.is.personal == 'False'}"/>
-		<echo message="Committing Changes..." if="${build.is.personal == 'False'}"/>
-	    <exec program="svn.exe"
-			  append = "true"
-			  basedir="tools\subversion"
-			  commandline="commit --username ${vcs.username} --password ${vcs.password}  -m &quot;Commit Changes made by Build Script&quot;"
-	          if="${build.is.personal == 'False'}"/>
-	</target>
 	
-	<target name="Failure" description="Executes on Failure">
-	    <echo message="Reverting Changes..." if="${build.is.personal == 'False'}"/>
-	    <exec program="svn.exe"
-			basedir="tools\subversion"
-			commandline="revert ${teamcity.build.checkoutDir}"
-			if="${build.is.personal == 'False'}"/>
-	</target>
 
 	
 		

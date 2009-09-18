@@ -56,7 +56,6 @@ namespace SpecExpress.Test
         }
 
         [Test]
-        [ExpectedException(typeof(SpecExpressConfigurationException))]
         public void AssertConfigurationValid_IsInvalid()
         {
             //Set Assemblies to scan for Specifications
@@ -64,7 +63,11 @@ namespace SpecExpress.Test
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
             Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Not.Empty);
 
-            ValidationCatalog.AssertConfigurationIsValid();
+            Assert.Throws<SpecExpressConfigurationException>(
+                () =>
+                    {
+                        ValidationCatalog.AssertConfigurationIsValid();
+                    });
         }
 
         [Test]

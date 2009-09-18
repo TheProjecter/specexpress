@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecExpress.Quickstart.Domain", "SpecExpress.Quickstart.Domain\SpecExpress.Quickstart.Domain.csproj", "{4B566077-E814-465F-A610-7D01CA53ACFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecExpress.Quickstart.Tests", "SpecExpress.Quickstart.Tests\SpecExpress.Quickstart.Tests.csproj", "{D246C906-BF19-41C3-9612-247EC2C85078}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B566077-E814-465F-A610-7D01CA53ACFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B566077-E814-465F-A610-7D01CA53ACFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B566077-E814-465F-A610-7D01CA53ACFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B566077-E814-465F-A610-7D01CA53ACFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D246C906-BF19-41C3-9612-247EC2C85078}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D246C906-BF19-41C3-9612-247EC2C85078}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D246C906-BF19-41C3-9612-247EC2C85078}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D246C906-BF19-41C3-9612-247EC2C85078}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

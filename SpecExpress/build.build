@@ -18,7 +18,7 @@
 	
 	<!--Global Properties-->
 	<property name="build.debug" value="true" />	
-	<property name="build.number" value="0.1.0.0"/>
+	<property name="build.number" value="0.1"/>
 
 	<target name="buildAndDeploy" depends="build, deploy"/>
 	

@@ -44,17 +44,18 @@
 			<exclude name="**/Diagrams/**" />
 		</fileset>		
 		
-		<resgen>
+		<!--<resgen>
 			<resources>
 				<include name="**/*.resx" />
 			</resources>
 		</resgen>
+		-->
 		
-		<resourcefileset id="project.resources" basedir="src/${proj.name}">
+		<resourcefileset id="project.resources" basedir="src/${proj.name}" dynamicprefix="true" prefix="${proj.name}">
 			<exclude name="**/bin/**" />
 			<exclude name="**/obj/**" />
-			<include name="**/*.resources" />
-			<include name="**/*.*.hbm.xml" />			
+			<include name="**/*.resources" />			
+			<include name="**/*.resx" />	
 		</resourcefileset>
 				
 		<!--copy and flatten as a way to create a distinct list of references-->	
@@ -114,12 +115,12 @@
 			<attributes>
 				<attribute type="AssemblyTitleAttribute" value="${proj.name}" />
 				<attribute type="AssemblyDescriptionAttribute" value="" />					
-				<attribute type="AssemblyProductAttribute" value="${proj.name}" />
-				<attribute type="AssemblyCopyrightAttribute" value="Copyright, StudentResources 2009" />
+				<attribute type="AssemblyProductAttribute" value="${proj.name}" />				
 				<attribute type="ComVisibleAttribute" value="false" />
 				<attribute type="CLSCompliantAttribute" value="true" />					
 				<attribute type="AssemblyVersionAttribute" value="${build.number}" />
 				<attribute type="AssemblyDelaySignAttribute" value="false" />
+				<attribute type="AssemblyCopyrightAttribute" value="Copyright, Alan Baker 2009" />
 				<!--Fix this later: <attribute type="AssemblyKeyFileAttribute" value="..\SR.snk" />-->
 			</attributes>
 			<references>

@@ -19,6 +19,9 @@
 	<!--Global Properties-->
 	<property name="build.debug" value="true" />	
 	<property name="build.number" value="0.1"/>
+	<property name="svn.revision" value="0" />
+	<property name="archive.dir" value="archive" />
+	
 
 	<target name="buildAndDeploy" depends="build, deploy"/>
 	
@@ -46,7 +49,7 @@
 	</target>
 
     <!--Deploy-->
-	<target name="deploy">
+	<target name="deploy" depends="getSubversionRevision">
 		<property name="deploy.dir" value="deploy" />
 		
 		<mkdir dir="${deploy.dir}"   if="${ not directory::exists(deploy.dir)}"/>	
@@ -67,8 +70,32 @@
 		<copy file="License.txt" todir="${deploy.dir}"/>
 		
 		
+		
+		<mkdir dir="${archive.dir}"   if="${ not directory::exists(archive.dir)}"/>	
+		<zip zipfile="${archive.dir}/SpecExpress-${build.number}.${svn.revision}.zip">
+			<fileset basedir="${deploy.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+		
 	</target>
 
+	<target name="getSubversionRevision">
+		<!-- Retrieve subversion revision number -->
+		<echo message="Retrieving Subversion revision number"/>		
+		<exec
+			program="tools\svn\svn.exe"
+			commandline='log "src" --xml --limit 1'
+			output="${build.dir}\_revision.xml"
+			failonerror="false"/>
+		<xmlpeek
+			file="${build.dir}\_revision.xml"
+			xpath="/log/logentry/@revision"
+			property="svn.revision"
+			failonerror="false"/>
+		<echo message="Using Subversion revision number: ${svn.revision}"/>
+		
+	</target>
 
 
 	

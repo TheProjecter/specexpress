@@ -64,6 +64,18 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, string> LengthEqualTo<T>(this IRuleBuilder<T, string> expression, int length)
+        {
+            expression.RegisterValidator(new LengthEqualTo<T>(length));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, string> LengthEqualTo<T>(this IRuleBuilder<T, string> expression, Expression<Func<T, int>> length)
+        {
+            expression.RegisterValidator(new LengthEqualTo<T>(length));
+            return expression.JoinBuilder;
+        }
+
         public static ActionJoinBuilder<T, string> MinLength<T>(this IRuleBuilder<T, string> expression, int min)
         {
             expression.RegisterValidator(new MinLength<T>(min));

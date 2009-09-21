@@ -155,6 +155,9 @@
     <Compile Include="..\SpecExpress\Rules\StringValidators\LengthBetween.cs">
       <Link>Rules\StringValidators\LengthBetween.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\StringValidators\LengthEqualTo.cs">
+      <Link>Rules\StringValidators\LengthEqualTo.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\StringValidators\Matches.cs">
       <Link>Rules\StringValidators\Matches.cs</Link>
     </Compile>

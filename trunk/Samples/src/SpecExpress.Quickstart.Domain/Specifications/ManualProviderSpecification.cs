@@ -28,7 +28,8 @@ namespace SpecExpress.Quickstart.Domain.Specifications
                 }
 
                 //Only characters A-Z
-                var onlyValidChars = new Regex(@"^[a-zA-Z\s]+$").Match(input.LastName.Trim()).Success;
+                var onlyValidChars = new Regex(@"^[a-zA-Z\s]+$")
+                    .Match(input.LastName.Trim()).Success;
 
                 if (!onlyValidChars)
                 {

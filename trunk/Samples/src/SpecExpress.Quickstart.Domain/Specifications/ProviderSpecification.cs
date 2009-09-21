@@ -13,7 +13,10 @@ namespace SpecExpress.Quickstart.Domain.Specifications
         public ProviderSpecification()
         {
             Check(p => p.FirstName).Required().And.IsAlpha();
-            Check(p => p.LastName).Required().And.IsAlpha();
+            Check(p => p.LastName).Required()
+                .And.IsAlpha()
+                .And.MaxLength(50);
+
             Check(p => p.MiddleInitial).Optional().And.MaxLength(1).And.IsAlpha();
 
             //Note: no need to validate required for Enums. Because they are value types they have default values E(0)

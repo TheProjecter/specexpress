@@ -17,5 +17,6 @@ namespace SpecExpress.Quickstart.Domain.Factories
                            new State(2, "OR", "Oregon")
                        };
         }
+       
     }
 }

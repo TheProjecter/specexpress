@@ -59,10 +59,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RegularExpressions.resx</DependentUpon>
     </Compile>
+    <Compile Include="Specifications\AddressSpecification.cs" />
     <Compile Include="Specifications\LocationScheduleSpecification.cs" />
     <Compile Include="Specifications\LocationSpecification.cs" />
     <Compile Include="Specifications\ManualProviderSpecification.cs" />
     <Compile Include="Specifications\ProviderSpecification.cs" />
+    <Compile Include="Values\Address.cs" />
     <Compile Include="Values\Gender.cs" />
     <Compile Include="Values\Location.cs" />
     <Compile Include="Values\LocationSchedule.cs" />

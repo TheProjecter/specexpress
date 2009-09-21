@@ -1,5 +1,5 @@
 <project xmlns="http://nant.sourceforge.net/release/0.86-beta1/nant.xsd">
-	<property name="nant.settings.currentframework" value="net-3.5" />
+
 	<property name="teamcity.build.checkoutDir" value="" unless="${property::exists('teamcity.build.checkoutDir')}"/>
 	<property name="build.is.personal" value="${property::exists('build.is.personal')}" unless="${property::exists('build.is.personal')}"/>
 	<property name="build.number" value="0.0.0.0" unless="${property::exists('build.number')}"/>

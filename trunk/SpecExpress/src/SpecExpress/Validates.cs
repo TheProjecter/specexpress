@@ -10,11 +10,36 @@ namespace SpecExpress
    
     public abstract class Validates<T> : Specification
     {
+        private Type _forType;
+
         public override Type ForType
         {
             get
             {
-                 return this.GetType().BaseType.GetGenericArguments().FirstOrDefault();
+                if (_forType == null)
+                {
+                    bool found = false;
+                    Type currentType = this.GetType();
+                    
+                    while(!found)
+                    {
+                        //_forType = this.GetType().BaseType.GetGenericArguments().FirstOrDefault();
+                        if (currentType.BaseType.Name == "Validates`1")
+                        {
+                            found = true;
+                        }
+                        else
+                        {
+                            currentType = currentType.BaseType;
+                        }
+                    }
+
+                    _forType = currentType.BaseType.GetGenericArguments().FirstOrDefault();
+                    
+                }
+                return _forType;
+
+                
             }
         }
 

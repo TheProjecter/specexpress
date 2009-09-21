@@ -6,11 +6,11 @@ using SpecExpress.Test.Domain.Entities;
 
 namespace SpecExpress.Test.Domain.Specifications
 {
-    public class InvalidWidgetSpecification : Validates<Widget>
+    public abstract class  WidgetSpecificationBase: Validates<Widget>
     {
-        public InvalidWidgetSpecification()
+        public WidgetSpecificationBase()
         {
-            Check(w => w.Name);
+            Check(w => w.Name).Required().And.MaxLength(5);
         }
     }
 }

@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProductAttribute("SpecExpress.Test.Domain")]
 [assembly: ComVisibleAttribute(false)]
 [assembly: CLSCompliantAttribute(true)]
-[assembly: AssemblyVersionAttribute("0.1.0.0")]
+[assembly: AssemblyVersionAttribute("0.1.161")]
 [assembly: AssemblyDelaySignAttribute(false)]
 [assembly: AssemblyCopyrightAttribute("Copyright, Alan Baker 2009")]
 

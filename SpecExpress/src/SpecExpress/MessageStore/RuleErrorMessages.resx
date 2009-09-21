@@ -153,6 +153,9 @@
   <data name="LengthBetween" xml:space="preserve">
     <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
   </data>
+  <data name="LengthEqualTo" xml:space="preserve">
+    <value>{PropertyName} shoud be {0} characters.</value>
+  </data>
   <data name="LessThan" xml:space="preserve">
     <value>'{PropertyName}' must be less than {0}. You entered {PropertyValue}.</value>
   </data>
@@ -203,6 +206,9 @@
   </data>
   <data name="Not_LengthBetween" xml:space="preserve">
     <value>'{PropertyName}' must not be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
+  </data>
+  <data name="Not_LengthEqualTo" xml:space="preserve">
+    <value>{PropertyName} shoud not be {0} characters.</value>
   </data>
   <data name="Not_LessThan" xml:space="preserve">
     <value>'{PropertyName}' must not be less than {0}. You entered {PropertyValue}.</value>

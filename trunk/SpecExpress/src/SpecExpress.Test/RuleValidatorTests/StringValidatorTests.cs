@@ -177,7 +177,21 @@ namespace SpecExpress.Test.RuleValidatorTests
             return validator.Validate(context) == null;
         }
 
-       
+
+        [TestCase("", 0,Result = true, TestName = "Empty")]
+        [TestCase("      ", 0, Result = true, TestName = "Whitespace")]
+        [TestCase(null, 0, Result = true, TestName = "Null")]
+        [TestCase("abcdef", 5, Result = true, TestName = "5 characters")]
+        [TestCase("abcdef", 4, Result = false, TestName = "5 characters invalid")]
+        public bool LengthEqualTo_IsValid(string propertyValue)
+        {
+            //Create Validator
+            var validator = new Alpha<Contact>();
+            RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
       
 
 

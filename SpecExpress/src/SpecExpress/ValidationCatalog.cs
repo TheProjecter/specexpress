@@ -9,6 +9,8 @@ namespace SpecExpress
 {
     public static class ValidationCatalog
     {
+        private static object _syncLock = new object();
+
         public static bool ValidateObjectGraph { get; set; }
 
         //public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
@@ -45,9 +47,12 @@ namespace SpecExpress
 
         public static void Configure(Action<ValidationCatalogConfiguration> action)
         {
-            //Should these rules be "disposable"? ie, not added to registry?
-            action(Configuration);
-            
+            lock (_syncLock)
+            {
+                //Should these rules be "disposable"? ie, not added to registry?
+                action(Configuration);
+            }
+
         }
 
 
@@ -71,11 +76,11 @@ namespace SpecExpress
                 throw new ArgumentNullException("Validate requires a non-null instance.");
             }
 
-            return new ValidationNotification { Errors = specification.Validate(instance) }; 
+            return new ValidationNotification { Errors = specification.Validate(instance) };
         }
 
 
-        public static ValidationNotification Validate<TSpec>(object instance) where TSpec: new()
+        public static ValidationNotification Validate<TSpec>(object instance) where TSpec : new()
         {
             var spec = new TSpec() as Specification;
             return Validate(instance, spec);
@@ -84,7 +89,10 @@ namespace SpecExpress
 
         public static void Reset()
         {
-            _registry.Clear();
+            lock (_syncLock)
+            {
+                _registry.Clear();
+            }
         }
 
         public static void ResetConfiguration()
@@ -99,21 +107,25 @@ namespace SpecExpress
 
         public static void AssertConfigurationIsValid()
         {
-            //Look for multiple specifications for a type where no default is defined.
-            //TODO: Implement multispec check
-
-            //Look for PropertyValidators with no Rules
-            var invalidPropertyValidators = from r in _registry
-                                            from v in r.PropertyValidators
-                                            where v.Rules == null || !v.Rules.Any()
-                                            select
-                                                r.GetType().Name + " is invalid because it has no rules defined for property '" +
-                                                v.PropertyName + "'.";
-
-            if (invalidPropertyValidators.Any())
+            lock (_syncLock)
             {
-                var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
-                throw new SpecExpressConfigurationException(errorString);
+
+                //Look for multiple specifications for a type where no default is defined.
+                //TODO: Implement multispec check
+
+                //Look for PropertyValidators with no Rules
+                var invalidPropertyValidators = from r in _registry
+                                                from v in r.PropertyValidators
+                                                where v.Rules == null || !v.Rules.Any()
+                                                select
+                                                    r.GetType().Name + " is invalid because it has no rules defined for property '" +
+                                                    v.PropertyName + "'.";
+
+                if (invalidPropertyValidators.Any())
+                {
+                    var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
+                    throw new SpecExpressConfigurationException(errorString);
+                }
             }
         }
 
@@ -121,45 +133,49 @@ namespace SpecExpress
 
         public static Specification TryGetSpecification(Type type)
         {
-            var specs = from r in _registry
-                        where r.ForType == type
-                        select r;
-
-            //No Specs found for type
-            if (!specs.ToList().Any())
+            lock (_syncLock)
             {
-                return null;
-            }
 
-            //If more than one spec was found for type
-            if (specs.ToList().Count > 1)
-            {
-                //try to return the default
-                var defaultSpecs =  from s in specs
-                       where s.DefaultForType
-                       select s;
+                var specs = from r in _registry
+                            where r.ForType == type
+                            select r;
 
-                //No default specs defined
-                if (!defaultSpecs.Any())
+                //No Specs found for type
+                if (!specs.ToList().Any())
                 {
-                    throw new SpecExpressConfigurationException("Multiple Specifications found and none are defined as default.");
+                    return null;
                 }
 
-                //Multiple specs defined as Default
-                if (defaultSpecs.Count() > 1)
+                //If more than one spec was found for type
+                if (specs.ToList().Count > 1)
                 {
-                    throw new SpecExpressConfigurationException("Multiple Specifications found and multiple are defined as default.");
+                    //try to return the default
+                    var defaultSpecs = from s in specs
+                                       where s.DefaultForType
+                                       select s;
+
+                    //No default specs defined
+                    if (!defaultSpecs.Any())
+                    {
+                        throw new SpecExpressConfigurationException("Multiple Specifications found and none are defined as default.");
+                    }
+
+                    //Multiple specs defined as Default
+                    if (defaultSpecs.Count() > 1)
+                    {
+                        throw new SpecExpressConfigurationException("Multiple Specifications found and multiple are defined as default.");
+                    }
+
+                    return defaultSpecs.First();
                 }
 
-                return defaultSpecs.First();
+                return specs.First();
             }
-
-            return specs.First();
         }
 
         public static Specification GetSpecification(Type type)
         {
-            var spec =  TryGetSpecification(type);
+            var spec = TryGetSpecification(type);
             if (spec == null)
             {
                 throw new SpecExpressConfigurationException("No Specification for type " + type + " was found.");
@@ -180,10 +196,10 @@ namespace SpecExpress
 
         public static IList<Specification> GetAllSpecifications()
         {
-            return _registry;
+            // For thread safety, return a copy of the registry
+            return new List<Specification>(_registry);
         }
 
-        
         #endregion
 
         #region Registration
@@ -220,20 +236,28 @@ namespace SpecExpress
 
         private static void RegisterSpecificationWithRegistry(Specification spec)
         {
-            if (spec != null)
+            lock (_syncLock)
             {
-                _registry.Add(spec);
+                if (spec != null)
+                {
+                    _registry.Add(spec);
+                }
             }
         }
 
         private static ValidationCatalogConfiguration buildDefaultValidationConfiguration()
         {
-            return new ValidationCatalogConfiguration()
+            lock (_syncLock)
             {
-                DefaultMessageStore = new ResourceMessageStore(RuleErrorMessages.ResourceManager),
-                ValidateObjectGraph = false
-            };
-            
+                ValidationCatalogConfiguration config = new ValidationCatalogConfiguration()
+                                                            {
+                                                                DefaultMessageStore =
+                                                                    new ResourceMessageStore(
+                                                                    RuleErrorMessages.ResourceManager),
+                                                                ValidateObjectGraph = false
+                                                            };
+                return config;
+            }
         }
 
         #endregion

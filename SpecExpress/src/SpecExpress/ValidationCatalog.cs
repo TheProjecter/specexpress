@@ -9,15 +9,21 @@ namespace SpecExpress
 {
     public static class ValidationCatalog
     {
-        private static object _syncLock = new object();
 
         public static bool ValidateObjectGraph { get; set; }
 
         //public static IDictionary<Type, Specification> Registry = new Dictionary<Type, Specification>();
 
-        public static ValidationCatalogConfiguration Configuration = buildDefaultValidationConfiguration();
+        public static ValidationCatalogConfiguration Configuration { get; private set;}
 
         private static IList<Specification> _registry = new List<Specification>();
+
+        private static object _syncLock = new object();
+
+        static ValidationCatalog()
+        {
+            Configuration = buildDefaultValidationConfiguration();
+        }
 
         /// <summary>
         /// Add Specifications dynamically without a SpecificationBase
@@ -47,12 +53,8 @@ namespace SpecExpress
 
         public static void Configure(Action<ValidationCatalogConfiguration> action)
         {
-            lock (_syncLock)
-            {
                 //Should these rules be "disposable"? ie, not added to registry?
                 action(Configuration);
-            }
-
         }
 
 
@@ -213,17 +215,21 @@ namespace SpecExpress
             //For each type, instantiate it and add it to the collection of specs found
             specs.ToList<Type>().ForEach(spec =>
             {
-                try
+                // Prevent two of the same specification from being registered
+                if (! (from specification in _registry where specification.GetType().FullName == spec.FullName select specification).Any())
                 {
-                    var s = Activator.CreateInstance(spec) as Specification;
+                    try
+                    {
+                        var s = Activator.CreateInstance(spec) as Specification;
 
-                    RegisterSpecificationWithRegistry(s);
-                }
-                catch (System.Reflection.TargetInvocationException te)
-                {
-                    //Can't create the object because it has a specification that hasn't been loaded yet
-                    //save it for the next pass
-                    delayedSpecs.Add(spec);
+                        RegisterSpecificationWithRegistry(s);
+                    }
+                    catch (System.Reflection.TargetInvocationException te)
+                    {
+                        //Can't create the object because it has a specification that hasn't been loaded yet
+                        //save it for the next pass
+                        delayedSpecs.Add(spec);
+                    }
                 }
             });
 
@@ -238,6 +244,7 @@ namespace SpecExpress
         {
             lock (_syncLock)
             {
+
                 if (spec != null)
                 {
                     _registry.Add(spec);

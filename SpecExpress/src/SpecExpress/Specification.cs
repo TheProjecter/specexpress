@@ -16,12 +16,21 @@ namespace SpecExpress
         public List<PropertyValidator> PropertyValidators
         {
             get { return _propertyValidators; }
-            set { _propertyValidators = value; }
+            set
+            {
+                lock (this)
+                {
+                    _propertyValidators = value;
+                }
+            }
         }
 
         public List<ValidationResult> Validate(object instance)
         {
-            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+            lock (this)
+            {
+                return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+            }
         }
 
         public void IsDefaultForType()

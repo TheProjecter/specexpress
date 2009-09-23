@@ -48,10 +48,13 @@ namespace SpecExpress
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,
                                                                   string propertyNameOverride)
         {
-            PropertyValidator<T, TProperty> validator = registerValidator(expression);
-            validator.PropertyNameOverride = propertyNameOverride;
-            validator.Level = ValidationLevelType.Error;
-            return new ActionOptionBuilder<T, TProperty>(validator);
+            lock (this)
+            {
+                PropertyValidator<T, TProperty> validator = registerValidator(expression);
+                validator.PropertyNameOverride = propertyNameOverride;
+                validator.Level = ValidationLevelType.Error;
+                return new ActionOptionBuilder<T, TProperty>(validator);
+            }
         }
 
         public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression)
@@ -66,29 +69,35 @@ namespace SpecExpress
         public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression,
                                                                  string propertyNameOverride)
         {
-            PropertyValidator<T, TProperty> validator = registerValidator(expression);
-            validator.Level = ValidationLevelType.Warn;
-            validator.PropertyNameOverride = propertyNameOverride;
-            return new ActionOptionBuilder<T, TProperty>(validator);
+            lock (this)
+            {
+                PropertyValidator<T, TProperty> validator = registerValidator(expression);
+                validator.Level = ValidationLevelType.Warn;
+                validator.PropertyNameOverride = propertyNameOverride;
+                return new ActionOptionBuilder<T, TProperty>(validator);
+            }
         }
 
         public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression)
         {
-            return Warn(expression, null);
+                return Warn(expression, null);
         }
 
         #endregion
 
         public List<ValidationResult> Validate(T instance)
         {
-            return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+            lock (this)
+            {
+                return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+            }
         }
 
         private PropertyValidator<T, TProperty> registerValidator<TProperty>(Expression<Func<T, TProperty>> expression)
         {
-            var propertyValidator = new PropertyValidator<T, TProperty>(expression);
-            PropertyValidators.Add(propertyValidator);
-            return propertyValidator;
+                var propertyValidator = new PropertyValidator<T, TProperty>(expression);
+                PropertyValidators.Add(propertyValidator);
+                return propertyValidator;
         }
     }
 }

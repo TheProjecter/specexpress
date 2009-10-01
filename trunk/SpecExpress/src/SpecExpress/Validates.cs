@@ -23,7 +23,7 @@ namespace SpecExpress
                     
                     while(!found)
                     {
-                        //_forType = this.GetType().BaseType.GetGenericArguments().FirstOrDefault();
+                        //Look for base class by name
                         if (currentType.BaseType.Name == "Validates`1")
                         {
                             found = true;
@@ -38,8 +38,6 @@ namespace SpecExpress
                     
                 }
                 return _forType;
-
-                
             }
         }
 

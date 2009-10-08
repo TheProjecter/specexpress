@@ -65,9 +65,17 @@ namespace SpecExpress
         /// <returns></returns>
         public static ValidationNotification Validate(object instance)
         {
-            Type type = instance.GetType();
-            var spec = GetSpecification(instance.GetType());
-            return Validate(instance, spec);
+            if (instance is IEnumerable)
+            {
+                return ValidateCollection((IEnumerable)instance);
+            }
+            else
+            {
+                Type type = instance.GetType();
+                var spec = GetSpecification(instance.GetType());
+                return Validate(instance, spec);
+            }
+
         }
 
         public static ValidationNotification Validate(object instance, Specification specification)
@@ -78,11 +86,68 @@ namespace SpecExpress
                 throw new ArgumentNullException("Validate requires a non-null instance.");
             }
 
-            return new ValidationNotification { Errors = specification.Validate(instance) };
+            if (instance is IEnumerable)
+            {
+                return ValidateCollection((IEnumerable)instance, specification);
+            }
+            else
+            {
+                return new ValidationNotification { Errors = specification.Validate(instance) };
+            }
+            
+        }
+
+        private static ValidationNotification ValidateCollection(IEnumerable instance)
+        {
+            //assume that the first item in the collection is the same for all items in the collection and get the specification for that type
+            IEnumerator enumerator = ((IEnumerable)instance).GetEnumerator();
+
+            //move to the first item in the collection if it's not empty
+            if (enumerator.MoveNext())
+            {
+                var specification = GetSpecification(enumerator.Current.GetType());
+                return ValidateCollection((IEnumerable)instance, specification);
+            }
+            else
+            {
+                //Collection was empty, return default ValidationNotification
+                return new ValidationNotification();
+            }
+        }
+
+        private static ValidationNotification ValidateCollection(IEnumerable instance, Specification specification)
+        {
+            //Guard for null
+            if (instance == null)
+            {
+                throw new ArgumentNullException("Validate requires a non-null instance.");
+            }
+
+            var collectionResult = new List<ValidationResult>();
+
+            //Object being validated is a collection.
+            //Check if the type in the collection has a Specification
+            IEnumerator enumerator = instance.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                //validate the object with the given specification
+                collectionResult.AddRange(specification.Validate(enumerator.Current));
+            }
+
+            return new ValidationNotification { Errors = collectionResult };
+            
         }
 
 
+
         public static ValidationNotification Validate<TSpec>(object instance) where TSpec : new()
+        {
+            var spec = new TSpec() as Specification;
+            return Validate(instance, spec);
+        }
+
+        public static ValidationNotification Validate<TSpec>(IEnumerable instance) where TSpec : new()
         {
             var spec = new TSpec() as Specification;
             return Validate(instance, spec);

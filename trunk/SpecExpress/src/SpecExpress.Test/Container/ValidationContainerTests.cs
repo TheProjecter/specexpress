@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Reflection;
 using NUnit.Framework;
 using SpecExpress.MessageStore;
-using SpecExpress.Rules.DateValidators;
 using SpecExpress.Test.Domain.Specifications;
 using SpecExpressTest.Entities;
+using System.Collections.Generic;
 
 namespace SpecExpress.Test
 {
@@ -86,6 +85,29 @@ namespace SpecExpress.Test
         {
             Assert.That(  ValidationCatalog.Configuration.DefaultMessageStore.GetType(), Is.EqualTo(typeof(ResourceMessageStore)));
             Assert.That(ValidationCatalog.Configuration.ValidateObjectGraph, Is.False);
+        }
+
+        [Test]
+        public void Validate_Collection_Using_Specified_Specification_WithoutValidateObjectGraph()
+        {
+            //Build test data
+            var validContact = new Contact() { FirstName = "Johnny B", LastName = "Good" };
+            var invalidContact = new Contact() { FirstName = "Baddy" };
+
+            var contacts = new List<Contact>() {validContact, invalidContact};
+
+            //Create specification
+            ValidationCatalog.AddSpecification<Contact>(spec =>
+            {
+                spec.Check(c => c.FirstName).Required();
+                spec.Check(c => c.LastName).Required();
+            });
+            
+            //Validate
+            var results = ValidationCatalog.Validate(contacts);
+
+            Assert.That(results.Errors.Count, Is.AtLeast(1));
+
         }
 
     }

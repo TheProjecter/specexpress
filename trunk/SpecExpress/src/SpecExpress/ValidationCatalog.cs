@@ -65,17 +65,28 @@ namespace SpecExpress
         /// <returns></returns>
         public static ValidationNotification Validate(object instance)
         {
-            if (instance is IEnumerable)
+            //try to find a specification for the type
+            Specification specification = TryGetSpecification(instance.GetType());
+
+            if (specification != null)
             {
-                return ValidateCollection((IEnumerable)instance);
+                //Specification for this type found
+                return Validate(instance, specification);
             }
             else
             {
-                Type type = instance.GetType();
-                var spec = GetSpecification(instance.GetType());
-                return Validate(instance, spec);
+                //No spec found for type, try for Collection
+                if (instance is IEnumerable)
+                {
+                    return ValidateCollection((IEnumerable)instance);
+                }
+                else
+                {
+                    //Unable to find specification, so call GetSpecification to generate an error message
+                    GetSpecification(instance.GetType());
+                    return null;
+                }
             }
-
         }
 
         public static ValidationNotification Validate(object instance, Specification specification)
@@ -86,15 +97,19 @@ namespace SpecExpress
                 throw new ArgumentNullException("Validate requires a non-null instance.");
             }
 
+            //If the Specification and instance type match up the use them
+            if ( specification.ForType == instance.GetType())
+            {
+                return new ValidationNotification { Errors = specification.Validate(instance) };
+            }
+
+            //The Specification isn't for the same type as the instance, check if it's a collection of that type
             if (instance is IEnumerable)
             {
                 return ValidateCollection((IEnumerable)instance, specification);
             }
-            else
-            {
-                return new ValidationNotification { Errors = specification.Validate(instance) };
-            }
             
+            throw new SpecExpressConfigurationException("Specification is invalid for the instance. Specification is for type " + specification.ForType.ToString() + " and instance is type " + instance.GetType().ToString() + "." );
         }
 
         private static ValidationNotification ValidateCollection(IEnumerable instance)
@@ -139,20 +154,11 @@ namespace SpecExpress
             
         }
 
-
-
         public static ValidationNotification Validate<TSpec>(object instance) where TSpec : new()
         {
             var spec = new TSpec() as Specification;
             return Validate(instance, spec);
         }
-
-        public static ValidationNotification Validate<TSpec>(IEnumerable instance) where TSpec : new()
-        {
-            var spec = new TSpec() as Specification;
-            return Validate(instance, spec);
-        }
-
 
         public static void Reset()
         {

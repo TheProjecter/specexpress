@@ -246,8 +246,6 @@ namespace SpecExpress
 
                 if (PropertyValueRequired || (!PropertyValueRequired && !context.PropertyValue.IsNullOrDefault()) )
                 {
-
-
                     List<ValidationResult> list =
                         _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 

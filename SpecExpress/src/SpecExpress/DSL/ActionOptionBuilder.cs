@@ -8,23 +8,25 @@ namespace SpecExpress.DSL
     /// <typeparam name="TProperty"></typeparam>
     public class ActionOptionBuilder<T, TProperty>
     {
-        private readonly PropertyValidator<T, TProperty> _propertyValidator;
+        protected readonly PropertyValidator<T, TProperty> _propertyValidator;
 
         public ActionOptionBuilder(PropertyValidator<T, TProperty> propertyValidator)
         {
             _propertyValidator = propertyValidator;
         }
 
-        public ActionOptionConditionBuilder<T, TProperty> Required()
+        public ActionJoinBuilder<T, TProperty> Required()
         {
             _propertyValidator.PropertyValueRequired = true;
-            return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
+            return new ActionJoinBuilder<T,TProperty>(_propertyValidator);
+            //return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
         }
 
-        public ActionOptionConditionBuilder<T, TProperty> Optional()
+        public ActionJoinBuilder<T, TProperty> Optional()
         {
             _propertyValidator.PropertyValueRequired = false;
-            return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            //return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
         }
     }
 }

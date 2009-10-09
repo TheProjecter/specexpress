@@ -22,33 +22,33 @@ namespace SpecExpress.Test.DSLTests
         }
 
         [Test]
-        public void Optional_SetsPropertyValidatorRequieredToFalse_ReturnsActionOptionCondition()
+        public void Optional_SetsPropertyValidatorRequieredToFalse_ReturnsActionJoinBuilder()
         {
             // Create Dependancies
             PropertyValidator<Customer, string> validator = PropertyValidatorFactory.DefaultCustomerNameValidator();
 
             // Test
             var actionOptionBuilder = new ActionOptionBuilder<Customer, string>(validator);
-            ActionOptionConditionBuilder<Customer, string> optionalResult = actionOptionBuilder.Optional();
+            ActionJoinBuilder<Customer, string> optionalResult = actionOptionBuilder.Optional();
 
             // Assert
             Assert.That(validator.PropertyValueRequired, Is.False);
-            Assert.That(optionalResult, Is.InstanceOf<ActionOptionConditionBuilder<Customer, string>>());
+            Assert.That(optionalResult, Is.InstanceOf<ActionJoinBuilder<Customer, string>>());
         }
 
         [Test]
-        public void Required_SetsPropertyValidatorRequiredToTrue_ReturnsActionOptionCondition()
+        public void Required_SetsPropertyValidatorRequiredToTrue_ReturnsActionJoinBuilder()
         {
             // Create Dependancies
             PropertyValidator<Customer, string> validator = PropertyValidatorFactory.DefaultCustomerNameValidator();
 
             // Test
             var actionOptionBuilder = new ActionOptionBuilder<Customer, string>(validator);
-            ActionOptionConditionBuilder<Customer, string> requiredResult = actionOptionBuilder.Required();
+            ActionJoinBuilder<Customer, string> requiredResult = actionOptionBuilder.Required();
 
             // Assert
             Assert.That(validator.PropertyValueRequired, Is.True);
-            Assert.That(requiredResult, Is.InstanceOf<ActionOptionConditionBuilder<Customer, string>>());
+            Assert.That(requiredResult, Is.InstanceOf<ActionJoinBuilder<Customer, string>>());
         }
     }
 }

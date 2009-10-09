@@ -3,24 +3,21 @@ using System.Linq.Expressions;
 
 namespace SpecExpress.DSL
 {
-    public class ActionOptionConditionBuilder<T, TProperty>
+    public class ActionOptionConditionBuilder<T, TProperty> : ActionOptionBuilder<T,TProperty>
     {
-        private readonly PropertyValidator<T, TProperty> _propertyValidator;
-
-        public ActionOptionConditionBuilder(PropertyValidator<T, TProperty> propertyValidator)
+        public ActionOptionConditionBuilder(PropertyValidator<T, TProperty> propertyValidator) : base(propertyValidator)
         {
-            _propertyValidator = propertyValidator;
         }
 
-        public RuleBuilder<T, TProperty> And
-        {
-            get { return new RuleBuilder<T, TProperty>(_propertyValidator); }
-        }
+        //public RuleBuilder<T, TProperty> And
+        //{
+        //    get { return new RuleBuilder<T, TProperty>(_propertyValidator); }
+        //}
 
-        public WithBuilder<T, TProperty> With
-        {
-            get { return new WithBuilder<T, TProperty>(_propertyValidator); }
-        }
+        //public WithBuilder<T, TProperty> With
+        //{
+        //    get { return new WithBuilder<T, TProperty>(_propertyValidator); }
+        //}
 
         public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression)
         {

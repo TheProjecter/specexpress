@@ -9,14 +9,14 @@ namespace SpecExpress.DSL
             _propertyValidator = propertyValidator;
         }
 
-        public RuleBuilder<T, TProperty> Then
+        public ActionOptionBuilder<T, TProperty> Then
         {
-            get { return new RuleBuilder<T, TProperty>(_propertyValidator); }
+            get { return new ActionOptionBuilder<T, TProperty>(_propertyValidator); }
         }
 
-        public WithBuilder<T, TProperty> With
-        {
-            get { return new WithBuilder<T, TProperty>(_propertyValidator); }
-        }
+        //public WithBuilder<T, TProperty> With
+        //{
+        //    get { return new WithBuilder<T, TProperty>(_propertyValidator); }
+        //}
     }
 }

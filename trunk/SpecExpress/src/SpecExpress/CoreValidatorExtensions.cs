@@ -26,9 +26,21 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, System.Nullable<DateTime>> IsInFuture<T>(this IRuleBuilder<T, System.Nullable<DateTime>> expression)
+        {
+            expression.RegisterValidator(new Rules.DateValidators.IsInFutureNullable<T>());
+            return expression.JoinBuilder;
+        }
+
         public static ActionJoinBuilder<T, DateTime> IsInPast<T>(this IRuleBuilder<T, DateTime> expression)
         {
             expression.RegisterValidator(new Rules.DateValidators.IsInPast<T>());
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, System.Nullable<DateTime>> IsInPast<T>(this IRuleBuilder<T, System.Nullable<DateTime>> expression)
+        {
+            expression.RegisterValidator(new Rules.DateValidators.IsInPastNullable<T>());
             return expression.JoinBuilder;
         }
 

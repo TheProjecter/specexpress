@@ -14,4 +14,18 @@ namespace SpecExpress.Rules.DateValidators
             return Evaluate(context.PropertyValue > DateTime.Now, context);
         }
     }
+
+    public class IsInFutureNullable<T> : RuleValidator<T, System.Nullable<DateTime>>
+    {
+        public override object[] Parameters
+        {
+            get { return new object[] { }; }
+        }
+
+        public override ValidationResult Validate(RuleValidatorContext<T, System.Nullable<DateTime>> context)
+        {
+            return Evaluate(!context.PropertyValue.HasValue || context.PropertyValue.Value > DateTime.Now, context);
+        }
+    }
+
 }

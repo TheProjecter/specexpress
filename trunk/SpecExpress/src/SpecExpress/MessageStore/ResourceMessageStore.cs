@@ -36,6 +36,12 @@ namespace SpecExpress.MessageStore
             //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
             string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
 
+            // Remove "Nullable" from end of type name
+            if (key.EndsWith("Nullable"))
+            {
+                key = key.Remove(key.Length - 7);
+            }
+
             // Prefix key with "Not_" for negated rule messages
             if (context.Negate)
             {

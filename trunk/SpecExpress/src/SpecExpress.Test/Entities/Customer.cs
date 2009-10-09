@@ -11,6 +11,7 @@ namespace SpecExpress.Test.Entities
         public DateTime CustomerDate { get; set; }
         public DateTime ActiveDate { get; set; }
         public DateTime ExpireDate { get; set; }
+        public DateTime? PromotionDate { get; set; }
         public Address Address { get; set; }
         public int Max { get; set;}
         public int Min { get; set; }

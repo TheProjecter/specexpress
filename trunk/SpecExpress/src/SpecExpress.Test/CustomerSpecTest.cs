@@ -122,6 +122,32 @@ namespace SpecExpressTest
             Assert.That(notification[0].Message, Is.EqualTo("Address Country Name is required."));
         }
 
+        [Test]
+        public void CustomerPromotionDate_IsInFuture_IsValid()
+        {
+            var customer = new Customer() {PromotionDate = DateTime.Now.AddDays(1)};
+
+            var spec = new CustomerSpecification();
+            spec.Check(c => c.PromotionDate).Optional().And.IsInFuture();
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.That(notification, Is.Empty);
+
+        }
+
+        [Test]
+        public void PastCustomerPromotionDate_IsInFuture_IsNotValid()
+        {
+            var customer = new Customer() { PromotionDate = DateTime.Now.AddDays(-1) };
+
+            var spec = new CustomerSpecification();
+            spec.Check(c => c.PromotionDate).Optional().And.IsInFuture();
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.That(notification, Is.Not.Empty);
+
+        }
+
         //[Test]
         //public void Test1()
         //{

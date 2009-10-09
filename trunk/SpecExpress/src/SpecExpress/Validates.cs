@@ -43,7 +43,7 @@ namespace SpecExpress
 
         #region Check
 
-        public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,
+        public ActionOptionConditionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression,
                                                                   string propertyNameOverride)
         {
             lock (this)
@@ -51,11 +51,11 @@ namespace SpecExpress
                 PropertyValidator<T, TProperty> validator = registerValidator(expression);
                 validator.PropertyNameOverride = propertyNameOverride;
                 validator.Level = ValidationLevelType.Error;
-                return new ActionOptionBuilder<T, TProperty>(validator);
+                return new ActionOptionConditionBuilder<T, TProperty>(validator);
             }
         }
 
-        public ActionOptionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression)
+        public ActionOptionConditionBuilder<T, TProperty> Check<TProperty>(Expression<Func<T, TProperty>> expression)
         {
             return Check(expression, null);
         }
@@ -64,7 +64,7 @@ namespace SpecExpress
 
         #region Warn
 
-        public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression,
+        public ActionOptionConditionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression,
                                                                  string propertyNameOverride)
         {
             lock (this)
@@ -72,11 +72,11 @@ namespace SpecExpress
                 PropertyValidator<T, TProperty> validator = registerValidator(expression);
                 validator.Level = ValidationLevelType.Warn;
                 validator.PropertyNameOverride = propertyNameOverride;
-                return new ActionOptionBuilder<T, TProperty>(validator);
+                return new ActionOptionConditionBuilder<T, TProperty>(validator);
             }
         }
 
-        public ActionOptionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression)
+        public ActionOptionConditionBuilder<T, TProperty> Warn<TProperty>(Expression<Func<T, TProperty>> expression)
         {
                 return Warn(expression, null);
         }

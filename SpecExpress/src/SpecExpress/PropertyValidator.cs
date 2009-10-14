@@ -233,11 +233,12 @@ namespace SpecExpress
 
         public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
         {
-            if (_rules == null || !_rules.Any())
-            {
-                throw new SpecExpressConfigurationException(
-                    "No rules exist for this Property" + PropertyName + " for type " + typeof(T).Name + ". This is because the rules are improperly configured.");
-            }
+            // RB 20091014: Allow a Property Validator with no rules defined to be valid (i.e. "Check(c => c.Name).Optional();" ).
+            //if (_rules == null || !_rules.Any())
+            //{
+            //    throw new SpecExpressConfigurationException(
+            //        "No rules exist for this Property" + PropertyName + " for type " + typeof(T).Name + ". This is because the rules are improperly configured.");
+            //}
 
             if ( Condition == null || (Condition != null && Condition(instance)))
             {

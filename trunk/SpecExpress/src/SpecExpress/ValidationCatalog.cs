@@ -186,19 +186,20 @@ namespace SpecExpress
                 //Look for multiple specifications for a type where no default is defined.
                 //TODO: Implement multispec check
 
-                //Look for PropertyValidators with no Rules
-                var invalidPropertyValidators = from r in _registry
-                                                from v in r.PropertyValidators
-                                                where v.Rules == null || !v.Rules.Any()
-                                                select
-                                                    r.GetType().Name + " is invalid because it has no rules defined for property '" +
-                                                    v.PropertyName + "'.";
+                // RB 20091014: Allow a Property Validator with no rules defined to be valid (i.e. "Check(c => c.Name).Optional();" ).
+                ////Look for PropertyValidators with no Rules
+                //var invalidPropertyValidators = from r in _registry
+                //                                from v in r.PropertyValidators
+                //                                where v.Rules == null || !v.Rules.Any()
+                //                                select
+                //                                    r.GetType().Name + " is invalid because it has no rules defined for property '" +
+                //                                    v.PropertyName + "'.";
 
-                if (invalidPropertyValidators.Any())
-                {
-                    var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
-                    throw new SpecExpressConfigurationException(errorString);
-                }
+                //if (invalidPropertyValidators.Any())
+                //{
+                //    var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
+                //    throw new SpecExpressConfigurationException(errorString);
+                //}
             }
         }
 

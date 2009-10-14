@@ -13,6 +13,18 @@ namespace SpecExpressTest
     public class CustomerSpecTest
     {
         [Test]
+        public void CustomerName_Optional_IsValid()
+        {
+            var customer = new Customer();
+
+            var spec = new CustomerSpecification();
+            spec.Check(cust => cust.Name).Optional();
+
+            List<ValidationResult> notification = spec.Validate(customer);
+            Assert.IsEmpty(notification);
+        }
+
+        [Test]
         public void CustomerName_OptionalAndLength_IsValid()
         {
             var customer = new Customer();

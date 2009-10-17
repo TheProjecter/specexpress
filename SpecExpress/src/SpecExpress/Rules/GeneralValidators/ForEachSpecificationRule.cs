@@ -76,7 +76,8 @@ namespace SpecExpress.Rules.GeneralValidators
                 var itemErrors = _specification.Validate(item);
                 if (itemErrors.Any())
                 {
-                    var itemError = ValidationResultFactory.Create(this, context, Parameters, item.GetType().Name + " " + index + " in {PropertyName} is invalid.", MessageStoreName, MessageKey);
+                    Message = item.GetType().Name + " " + index + " in {PropertyName} is invalid.";
+                    var itemError = ValidationResultFactory.Create(this, context, Parameters, MessageKey);
                     itemError.NestedValdiationResults = itemErrors;
                     itemsNestedValidationResult.Add(itemError);
                 }
@@ -86,7 +87,8 @@ namespace SpecExpress.Rules.GeneralValidators
             if (itemsNestedValidationResult.Any())
             {
                 //Errors were found on at least one item in the collection to return a ValidationResult for the Collection property
-                collectionValidationResult = ValidationResultFactory.Create(this, context, Parameters, "{PropertyName} is invalid.", MessageStoreName, MessageKey);
+                Message = "{PropertyName} is invalid.";
+                collectionValidationResult = ValidationResultFactory.Create(this, context, Parameters, MessageKey);
                 collectionValidationResult.NestedValdiationResults = itemsNestedValidationResult;
             }
 

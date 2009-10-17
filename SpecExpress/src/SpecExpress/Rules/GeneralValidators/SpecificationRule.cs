@@ -17,9 +17,10 @@ namespace SpecExpress.Rules.GeneralValidators
         /// Validate using designated specification
         /// </summary>
         /// <param name="specification"></param>
-        public SpecificationRule(Validates<TProperty> specification)
+        public SpecificationRule(Validates<TProperty> specification) 
         {
             _specification = specification;
+            Message = "{PropertyName} is invalid.";
         }
 
         /// <summary>
@@ -30,8 +31,13 @@ namespace SpecExpress.Rules.GeneralValidators
             //When a Specificiation class is being instantiated during the registration process,
             //The specification for this rule may not be in the registry yet
             //var specification = ValidationCatalog.Registry[typeof(TProperty)];
-             _specification = ValidationCatalog.GetSpecification<TProperty>();
+            if (_specification == null)
+            {
+                _specification = ValidationCatalog.GetSpecification<TProperty>();   
+            }
+             
             //_specification = specification as SpecificationBase<TProperty>;
+            
         }
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
@@ -41,7 +47,7 @@ namespace SpecExpress.Rules.GeneralValidators
 
             if (list.Any())
             {
-                result = ValidationResultFactory.Create(this, context, Parameters, "{PropertyName} is invalid.", MessageStoreName, MessageKey);
+                result = ValidationResultFactory.Create(this, context, Parameters, MessageKey);
                 result.NestedValdiationResults = list;
             }
 

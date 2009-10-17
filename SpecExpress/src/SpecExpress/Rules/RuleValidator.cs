@@ -25,7 +25,7 @@ namespace SpecExpress.Rules
                 }
                 else
                 {
-                    return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName, MessageKey);
+                    return ValidationResultFactory.Create(this, context, Parameters, MessageKey);
                 }
             }
             else
@@ -36,8 +36,30 @@ namespace SpecExpress.Rules
                 }
                 else
                 {
-                    return ValidationResultFactory.Create(this, context, Parameters, Message, MessageStoreName,MessageKey);
+                    return ValidationResultFactory.Create(this, context, Parameters,MessageKey);
                 }
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get
+            {
+                string message = string.Empty;
+                var messageService = new MessageService();
+
+                //if (String.IsNullOrEmpty(Message))
+                //{
+                //    var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, messageStore, messageKey);
+                //    message = messageService.GetDefaultMessageAndFormat(messageContext, parameters);
+                //}
+                //else
+                //{
+                //    //Since the message was supplied, don't get the default message from the store, just format it
+                //    message = messageService.FormatMessage(validator.Message, context, parameters);
+                //}
+
+                return message;
             }
         }
     }

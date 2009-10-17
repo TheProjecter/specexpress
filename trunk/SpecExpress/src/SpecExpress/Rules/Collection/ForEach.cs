@@ -44,7 +44,8 @@ namespace SpecExpress.Rules.Collection
 
             if (sb.Length > 0)
             {
-                return ValidationResultFactory.Create(this, context, Parameters, sb.ToString(), null, null);                            
+                Message = sb.ToString();
+                return ValidationResultFactory.Create(this, context, null, null);                            
             }
             else
             {

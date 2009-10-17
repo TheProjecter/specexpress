@@ -14,14 +14,7 @@ namespace SpecExpress.Rules.GeneralValidators
 
         public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
         {
-            //return Evaluate( 
-            //    !(  context.PropertyValue == null
-            //        || context.PropertyValue.Equals(string.Empty)
-            //        || Equals(context.PropertyValue, default(TProperty))
-            //        || !( !(context.PropertyValue is IEnumerable) || (context.PropertyValue is IEnumerable && ((IEnumerable)(context.PropertyValue)).GetEnumerator().MoveNext())))
-            //    , context);
-
-            return Evaluate(!context.PropertyValue.IsNullOrDefault(), context);
+          return Evaluate(!context.PropertyValue.IsNullOrDefault(), context);
         }
     }
 

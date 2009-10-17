@@ -10,7 +10,7 @@ namespace SpecExpress.MessageStore
 {
     public class MessageService
     {
-        public string GetDefaultMessage(MessageContext context, object[] parameters)
+        public string GetDefaultMessageAndFormat(MessageContext context, object[] parameters)
         {
             IMessageStore messageStore = String.IsNullOrEmpty(context.MessageStoreName)
                                              ? MessageStoreFactory.GetMessageStore()
@@ -21,6 +21,19 @@ namespace SpecExpress.MessageStore
             return FormatMessage(messageTemplate, context.RuleContext, parameters);
         }
 
+         public string GetDefaultMessage(MessageContext context, object[] parameters)
+        {
+            IMessageStore messageStore = String.IsNullOrEmpty(context.MessageStoreName)
+                                             ? MessageStoreFactory.GetMessageStore()
+                                             : MessageStoreFactory.GetMessageStore(context.MessageStoreName);
+
+            string messageTemplate = context.Key == null ? messageStore.GetMessageTemplate(context) : messageStore.GetMessageTemplate(context.Key);
+          
+            return FormatMessage(messageTemplate, context.RuleContext, parameters);
+        }
+
+
+        
         public string FormatMessage(string message, RuleValidatorContext context, object[] parameters)
         {
             //Replace known keywords with actual values

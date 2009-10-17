@@ -9,20 +9,20 @@ namespace SpecExpress
 {
     internal static class ValidationResultFactory
     {
-        public static ValidationResult Create(RuleValidator validator, RuleValidatorContext context, object[] parameters, string customMessage, string messageStore, object messageKey)
+        public static ValidationResult Create(RuleValidator validator, RuleValidatorContext context, object[] parameters, object messageKey)
         {
             string message = string.Empty;
             var messageService = new MessageService();
 
-            if (String.IsNullOrEmpty(customMessage))
+            if (String.IsNullOrEmpty(validator.Message))
             {
-                var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, messageStore, messageKey);
-                message = messageService.GetDefaultMessage(messageContext, parameters);
+                var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, validator.MessageStoreName, messageKey);
+                message = messageService.GetDefaultMessageAndFormat(messageContext, parameters);
             }
             else
             {
                 //Since the message was supplied, don't get the default message from the store, just format it
-                message = messageService.FormatMessage(customMessage, context, parameters);
+                message = messageService.FormatMessage(validator.Message, context, parameters);
             }
            
             return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);

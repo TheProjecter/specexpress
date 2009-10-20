@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SpecExpress.Web
 {
-    interface IPageSpecification 
+    public interface IPageSpecification 
     {
         Type PageSpecification { get; }
     }

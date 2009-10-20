@@ -41,31 +41,6 @@ namespace SpecExpress.Rules
             }
         }
 
-        public string ErrorMessage
-        {
-            get
-            {
-                string message = string.Empty;
-                var messageService = new MessageService();
-
-                //if (String.IsNullOrEmpty(Message))
-                //{
-                //    var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, messageStore, messageKey);
-                //    message = messageService.GetDefaultMessageAndFormat(messageContext, parameters);
-                //}
-                //else
-                //{
-                //    //Since the message was supplied, don't get the default message from the store, just format it
-                //    message = messageService.FormatMessage(validator.Message, context, parameters);
-                //}
-
-                return message;
-            }
-        }
-    }
-
-    public abstract class RuleValidator<T, TProperty> : RuleValidator
-    {
         protected IDictionary<string, CompiledExpression> PropertyExpressions = new Dictionary<string, CompiledExpression>();
 
         protected CompiledExpression SetPropertyExpression(LambdaExpression expression)
@@ -79,6 +54,34 @@ namespace SpecExpress.Rules
             PropertyExpressions[key] = compiledExpression;
             return compiledExpression;
         }
+
+        public string ErrorMessageTemplate
+        {
+            get
+            {
+                string message = string.Empty;
+                var messageService = new MessageService();
+
+                if (String.IsNullOrEmpty(Message))
+                {
+                    var messageContext = new MessageContext(null, this.GetType(), Negate, MessageStoreName, MessageKey);
+                    message = messageService.GetMessageTemplate(messageContext);
+                }
+                else
+                {
+                    //Since the message was supplied, don't get the default message from the store, just return it
+                    message = Message;
+                }
+
+                return message;
+            }
+        }
+    }
+
+    public abstract class RuleValidator<T, TProperty> : RuleValidator
+    {
+        
+       
 
         /// <summary>
         /// Executes a Delegate and casts to the return value to the appropriate type

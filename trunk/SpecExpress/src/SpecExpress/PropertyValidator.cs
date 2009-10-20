@@ -83,7 +83,11 @@ namespace SpecExpress
         }
 
         public ValidationLevelType Level { get; set; }
-        public bool PropertyValueRequired { get; protected set; }
+        public virtual bool PropertyValueRequired { get; set; }
+
+        public abstract RuleValidator RequiredRule { get;}
+
+
         public PropertyValidator Child { get; set; }
         public PropertyValidator Parent { get; set; }
         public LambdaExpression Property { get; set; }
@@ -186,7 +190,7 @@ namespace SpecExpress
 
         public Predicate<T> Condition { get; set; }
 
-        public new bool PropertyValueRequired
+        public override bool PropertyValueRequired
         {
             get { return base.PropertyValueRequired; }
             set
@@ -197,6 +201,7 @@ namespace SpecExpress
                     new List<RuleValidator<T, TProperty>>(from validator in _rules
                                                           where validator.GetType() != typeof (Required<T, TProperty>)
                                                           select validator);
+
                 _rules = newList;
 
                 if (value)
@@ -207,6 +212,15 @@ namespace SpecExpress
 
                 base.PropertyValueRequired = value;
             }
+        }
+
+        public override RuleValidator RequiredRule
+        { 
+            get
+            {
+                return _rules.OfType<Required<T, TProperty>>().First();
+            }
+
         }
 
         public new PropertyValidator<T, TProperty> Child

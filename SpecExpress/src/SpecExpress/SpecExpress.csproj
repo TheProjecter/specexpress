@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +106,10 @@
     <Compile Include="ValidationResult.cs" />
     <Compile Include="PropertyValidator.cs" />
     <Compile Include="ValidationResultFactory.cs" />
+    <Compile Include="Web\ControlExtensions.cs" />
+    <Compile Include="Web\IPageSpecification.cs" />
+    <Compile Include="Web\SpecExpressProxyValidator.cs" />
+    <Compile Include="Web\SpecExpressProxyValidatorHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MessageStore\RuleErrorMessages.resx">

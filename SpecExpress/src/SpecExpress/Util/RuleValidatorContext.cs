@@ -10,6 +10,7 @@ namespace SpecExpress.Rules
         public string PropertyName { get; protected set; }
         public object PropertyValue { get; protected set; }
         public MemberInfo PropertyInfo { get; set; }
+        public Object Instance { get; set; }
     }
 
     /// <summary>
@@ -19,8 +20,6 @@ namespace SpecExpress.Rules
     /// <typeparam name="TProperty"></typeparam>
     public class RuleValidatorContext<T, TProperty> : RuleValidatorContext
     {
-        protected T _instance;
-
         public RuleValidatorContext(T instance, PropertyValidator<T, TProperty> validator,
                                     RuleValidatorContext parentContext)
         {
@@ -30,7 +29,7 @@ namespace SpecExpress.Rules
             PropertyValue = (TProperty) validator.GetValueForProperty(instance);
             PropertyInfo = validator.PropertyInfo;
             Parent = parentContext;
-            _instance = instance;
+            Instance = instance;
         }
 
         public RuleValidatorContext(T instance, string propertyName, TProperty propertyValue, MemberInfo propertyInfo,
@@ -40,7 +39,7 @@ namespace SpecExpress.Rules
             PropertyValue = propertyValue;
             PropertyInfo = propertyInfo;
             Parent = parentContext;
-            _instance = instance;
+            Instance = instance;
         }
 
         public new TProperty PropertyValue
@@ -49,9 +48,10 @@ namespace SpecExpress.Rules
             set { base.PropertyValue = value; }
         }
 
-        public T Instance
+        public new T Instance
         {
-            get { return _instance; }
+            get { return (T) base.Instance; }
+            set { base.Instance = value; }
         }
     }
 }

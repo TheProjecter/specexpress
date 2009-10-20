@@ -12,24 +12,20 @@ namespace SpecExpress.MessageStore
     {
         public string GetDefaultMessageAndFormat(MessageContext context, object[] parameters)
         {
-            IMessageStore messageStore = String.IsNullOrEmpty(context.MessageStoreName)
-                                             ? MessageStoreFactory.GetMessageStore()
-                                             : MessageStoreFactory.GetMessageStore(context.MessageStoreName);
-
-            string messageTemplate = context.Key == null ? messageStore.GetMessageTemplate(context) : messageStore.GetMessageTemplate(context.Key);
+            string messageTemplate = GetMessageTemplate(context);
           
             return FormatMessage(messageTemplate, context.RuleContext, parameters);
         }
 
-         public string GetDefaultMessage(MessageContext context, object[] parameters)
+        public string GetMessageTemplate(MessageContext context)
         {
             IMessageStore messageStore = String.IsNullOrEmpty(context.MessageStoreName)
                                              ? MessageStoreFactory.GetMessageStore()
                                              : MessageStoreFactory.GetMessageStore(context.MessageStoreName);
 
             string messageTemplate = context.Key == null ? messageStore.GetMessageTemplate(context) : messageStore.GetMessageTemplate(context.Key);
-          
-            return FormatMessage(messageTemplate, context.RuleContext, parameters);
+
+             return messageTemplate;
         }
 
 

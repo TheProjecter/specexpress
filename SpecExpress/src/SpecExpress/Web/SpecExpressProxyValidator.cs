@@ -13,6 +13,13 @@ namespace SpecExpress.Web
         private PropertyValidator _currentPropertyValidator;
         private Specification _currentSpecification;
         private ValidationSummaryDisplayMode displayMode;
+        private string _defaultErrorMessage = "Default error message";
+
+        public SpecExpressProxyValidator()
+        {
+            this.ErrorMessage = _defaultErrorMessage;
+        }
+
 
         protected PropertyValidator CurrentPropertyValidator
         {
@@ -61,7 +68,6 @@ namespace SpecExpress.Web
         {
             get { return CurrentPropertyValidator.PropertyValueRequired; }
         }
-
 
         public string PropertyName { get; set; }
         public string TypeName { get; set; }

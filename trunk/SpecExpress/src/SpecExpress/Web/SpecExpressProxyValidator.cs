@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using SpecExpress.Util;
 
 namespace SpecExpress.Web
 {
@@ -104,11 +106,31 @@ namespace SpecExpress.Web
 
                 string requiredErrorMessage = CurrentPropertyValidator.RequiredRule.ErrorMessageTemplate;
 
-                string label =
-                    Page.Controls.All().OfType<Label>().Where(x => x.AssociatedControlID == ControlToValidate).First().
-                        Text.Replace(":", "");
+                //Try and get the label, if not found, default to PropertyName, 
+                var labelControl = Page.Controls.All().OfType<Label>().Where(x => x.AssociatedControlID == ControlToValidate).FirstOrDefault();
 
-                string formattedRequiredErrorMessage = requiredErrorMessage.Replace("{PropertyName}", label);
+                string labelName;
+
+                if (labelControl == null)
+                {
+                    //Label control not found, default to type name
+                    labelName = PropertyName.SplitPascalCase();
+                }
+                else
+                {
+                    labelName = labelControl.Text.Replace(":", "");
+                }
+                
+              
+
+                string formattedRequiredErrorMessage = requiredErrorMessage.Replace("{PropertyName}", labelName);
+
+                //TODO: This is required if you want the error message to be displayed inline. Not sure how to handle this generically
+                if (String.IsNullOrEmpty(Text))
+                {
+                    this.Text = formattedRequiredErrorMessage;
+                }
+                
 
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "requirederrormessage",
                                                            formattedRequiredErrorMessage, true);

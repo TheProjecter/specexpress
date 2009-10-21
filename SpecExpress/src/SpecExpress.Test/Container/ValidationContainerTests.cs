@@ -55,6 +55,7 @@ namespace SpecExpress.Test
         }
 
         [Test]
+        [Ignore]
         public void AssertConfigurationValid_IsInvalid()
         {
             //Set Assemblies to scan for Specifications

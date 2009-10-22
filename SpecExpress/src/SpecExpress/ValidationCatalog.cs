@@ -57,6 +57,50 @@ namespace SpecExpress
                 action(Configuration);
         }
 
+        public static void Reset()
+        {
+            lock (_syncLock)
+            {
+                _registry.Clear();
+            }
+        }
+
+        public static void ResetConfiguration()
+        {
+            Configuration = buildDefaultValidationConfiguration();
+        }
+
+        public static void RegisterSpecification<TEntity>(Validates<TEntity> expression)
+        {
+            RegisterSpecificationWithRegistry(expression);
+        }
+
+        public static void AssertConfigurationIsValid()
+        {
+            lock (_syncLock)
+            {
+
+                //Look for multiple specifications for a type where no default is defined.
+                //TODO: Implement multispec check
+
+                // RB 20091014: Allow a Property Validator with no rules defined to be valid (i.e. "Check(c => c.Name).Optional();" ).
+                ////Look for PropertyValidators with no Rules
+                //var invalidPropertyValidators = from r in _registry
+                //                                from v in r.PropertyValidators
+                //                                where v.Rules == null || !v.Rules.Any()
+                //                                select
+                //                                    r.GetType().Name + " is invalid because it has no rules defined for property '" +
+                //                                    v.PropertyName + "'.";
+
+                //if (invalidPropertyValidators.Any())
+                //{
+                //    var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
+                //    throw new SpecExpressConfigurationException(errorString);
+                //}
+            }
+        }
+
+        #region Object Validation
 
         /// <summary>
         /// Evaluate an object against it's matching Specification and returns any broken rules.
@@ -160,48 +204,33 @@ namespace SpecExpress
             return Validate(instance, spec);
         }
 
-        public static void Reset()
+        #endregion
+
+        #region Property Validation
+
+        public static ValidationNotification ValidateProperty(object instance, string propertyName)
         {
-            lock (_syncLock)
-            {
-                _registry.Clear();
-            }
+            Specification specification = TryGetSpecification(instance.GetType());
+
+            return ValidateProperty(instance, propertyName, specification);
         }
 
-        public static void ResetConfiguration()
+        public static ValidationNotification ValidateProperty(object instance, string propertyName,
+                                                              Specification specification)
         {
-            Configuration = buildDefaultValidationConfiguration();
+            var validators = from validator in specification.PropertyValidators
+                             where validator.PropertyName == propertyName
+                             select validator;
+
+            var results =
+                (from propertyValidator in validators
+                 select propertyValidator.Validate(instance))
+                .SelectMany(x => x)
+                .ToList();
+
+            return new ValidationNotification() {Errors = results};
         }
-
-        public static void RegisterSpecification<TEntity>(Validates<TEntity> expression)
-        {
-            RegisterSpecificationWithRegistry(expression);
-        }
-
-        public static void AssertConfigurationIsValid()
-        {
-            lock (_syncLock)
-            {
-
-                //Look for multiple specifications for a type where no default is defined.
-                //TODO: Implement multispec check
-
-                // RB 20091014: Allow a Property Validator with no rules defined to be valid (i.e. "Check(c => c.Name).Optional();" ).
-                ////Look for PropertyValidators with no Rules
-                //var invalidPropertyValidators = from r in _registry
-                //                                from v in r.PropertyValidators
-                //                                where v.Rules == null || !v.Rules.Any()
-                //                                select
-                //                                    r.GetType().Name + " is invalid because it has no rules defined for property '" +
-                //                                    v.PropertyName + "'.";
-
-                //if (invalidPropertyValidators.Any())
-                //{
-                //    var errorString = invalidPropertyValidators.Aggregate(string.Empty, (x, y) => x + "\n" + y);
-                //    throw new SpecExpressConfigurationException(errorString);
-                //}
-            }
-        }
+        #endregion
 
         #region Container
 

@@ -208,19 +208,26 @@ namespace SpecExpress
 
         #region Property Validation
 
-        public static ValidationNotification ValidateProperty(object instance, string propertyName)
+        public static ValidationNotification ValidateProperty<T>(T instance, Expression<Func<T,object>> property)
         {
-            Specification specification = TryGetSpecification(instance.GetType());
+            Specification specification = TryGetSpecification(typeof(T));
 
-            return ValidateProperty(instance, propertyName, specification);
+            return ValidateProperty(instance, property, specification);
         }
 
-        public static ValidationNotification ValidateProperty(object instance, string propertyName,
+        public static ValidationNotification ValidateProperty<T>(T instance, Expression<Func<T, object>> property,
                                                               Specification specification)
         {
+            var prop = new PropertyValidator<T, object>(property);
+
             var validators = from validator in specification.PropertyValidators
-                             where validator.PropertyName == propertyName
+                             where validator.PropertyName == prop.PropertyName
                              select validator;
+
+            if (validators == null || validators.Count() == 0)
+            {
+                throw new ArgumentException(string.Format("There are not any validation rules defined for {0}.{1}.",instance.GetType().FullName,prop.PropertyName));
+            }
 
             var results =
                 (from propertyValidator in validators

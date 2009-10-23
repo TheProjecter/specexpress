@@ -58,6 +58,11 @@ namespace SpecExpress
         {
             get
             {  
+                if (!String.IsNullOrEmpty(PropertyNameOverride))
+                {
+                    return PropertyNameOverride;
+                }
+
                 Expression body = Property.Body;
                 var propertyNameNode = new List<string>();
 

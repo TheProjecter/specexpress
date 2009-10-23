@@ -65,9 +65,9 @@ namespace SpecExpress.Test
 
             Assert.Throws<SpecExpressConfigurationException>(
                 () =>
-                    {
-                        ValidationCatalog.AssertConfigurationIsValid();
-                    });
+                {
+                    ValidationCatalog.AssertConfigurationIsValid();
+                });
         }
 
         [Test]
@@ -77,14 +77,14 @@ namespace SpecExpress.Test
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
 
             var spec = ValidationCatalog.GetSpecification<SpecExpress.Test.Domain.Entities.Contact>();
-            Assert.That( spec.GetType(), Is.EqualTo( typeof (ContactSpecification) ));
+            Assert.That(spec.GetType(), Is.EqualTo(typeof(ContactSpecification)));
         }
 
 
         [Test]
         public void When_configuring_Catalog_and_using_default_configuration()
         {
-            Assert.That(  ValidationCatalog.Configuration.DefaultMessageStore.GetType(), Is.EqualTo(typeof(ResourceMessageStore)));
+            Assert.That(ValidationCatalog.Configuration.DefaultMessageStore.GetType(), Is.EqualTo(typeof(ResourceMessageStore)));
             Assert.That(ValidationCatalog.Configuration.ValidateObjectGraph, Is.False);
         }
 
@@ -95,7 +95,7 @@ namespace SpecExpress.Test
             var validContact = new Contact() { FirstName = "Johnny B", LastName = "Good" };
             var invalidContact = new Contact() { FirstName = "Baddy" };
 
-            var contacts = new List<Contact>() {validContact, invalidContact};
+            var contacts = new List<Contact>() { validContact, invalidContact };
 
             //Create specification
             ValidationCatalog.AddSpecification<Contact>(spec =>
@@ -103,7 +103,7 @@ namespace SpecExpress.Test
                 spec.Check(c => c.FirstName).Required();
                 spec.Check(c => c.LastName).Required();
             });
-            
+
             //Validate
             var results = ValidationCatalog.Validate(contacts);
 
@@ -129,11 +129,58 @@ namespace SpecExpress.Test
             Assert.AreNotEqual(2, objectNotification.Errors);
 
             // Validation contact.LastName should result with only one error.
-            var propertyNotification = ValidationCatalog.ValidateProperty(contact,"LastName");
+            var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
             Assert.IsFalse(propertyNotification.IsValid);
-            Assert.AreNotEqual(1,propertyNotification.Errors);
+            Assert.AreNotEqual(1, propertyNotification.Errors);
         }
 
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateProperty_NoValidationForProperyt_ThrowsArgumentException()
+        {
+            //Create Rules Adhoc
+            ValidationCatalog.AddSpecification<Contact>(x =>
+            {
+                x.Check(c => c.FirstName).Required();
+            });
+
+            var contact = new Contact();
+
+            // Validation contact.LastName should result with only one error.
+            var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
+        }
+
+        [Test]
+        public void ValidateProperty_CollectionProperty_ReturnsValidationNotification()
+        {
+            //Create Rules Adhoc
+            ValidationCatalog.AddSpecification<Address>(x =>
+                                                            {
+                                                                x.Check(a => a.Street)
+                                                                    .Required().And
+                                                                    .MaxLength(50);
+                                                            });
+
+            ValidationCatalog.AddSpecification<Contact>(x =>
+                                                            {
+                                                                x.Check(c => c.Addresses).Required()
+                                                                    .With.ForEachSpecification<Address>();
+                                                                x.Check(c => c.FirstName).Required().And.MaxLength(100);
+                                                            });
+
+            var contact = new Contact();
+            contact.Addresses = new List<Address>() {new Address()};
+
+            // Validating contact as a whole should result in two errors.
+            var objectNotification = ValidationCatalog.Validate(contact);
+            Assert.IsFalse(objectNotification.IsValid);
+            Assert.AreNotEqual(2, objectNotification.Errors);
+
+            // Validation contact.LastName should result with only one error.
+            var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.Addresses);
+            Assert.IsFalse(propertyNotification.IsValid);
+            Assert.AreNotEqual(1, propertyNotification.Errors);
+        }
 
     }
 }

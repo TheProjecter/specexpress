@@ -27,8 +27,9 @@ namespace SpecExpress.Web
             {
                 if (_currentPropertyValidator == null)
                 {
+                    //TODO: Throw exception if no match found
                     _currentPropertyValidator =
-                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyInfo.Name == PropertyName).First();
+                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyName == PropertyName).First();
                 }
 
                 return _currentPropertyValidator;
@@ -132,9 +133,15 @@ namespace SpecExpress.Web
                 string formattedRequiredErrorMessage = requiredErrorMessage.Replace("{PropertyName}", labelName);
 
                 //TODO: This is required if you want the error message to be displayed inline. Not sure how to handle this generically
-                if (String.IsNullOrEmpty(Text))
+
+                if (String.IsNullOrEmpty(Text) && ErrorMessage == _defaultErrorMessage)
                 {
+                    //Text is displayed if there is an error overriding Error message. So only explictly set it there isn't an Error Message
                     this.Text = formattedRequiredErrorMessage;
+                }
+                else
+                {
+                    //is.Text
                 }
                 
 

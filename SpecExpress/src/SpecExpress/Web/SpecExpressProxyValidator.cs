@@ -17,7 +17,7 @@ namespace SpecExpress.Web
 
         public SpecExpressProxyValidator()
         {
-            this.ErrorMessage = _defaultErrorMessage;
+            //this.ErrorMessage = _defaultErrorMessage;
         }
 
 
@@ -99,7 +99,7 @@ namespace SpecExpress.Web
 
         protected override void AddAttributesToRender(HtmlTextWriter writer)
         {
-            base.AddAttributesToRender(writer);
+          
 
             if (PropertyIsRequired)
             {
@@ -127,26 +127,29 @@ namespace SpecExpress.Web
                 {
                     labelName = labelControl.Text.Replace(":", "");
                 }
-                
-              
+                              
 
                 string formattedRequiredErrorMessage = requiredErrorMessage.Replace("{PropertyName}", labelName);
 
                 //TODO: This is required if you want the error message to be displayed inline. Not sure how to handle this generically
-
-                if (String.IsNullOrEmpty(Text) && ErrorMessage == _defaultErrorMessage)
+                if (String.IsNullOrEmpty(ErrorMessage))
                 {
-                    //Text is displayed if there is an error overriding Error message. So only explictly set it there isn't an Error Message
+                    this.ErrorMessage = formattedRequiredErrorMessage;
                     this.Text = formattedRequiredErrorMessage;
                 }
                 else
                 {
-                    //is.Text
+                    this.Text = ErrorMessage;
                 }
-                
+
+
+               
+                        
 
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "requirederrormessage",
                                                            formattedRequiredErrorMessage, true);
+
+                base.AddAttributesToRender(writer);
             }
         }
 
@@ -175,10 +178,7 @@ namespace SpecExpress.Web
                 if (!Page.ClientScript.IsClientScriptBlockRegistered(typeof (SpecExpressProxyValidator), "Script"))
                 {
                     Page.ClientScript.RegisterClientScriptBlock(typeof (SpecExpressProxyValidator), "Script",
-                                                                @"<script type=""text/javascript"">
-function SpecExpressProxyValidatorEvaluateIsValid(val) { " +
-                                                                ClientID + ".errormessage = " + ClientID +
-                                                                ".requirederrormessage; return RequiredFieldValidatorEvaluateIsValid(val)}</script>");
+                                                                @"<script type=""text/javascript"">function SpecExpressProxyValidatorEvaluateIsValid(val) {var returnval = RequiredFieldValidatorEvaluateIsValid(val); if (!returnval){ val.errormessage == val.requirederrormessage;};return returnval;}</script>");
                 }
             }
         }
@@ -231,6 +231,11 @@ function SpecExpressProxyValidatorEvaluateIsValid(val) { " +
 
 
             return stringBuilder.ToString();
+        }
+
+        protected override void OnDataBinding(EventArgs e)
+        {
+            base.OnDataBinding(e);
         }
     }
 }

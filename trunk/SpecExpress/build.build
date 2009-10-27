@@ -37,7 +37,6 @@
 		<nant buildfile="build-project-common.xml">
 			<properties>
 				<property name="proj.name" value="SpecExpress.Test.Domain" />
-						
 			</properties>
 		</nant>
 		

@@ -11,7 +11,7 @@
 		<!--Gets build number from Teamcity if available-->
 		<property name="build.number" value="0.0" unless="${property::exists('build.number')}"/>		
 
-		<csc target="library" debug="${build.debug}" output="${build.dir}/${proj.name}.dll" >			
+		<csc target="library" debug="${build.debug}" output="${build.dir}/${proj.name}.dll" keyfile="specexpress.key" >			
 			<sources refid="project.sources" />
 			<references refid="project.references" />
 			<resources refid="project.resources" />

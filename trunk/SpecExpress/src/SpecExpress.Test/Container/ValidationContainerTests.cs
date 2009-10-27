@@ -135,7 +135,6 @@ namespace SpecExpress.Test
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentException))]
         public void ValidateProperty_NoValidationForProperyt_ThrowsArgumentException()
         {
             //Create Rules Adhoc
@@ -147,7 +146,14 @@ namespace SpecExpress.Test
             var contact = new Contact();
 
             // Validation contact.LastName should result with only one error.
-            var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
+
+
+            Assert.Throws<ArgumentException>(
+               () =>
+               {
+                   var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
+               });
+
         }
 
         [Test]

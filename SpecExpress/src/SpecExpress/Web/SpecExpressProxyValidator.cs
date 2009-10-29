@@ -99,14 +99,14 @@ namespace SpecExpress.Web
 
         protected override void AddAttributesToRender(HtmlTextWriter writer)
         {
-          
-
             if (PropertyIsRequired)
             {
+                Page.ClientScript.RegisterExpandoAttribute(ClientID, "initialvalue", InitialValue);
+
                 //Client Scripts adding scripts mocking a  Required Field Validator
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "evaluationfunction",
                                                            "SpecExpressProxyValidatorEvaluateIsValid", false);
-                Page.ClientScript.RegisterExpandoAttribute(ClientID, "initialvalue", InitialValue);
+              
 
                 //var validatedType = BuildManager.GetType(this.TypeName, false, false);
                 //var TProperty = validatedType.GetProperty(this.PropertyName);
@@ -140,17 +140,13 @@ namespace SpecExpress.Web
                 else
                 {
                     this.Text = ErrorMessage;
-                }
-
-
-               
-                        
+                } 
 
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "requirederrormessage",
                                                            formattedRequiredErrorMessage, true);
-
-                base.AddAttributesToRender(writer);
             }
+
+            base.AddAttributesToRender(writer);
         }
 
         protected override bool EvaluateIsValid()

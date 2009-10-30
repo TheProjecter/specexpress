@@ -316,9 +316,25 @@ namespace SpecExpress
 
         private static void CreateAndRegisterSpecificationsWithRegistry(IEnumerable<Type> specs)
         {
+            int counter = 0;
+            int max = 10;
+
+            var delayedSpecs = CreateAndRegisterSpecificationsWithRegistryIterator(specs, counter, max);
+
+            while (delayedSpecs.Any())
+            {
+                counter++;
+                delayedSpecs = CreateAndRegisterSpecificationsWithRegistryIterator(specs, counter, max);
+            }
+
+        }
+
+        private static List<Type> CreateAndRegisterSpecificationsWithRegistryIterator(IEnumerable<Type> specs, int counter, int max)
+        {
             //TODO: This can result in a stackoverflow if a ForEachSpecification<Type> never finds a default spec for Type
 
             var delayedSpecs = new List<Type>();
+          
 
             //For each type, instantiate it and add it to the collection of specs found
             specs.ToList<Type>().ForEach(spec =>
@@ -334,18 +350,28 @@ namespace SpecExpress
                     }
                     catch (System.Reflection.TargetInvocationException te)
                     {
-                        //Can't create the object because it has a specification that hasn't been loaded yet
-                        //save it for the next pass
-                        delayedSpecs.Add(spec);
+                        if (counter > max)
+                        {
+                            throw;
+                        }
+                        else
+                        {
+                            //Can't create the object because it has a specification that hasn't been loaded yet
+                            //save it for the next pass
+                            delayedSpecs.Add(spec);
+                            
+                        }
                     }
                 }
             });
 
+            return delayedSpecs;
+
             //Process any specification that couldn't be reloaded
-            if (delayedSpecs.Any())
-            {
-                CreateAndRegisterSpecificationsWithRegistry(delayedSpecs);
-            }
+            //if (delayedSpecs.Any())
+            //{
+            //    CreateAndRegisterSpecificationsWithRegistry(delayedSpecs);
+            //}
         }
 
         private static void RegisterSpecificationWithRegistry(Specification spec)

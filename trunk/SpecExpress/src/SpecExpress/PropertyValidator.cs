@@ -223,7 +223,7 @@ namespace SpecExpress
         { 
             get
             {
-                return _rules.OfType<Required<T, TProperty>>().First();
+                return _rules.OfType<Required<T, TProperty>>().FirstOrDefault();
             }
 
         }

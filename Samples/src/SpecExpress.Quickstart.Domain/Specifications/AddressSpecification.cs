@@ -23,15 +23,13 @@ namespace SpecExpress.Quickstart.Domain.Specifications
 
             Check(a => a.Country).Optional().And.IsAlpha();
 
-            Check(a => a.ZipCode).Required()
-                .If(a => a.Country == "US").Then
-                    .LengthEqualTo(5)
-                    .And.IsNumeric();
+            Check(a => a.ZipCode).If(a => a.Country == "US").Then.Required()
+                .And.LengthEqualTo(5)
+                .And.IsNumeric();
 
-            Check(a => a.ZipPlusFour).Required()
-                .If(a => a.ZipCode.Any()).Then
-                    .LengthEqualTo(4)
-                    .And.IsNumeric();
+            Check(a => a.ZipPlusFour).If(a => a.ZipCode.Any()).Then.Required()
+                .And.LengthEqualTo(4)
+                .And.IsNumeric();
 
 
         }

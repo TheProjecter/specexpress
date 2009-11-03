@@ -28,8 +28,8 @@ namespace SpecExpress.Quickstart.Domain.Specifications
             //Validate collection of lookup types
             //If ProviderType is Doctor then validate each specialty is valid.
           
-            Check(p => p.Specialties).Required()
-                .If(p => p.ProviderType == ProviderType.Doctor)
+            Check(p => p.Specialties).If(p => p.ProviderType == ProviderType.Doctor)
+                .Then.Required()              
                 .With.ForEachSpecification<Specialty>(
                     spec => spec.Check(s => s, "Specialties").Required() //At least 1 Location is required
                         .And.IsInSet(SpecialtyFactory.GetSpecialties()));

@@ -56,7 +56,7 @@ namespace SpecExpress.Test
             var valNot = ValidationCatalog.Validate(contact);
 
             Assert.That(valNot.Errors, Is.Not.Empty);
-            Assert.That(valNot.Errors.First().Message, Is.EqualTo("'Last Name' must be between 1 and 3 characters. You entered 5 characters."));
+            Assert.That(valNot.Errors.First().Message, Is.EqualTo("Last Name must be between 1 and 3 characters. You entered 5 characters."));
         }
 
     }

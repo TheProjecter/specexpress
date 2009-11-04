@@ -44,7 +44,16 @@ namespace SpecExpress
                 if (bodyExp.NodeType == ExpressionType.Call)
                 {
                     MethodCallExpression exp = (MethodCallExpression) Property.Body;
-                    return GetFirstMemberCallFromCallArguments(exp);
+
+                    //GetValueOrDefault
+                    if (exp.Object == null)
+                    {
+                        return GetFirstMemberCallFromCallArguments(exp);
+                    }
+                    else
+                    {
+                        return ((System.Linq.Expressions.MemberExpression)(exp.Object)).Member;
+                    }
                 }
 
                 return null;

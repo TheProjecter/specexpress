@@ -121,28 +121,28 @@
     <value>{PropertyName} should only contain letters.</value>
   </data>
   <data name="Between" xml:space="preserve">
-    <value>'{PropertyName}' must be between {0} and {1}.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be between {0} and {1}.  You entered {PropertyValue}.</value>
   </data>
   <data name="Contains" xml:space="preserve">
     <value>{PropertyName} does not contain {PropertyValue}.</value>
   </data>
   <data name="EqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must equal {0}.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must equal {0}.  You entered {PropertyValue}.</value>
   </data>
   <data name="GreaterThan" xml:space="preserve">
-    <value>'{PropertyName}' must be greater than {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be greater than {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="GreaterThanEqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must be greater than or equal to {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be greater than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="IsFalse" xml:space="preserve">
     <value>{PropertyName} must be false.</value>
   </data>
   <data name="IsInFuture" xml:space="preserve">
-    <value>'{PropertyName} must be in the future. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be in the future.</value>
   </data>
   <data name="IsInPast" xml:space="preserve">
-    <value>'{PropertyName} must be in the past.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be in the past.</value>
   </data>
   <data name="IsInSet" xml:space="preserve">
     <value>{PropertyName} is not a valid value.</value>
@@ -151,16 +151,16 @@
     <value>{PropertyName} must be true.</value>
   </data>
   <data name="LengthBetween" xml:space="preserve">
-    <value>'{PropertyName}' must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
+    <value>{PropertyName} must be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
   </data>
   <data name="LengthEqualTo" xml:space="preserve">
     <value>{PropertyName} shoud be {0} characters.</value>
   </data>
   <data name="LessThan" xml:space="preserve">
-    <value>'{PropertyName}' must be less than {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be less than {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="LessThanEqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must be less than or equal to {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must be less than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Matches" xml:space="preserve">
     <value>The value in {PropertyName} does not meet the pattern of '{0}'.  You entered {PropertyValue}.</value>
@@ -175,28 +175,28 @@
     <value>{PropertyName} should not contain letters.</value>
   </data>
   <data name="Not_Between" xml:space="preserve">
-    <value>'{PropertyName}' must not be between {0} and {1}.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be between {0} and {1}.  You entered {PropertyValue}.</value>
   </data>
   <data name="Not_Contains" xml:space="preserve">
     <value>{PropertyName} contains {PropertyValue}.</value>
   </data>
   <data name="Not_EqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must not equal {0}.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not equal {0}.  You entered {PropertyValue}.</value>
   </data>
   <data name="Not_GreaterThan" xml:space="preserve">
-    <value>'{PropertyName}' must not be greater than {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be greater than {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Not_GreaterThanEqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must not be greater than or equal to {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be greater than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Not_IsFalse" xml:space="preserve">
     <value>{PropertyName} must not be false.</value>
   </data>
   <data name="Not_IsInFuture" xml:space="preserve">
-    <value>'{PropertyName} must not be in the future. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be in the future. You entered {PropertyValue}.</value>
   </data>
   <data name="Not_IsInPast" xml:space="preserve">
-    <value>'{PropertyName} must not be in the past.  You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be in the past.  You entered {PropertyValue}.</value>
   </data>
   <data name="Not_IsInSet" xml:space="preserve">
     <value>{PropertyName} is not a valid value.</value>
@@ -205,16 +205,16 @@
     <value>{PropertyName} must not be true.</value>
   </data>
   <data name="Not_LengthBetween" xml:space="preserve">
-    <value>'{PropertyName}' must not be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
+    <value>{PropertyName} must not be between {0} and {1} characters. You entered {PropertyValue} characters.</value>
   </data>
   <data name="Not_LengthEqualTo" xml:space="preserve">
     <value>{PropertyName} shoud not be {0} characters.</value>
   </data>
   <data name="Not_LessThan" xml:space="preserve">
-    <value>'{PropertyName}' must not be less than {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be less than {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Not_LessThanEqualTo" xml:space="preserve">
-    <value>'{PropertyName}' must not be less than or equal to {0}. You entered {PropertyValue}.</value>
+    <value>{PropertyName} must not be less than or equal to {0}. You entered {PropertyValue}.</value>
   </data>
   <data name="Not_Matches" xml:space="preserve">
     <value>The value in {PropertyName} must not meet the pattern of '{0}'.  You entered {PropertyValue}.</value>

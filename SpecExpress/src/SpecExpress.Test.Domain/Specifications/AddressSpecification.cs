@@ -13,7 +13,7 @@ namespace SpecExpress.Test.Domain.Specifications
             Check(address => address.Country).Required();
             
             Check(address => address.Province).If(address => new List<string> {"US", "GB", "AU"}.Contains(
-                                                                            address.Country)).Then.Required();
+                                                                            address.Country)).Required();
             Check(address => address.City).Required();
         }
     }

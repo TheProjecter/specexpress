@@ -24,24 +24,24 @@ namespace SpecExpress.Test.DSLTests
         /// </summary>
         public void EssentialCompileCheckDSLStatements()
         {
-            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
-                .Required().With.Message("Name is Required")
+            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Required()
+                .With.Message("Name is Required")
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
-            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Required().With.Message("You broke a rule!")
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
             Check(c => c.Name).Required().And.LengthBetween(0, 10);
 
-            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Optional()
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Dumber Message");
 
-            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Check(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Optional()
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .Or.IsInSet(new List<string>(new[] {"Msg", "Another"})).With.Message("Message");
@@ -61,24 +61,24 @@ namespace SpecExpress.Test.DSLTests
         /// </summary>
       public void EssentialCompileWarnDSLStatements()
         {
-            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Required().With.Message("You broke a rule!")
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
-            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Required().With.Message("You broke a rule!")
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
             Warn(c => c.Name).Required().And.LengthBetween(0, 10);
 
-            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Optional()
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .And.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");
 
-            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now).Then
+            Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Optional()
                 .And.LengthBetween(0, 10).With.Message("Message")
                 .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With.Message("Message");

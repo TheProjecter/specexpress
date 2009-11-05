@@ -19,17 +19,34 @@ namespace SpecExpress.DSL
         //    get { return new WithBuilder<T, TProperty>(_propertyValidator); }
         //}
 
-        public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression)
+        //public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression)
+        //{
+        //    _propertyValidator.Condition = conditionalExpression.Compile();
+        //    return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
+        //}
+
+        //public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression, string errorMessage)
+        //{
+        //    _propertyValidator.Condition = conditionalExpression.Compile();
+
+        //    return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
+        //}
+
+        public ActionOptionBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression)
         {
             _propertyValidator.Condition = conditionalExpression.Compile();
-            return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
+            return new ActionOptionBuilder<T, TProperty>(_propertyValidator);
         }
 
-        public ActionOptionConditionSatisfiedBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression, string errorMessage)
+        public ActionOptionBuilder<T, TProperty> If(Expression<Predicate<T>> conditionalExpression, string errorMessage)
         {
             _propertyValidator.Condition = conditionalExpression.Compile();
 
-            return new ActionOptionConditionSatisfiedBuilder<T, TProperty>(_propertyValidator);
+            return new ActionOptionBuilder<T, TProperty>(_propertyValidator);
         }
+
+        //ActionOptionBuilder
+
+
     }
 }

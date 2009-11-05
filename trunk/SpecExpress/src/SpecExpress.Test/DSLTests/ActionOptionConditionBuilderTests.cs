@@ -14,15 +14,14 @@ namespace SpecExpress.Test.DSLTests.Functional
     {
         [Test]
         public void
-            If_NameLengtGreaterThan10_SetsPropertyValidatorCondition_ReturnsActionOptionConditionSatisfiedBuilder()
+            If_NameLengtGreaterThan10_SetsPropertyValidatorCondition_ReturnsActionOptionBuilder()
         {
             // Create Dependancies
             PropertyValidator<Customer, string> validator = PropertyValidatorFactory.DefaultCustomerNameValidator();
 
             // Test
             var actionOptionConditionBuilder = new ActionOptionConditionBuilder<Customer, string>(validator);
-            ActionOptionConditionSatisfiedBuilder<Customer, string> ifResult =
-                actionOptionConditionBuilder.If(c => c.Name.Length > 10);
+            ActionOptionBuilder<Customer, string> ifResult = actionOptionConditionBuilder.If(c => c.Name.Length > 10);
 
 
             // Assert

@@ -171,11 +171,24 @@ namespace SpecExpress.Web
             {
                 //Validate just this property
                 //Create a new object of Type and set the property
-                var obj = Activator.CreateInstance(CurrentSpecification.ForType);
+                var obj = Activator.CreateInstance( CurrentSpecification.ForType, true);
 
-                var controlValue = Page.Request.Form[Page.FindControl(ControlToValidate).ClientID];
+                var controlToValidate = Page.Controls.All().First(x => x.ID == ControlToValidate);
+
+                //Search Page and controls on user controls
+                var controlValue = Page.Request.Form[controlToValidate.UniqueID];
                 
-                CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, controlValue.ToString() , null);
+                //Get the Type of the Property represented by PropertyName
+                var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
+                if (property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(Nullable<DateTime>))
+                {
+                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, DateTime.Parse(controlValue.ToString()), null);
+                }
+                else
+                {
+                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, controlValue.ToString(), null);
+                }
+
 
                 PropertyErrors = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
             }

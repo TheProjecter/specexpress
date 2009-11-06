@@ -23,15 +23,28 @@ namespace SpecExpress.Quickstart.Domain.Specifications
 
             Check(a => a.Country).Optional().And.IsAlpha();
 
-            Check(a => a.ZipCode).If(a => a.Country == "US").Then.Required()
-                .And.LengthEqualTo(5)
-                .And.IsNumeric();
+            Check(a => a.ZipCode).If(a => a.Country == "US").Required().And
+                    .LengthEqualTo(5)
+                    .And.Not.EqualTo("00000");//.Or.Not.EqualTo("99999");
 
-            Check(a => a.ZipPlusFour).If(a => a.ZipCode.Any()).Then.Required()
-                .And.LengthEqualTo(4)
-                .And.IsNumeric();
+            Check(a => a.ZipPlusFour)
+                .If(a => a.ZipCode.Any()).Required().And
+                    .LengthEqualTo(4)
+                    .And.IsNumeric();
 
+            Check(a => a.ZipPlusFour).Required().And.Expect(IsValidDoohickey, "Not a valid Doohickey");
+            Check(a => a.ZipPlusFour).Required().And.Expect((a, z) =>
+                                                                {
+                                                                    const int MAGIC_NUMBER = 42;
+                                                                    return z.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
+                                                                }, "Not a valid Doohickey");
 
+        }
+
+        public bool IsValidDoohickey(Address address, string val)
+        {
+            const int MAGIC_NUMBER = 42;
+            return val.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
         }
     }
 }

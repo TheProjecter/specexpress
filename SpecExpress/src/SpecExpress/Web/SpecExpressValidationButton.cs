@@ -40,12 +40,6 @@ namespace SpecExpress.Web
 
         protected override void OnClick(EventArgs e)
         {
-            //if (GetObject == null)
-            //{
-            //    //Can't validate entire object
-            //    //so validate by property
-            //}
-
             if (GetObject != null)
             {
                 //Get the object to validate
@@ -67,6 +61,15 @@ namespace SpecExpress.Web
                     helper.Notify(vldNotification);
 
                     //Raise OnValidationNotification Event
+                    if (ValidationNotification != null)
+                    {
+                        ValidationNotification(this, new ValidationNotificationEventArgs(vldNotification));
+                    }
+                    else
+                    {
+                        base.OnClick(e);
+                    }
+
                     OnValidationNotification(new ValidationNotificationEventArgs(vldNotification));
                 }
                 else

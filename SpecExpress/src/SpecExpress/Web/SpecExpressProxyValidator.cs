@@ -63,6 +63,12 @@ namespace SpecExpress.Web
                     return ValidationNotification.Errors.Where(x => x.Property.Name == PropertyName).ToList();
                 }
             }
+
+            private set 
+            { 
+                ValidationNotification = new ValidationNotification();
+                ValidationNotification.Errors = value;
+            }
         }
 
         protected bool PropertyIsRequired
@@ -161,6 +167,19 @@ namespace SpecExpress.Web
 
         protected override bool EvaluateIsValid()
         {
+            if (ValidationNotification == null)
+            {
+                //Validate just this property
+                //Create a new object of Type and set the property
+                var obj = Activator.CreateInstance(CurrentSpecification.ForType);
+
+                var controlValue = Page.Request.Form[Page.FindControl(ControlToValidate).ClientID];
+                
+                CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, controlValue.ToString() , null);
+
+                PropertyErrors = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
+            }
+
             //TODO: Also check in Nested ValidationResults for this PropertyType and PropertyName
             if (PropertyErrors.Any())
             {

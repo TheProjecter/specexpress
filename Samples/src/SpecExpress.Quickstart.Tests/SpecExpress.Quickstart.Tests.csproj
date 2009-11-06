@@ -35,10 +35,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="SpecExpress, Version=0.1.147.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\specexpress\SpecExpress.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -58,6 +54,10 @@
     <Compile Include="ProviderTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SpecExpress\src\SpecExpress\SpecExpress.csproj">
+      <Project>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</Project>
+      <Name>SpecExpress</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SpecExpress.Quickstart.Domain\SpecExpress.Quickstart.Domain.csproj">
       <Project>{4B566077-E814-465F-A610-7D01CA53ACFB}</Project>
       <Name>SpecExpress.Quickstart.Domain</Name>

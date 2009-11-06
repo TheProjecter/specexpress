@@ -288,6 +288,26 @@ namespace SpecExpress.Test.RuleValidatorTests
             return validator.Validate(context) == null;
         }
 
+        [TestCase("1/1/2009", Result = true, TestName = "PropertyValueIsInPast")]
+        [TestCase("1/1/2100", Result = false, TestName = "PropertyValueIsInFuture")]
+        public bool IsInPast_NullableDate_IsValid(string propertyValue)
+        {
+            DateTime? propertyValueDateTime = null;
+
+            //Create Validator
+            var validator = new IsInPastNullable<NullableCalendarEvent>();
+            
+            // Build context for CalendarEvent containing a StartDate of propertyValue.
+            var calendarEvent = new NullableCalendarEvent() { CreateDate = null, StartDate = System.DateTime.Parse(propertyValue), EndDate = null };
+            RuleValidatorContext<NullableCalendarEvent, DateTime?> context = new RuleValidatorContext<NullableCalendarEvent, DateTime?>(calendarEvent, "StartDate", calendarEvent.StartDate, null, null);
+
+
+            //RuleValidatorContext<CalendarEvent, DateTime> context = BuildContextForCalendarEventStartDate("Test Event", propertyValueDateTime, DateTime.Now);
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
+
         public RuleValidatorContext<CalendarEvent, System.DateTime> BuildContextForCalendarEventStartDate(string subject, DateTime startDate, DateTime endDate)
         {
             var calendarEvent = new CalendarEvent() {Subject = subject, StartDate = startDate, EndDate = endDate};

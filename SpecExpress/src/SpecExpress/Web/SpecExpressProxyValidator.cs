@@ -29,7 +29,7 @@ namespace SpecExpress.Web
                 {
                     //TODO: Throw exception if no match found
                     _currentPropertyValidator =
-                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyName == PropertyName).First();
+                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyName == PropertyName).FirstOrDefault();
                 }
 
                 return _currentPropertyValidator;
@@ -43,7 +43,7 @@ namespace SpecExpress.Web
                 if (_currentSpecification == null)
                 {
                     _currentSpecification = ValidationCatalog.GetAllSpecifications().Where(
-                        x => x.GetType() == ((IPageSpecification) Page).PageSpecification).First();
+                        x => x.GetType() == ((IPageSpecification) Page).PageSpecification).FirstOrDefault();
                 }
                 return _currentSpecification;
             }
@@ -53,7 +53,7 @@ namespace SpecExpress.Web
         {
             get
             {
-                if (ValidationNotification == null)
+                if (ValidationNotification == null || !ValidationNotification.Errors.Any())
                 {
                     return new List<ValidationResult>();
                 }
@@ -67,7 +67,17 @@ namespace SpecExpress.Web
 
         protected bool PropertyIsRequired
         {
-            get { return CurrentPropertyValidator.PropertyValueRequired; }
+            get 
+            {
+                if (CurrentPropertyValidator == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return CurrentPropertyValidator.PropertyValueRequired;
+                }
+            }
         }
 
         public string PropertyName { get; set; }
@@ -227,11 +237,6 @@ namespace SpecExpress.Web
 
 
             return stringBuilder.ToString();
-        }
-
-        protected override void OnDataBinding(EventArgs e)
-        {
-            base.OnDataBinding(e);
         }
     }
 }

@@ -9,4 +9,10 @@ namespace SpecExpress.Web
     {
         Type PageSpecification { get; }
     }
+
+    //public interface IPageSpecification2<T> where T : Specification
+    //{
+    //    T PageSpecification2 { get; } 
+    //}
+
 }

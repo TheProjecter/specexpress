@@ -8,6 +8,11 @@ namespace SpecExpress.Quickstart.Domain.Entities
 {
     public class Provider : EntityBase
     {
+        public Provider()
+        {
+            
+        }
+
         public Provider(int id)
         {
             Id = id;

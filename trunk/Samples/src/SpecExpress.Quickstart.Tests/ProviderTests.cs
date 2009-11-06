@@ -116,5 +116,18 @@ namespace SpecExpress.Quickstart.Tests
 
         }
 
+
+        [Test]
+        public void Provider_ZipCode()
+        {
+            var provider = ProviderTestDataFactory.GetValidProvider();
+            provider.Locations.First().ZipCode = "99999";
+
+            var result = ValidationCatalog.Validate(provider);
+
+            Assert.That(result.IsValid, Is.False);
+            Assert.That(result.Errors.First().Message, Is.EqualTo("Locations is required."));
+
+        }
     }
 }

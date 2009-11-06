@@ -12,7 +12,7 @@ namespace SpecExpress.Quickstart.Domain.Specifications
     {
         public ProviderSpecification()
         {
-            Check(p => p.FirstName).Required().And.IsAlpha();
+            Check(p => p.FirstName).Required("Yo! You needa firsta name!").And.IsAlpha();
             Check(p => p.LastName).Required()
                 .And.IsAlpha()
                 .And.MaxLength(50);
@@ -21,18 +21,18 @@ namespace SpecExpress.Quickstart.Domain.Specifications
 
             //Note: no need to validate required for Enums. Because they are value types they have default values E(0)
             
-            //Validate each item in the collection with the default specification 
-            //specifying type item in the collection
-            Check(p => p.Locations).Required().With.ForEachSpecification<Location>();
+            ////Validate each item in the collection with the default specification 
+            ////specifying type item in the collection
+            //Check(p => p.Locations).Required().With.ForEachSpecification<Location>();
 
-            //Validate collection of lookup types
-            //If ProviderType is Doctor then validate each specialty is valid.
+            ////Validate collection of lookup types
+            ////If ProviderType is Doctor then validate each specialty is valid.
           
-            Check(p => p.Specialties).If(p => p.ProviderType == ProviderType.Doctor)
-                .Then.Required()              
-                .With.ForEachSpecification<Specialty>(
-                    spec => spec.Check(s => s, "Specialties").Required() //At least 1 Location is required
-                        .And.IsInSet(SpecialtyFactory.GetSpecialties()));
+            //Check(p => p.Specialties)
+            //    .If(p => p.ProviderType == ProviderType.Doctor).Then.Required()
+            //    .With.ForEachSpecification<Specialty>(
+            //        spec => spec.Check(s => s, "Specialties").Required() //At least 1 Location is required
+            //            .And.IsInSet(SpecialtyFactory.GetSpecialties()));
 
             /*
              * The above can also be expressed like this:

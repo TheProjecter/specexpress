@@ -5,6 +5,30 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecExpress.Quickstart.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecExpress.Quickstart.Domain", "SpecExpress.Quickstart.Domain\SpecExpress.Quickstart.Domain.csproj", "{4B566077-E814-465F-A610-7D01CA53ACFB}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SpecExpress.Quickstart.Web", "SpecExpress.Quickstart.Web\", "{E700F098-CCA7-4BD7-9613-B43CD564FB08}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFramework = "3.5"
+		ProjectReferences = "{4B566077-E814-465F-A610-7D01CA53ACFB}|SpecExpress.Quickstart.Domain.dll;{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}|SpecExpress.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/SpecExpress.Quickstart.Web"
+		Debug.AspNetCompiler.PhysicalPath = "SpecExpress.Quickstart.Web\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\SpecExpress.Quickstart.Web\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/SpecExpress.Quickstart.Web"
+		Release.AspNetCompiler.PhysicalPath = "SpecExpress.Quickstart.Web\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\SpecExpress.Quickstart.Web\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "64692"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecExpress", "..\..\SpecExpress\src\SpecExpress\SpecExpress.csproj", "{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +43,14 @@ Global
 		{4B566077-E814-465F-A610-7D01CA53ACFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B566077-E814-465F-A610-7D01CA53ACFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B566077-E814-465F-A610-7D01CA53ACFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E700F098-CCA7-4BD7-9613-B43CD564FB08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E700F098-CCA7-4BD7-9613-B43CD564FB08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E700F098-CCA7-4BD7-9613-B43CD564FB08}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{E700F098-CCA7-4BD7-9613-B43CD564FB08}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

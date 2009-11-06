@@ -22,6 +22,15 @@ namespace SpecExpress.DSL
             //return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
         }
 
+        public ActionJoinBuilder<T, TProperty> Required(string errorMessage)
+        {
+            _propertyValidator.PropertyValueRequired = true;
+            _propertyValidator.RequiredRule.Message = errorMessage;
+
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            //return new ActionOptionConditionBuilder<T, TProperty>(_propertyValidator);
+        }
+
         public ActionJoinBuilder<T, TProperty> Optional()
         {
             _propertyValidator.PropertyValueRequired = false;

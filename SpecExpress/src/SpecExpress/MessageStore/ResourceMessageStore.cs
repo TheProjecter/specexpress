@@ -39,7 +39,7 @@ namespace SpecExpress.MessageStore
             // Remove "Nullable" from end of type name
             if (key.EndsWith("Nullable"))
             {
-                key = key.Remove(key.Length - 7);
+                key = key.Remove(key.Length - 8);
             }
 
             // Prefix key with "Not_" for negated rule messages

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -15,6 +16,7 @@ namespace SpecExpress
             _property = property;
             _message = errorMessage;
             _target = target;
+            NestedValdiationResults = new List<ValidationResult>();
         }
 
         public ValidationResult(MemberInfo property, string message,  object target, IEnumerable<ValidationResult> nestedValidationResults)
@@ -45,6 +47,23 @@ namespace SpecExpress
         }
 
         public IEnumerable<ValidationResult> NestedValdiationResults {get;set;}
+
+        public IEnumerable<string> AllErrors()
+        {
+           
+            foreach (var error in NestedValdiationResults)
+            {
+                yield return error.Message;
+
+                foreach (var grandchild in error.AllErrors())
+                {
+                    yield return error.Property.Name + " " + grandchild;
+                }
+               
+            }
+          
+           
+        }
 
     }
 

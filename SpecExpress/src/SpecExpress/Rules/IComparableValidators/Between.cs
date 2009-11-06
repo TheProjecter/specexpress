@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.IComparableValidators
 {
-    public class Between<T, TProperty> : RuleValidator<T, TProperty> where TProperty : IComparable
+    public class Between<T, TProperty> : RuleValidator<T, TProperty>
     {
         private TProperty _floor;
         private TProperty _ceiling;
@@ -44,7 +45,9 @@ namespace SpecExpress.Rules.IComparableValidators
                 _ceiling = (TProperty)GetExpressionValue("ceiling", context);
             }
 
-            return Evaluate(context.PropertyValue.CompareTo(_ceiling) <= 0 && context.PropertyValue.CompareTo(_floor) >= 0 , context);
+            Comparer<TProperty> comparer = System.Collections.Generic.Comparer<TProperty>.Default;
+           
+            return Evaluate(comparer.Compare(context.PropertyValue, _ceiling) <= 0 && comparer.Compare(context.PropertyValue, _floor) >= 0 , context);
         }
 
         public override object[] Parameters

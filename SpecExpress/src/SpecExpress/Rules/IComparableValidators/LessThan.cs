@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.IComparableValidators
 {
-    public class LessThan<T, TProperty> : RuleValidator<T, TProperty> where TProperty : IComparable
+    public class LessThan<T, TProperty> : RuleValidator<T, TProperty> 
     {
         private TProperty _lessThan;
 
@@ -25,7 +26,8 @@ namespace SpecExpress.Rules.IComparableValidators
                 _lessThan = (TProperty)GetExpressionValue(context);
             }
 
-            return Evaluate(context.PropertyValue.CompareTo(_lessThan) < 0, context);
+            Comparer<TProperty> comparer = System.Collections.Generic.Comparer<TProperty>.Default;
+            return Evaluate(comparer.Compare(context.PropertyValue, _lessThan) < 0, context);
         }
 
         public override object[] Parameters

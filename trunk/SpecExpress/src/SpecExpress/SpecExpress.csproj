@@ -110,6 +110,7 @@
     <Compile Include="Web\IPageSpecification.cs" />
     <Compile Include="Web\SpecExpressProxyValidator.cs" />
     <Compile Include="Web\SpecExpressProxyValidatorHelper.cs" />
+    <Compile Include="Web\SpecExpressValidationButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MessageStore\RuleErrorMessages.resx">

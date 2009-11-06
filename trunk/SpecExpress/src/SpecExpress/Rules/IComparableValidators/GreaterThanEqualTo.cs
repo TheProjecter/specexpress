@@ -1,10 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace SpecExpress.Rules.IComparableValidators
 {
-    public class GreaterThanEqualTo<T, TProperty> : RuleValidator<T, TProperty> where TProperty : IComparable
+    public class GreaterThanEqualTo<T, TProperty> : RuleValidator<T, TProperty>
     {
         private TProperty _greaterThanEqualTo;
 
@@ -25,7 +26,9 @@ namespace SpecExpress.Rules.IComparableValidators
                 _greaterThanEqualTo = (TProperty)GetExpressionValue(context);
             }
 
-            return Evaluate(context.PropertyValue.CompareTo(_greaterThanEqualTo) >= 0, context);
+            Comparer<TProperty> comparer = System.Collections.Generic.Comparer<TProperty>.Default;
+
+            return Evaluate(comparer.Compare(context.PropertyValue, _greaterThanEqualTo) >= 0, context);
         }
 
         public override object[] Parameters

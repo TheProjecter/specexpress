@@ -166,85 +166,85 @@ namespace SpecExpress
         #endregion
 
         #region IComparable
-        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty greaterThan) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty greaterThan)
         {
             expression.RegisterValidator(new Rules.IComparableValidators.GreaterThan<T, TProperty>(greaterThan));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> greaterThan) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> GreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> greaterThan) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.GreaterThan<T, TProperty>(greaterThan));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> GreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty greaterThanEqualTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> GreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty greaterThanEqualTo) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.GreaterThanEqualTo<T, TProperty>(greaterThanEqualTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> GreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> greaterThanEqualTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> GreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> greaterThanEqualTo)
         {
             expression.RegisterValidator(new Rules.IComparableValidators.GreaterThanEqualTo<T, TProperty>(greaterThanEqualTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> LessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty lessThan) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> LessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty lessThan) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.LessThan<T, TProperty>(lessThan));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> LessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> lessThan) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> LessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> lessThan) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.LessThan<T, TProperty>(lessThan));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> LessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty lessThanEqualTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> LessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty lessThanEqualTo) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.LessThanEqualTo<T, TProperty>(lessThanEqualTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> LessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> lessThanEqualTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> LessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> lessThanEqualTo) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.LessThanEqualTo<T, TProperty>(lessThanEqualTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> EqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty equalTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> EqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty equalTo) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.EqualTo<T, TProperty>(equalTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> EqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> equalTo) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> EqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> equalTo) 
         {
             expression.RegisterValidator(new Rules.IComparableValidators.EqualTo<T, TProperty>(equalTo));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty floor, TProperty ceiling) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty floor, TProperty ceiling) 
         {
             expression.RegisterValidator(new Between<T, TProperty>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> floor, TProperty ceiling) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> floor, TProperty ceiling)
         {
             expression.RegisterValidator(new Between<T, TProperty>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty floor, Expression<Func<T, TProperty>> ceiling) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, TProperty floor, Expression<Func<T, TProperty>> ceiling) 
         {
             expression.RegisterValidator(new Between<T, TProperty>(floor, ceiling));
             return expression.JoinBuilder;
         }
 
-        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> floor, Expression<Func<T, TProperty>> ceiling) where TProperty : IComparable
+        public static ActionJoinBuilder<T, TProperty> Between<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, TProperty>> floor, Expression<Func<T, TProperty>> ceiling) 
         {
             expression.RegisterValidator(new Between<T, TProperty>(floor, ceiling));
             return expression.JoinBuilder;

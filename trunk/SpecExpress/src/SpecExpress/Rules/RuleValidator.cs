@@ -91,7 +91,15 @@ namespace SpecExpress.Rules
         /// <returns></returns>
         protected object GetExpressionValue(CompiledExpression expression, RuleValidatorContext<T, TProperty> context)
         {
-            return (TProperty)expression.Invoke(context.Instance);
+            try
+            {
+                return (TProperty)expression.Invoke(context.Instance);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
         /// <summary>

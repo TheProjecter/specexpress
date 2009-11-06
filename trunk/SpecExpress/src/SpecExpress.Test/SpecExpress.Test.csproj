@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{78D20181-3C87-4DB2-AD31-1D17A159BC16}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -70,11 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressSpecification.cs" />
+    <Compile Include="BadWolf.cs" />
     <Compile Include="ContactSpecificationTests.cs" />
     <Compile Include="Container\ComplexTypesTests.cs" />
     <Compile Include="ContactSpecification.cs" />
     <Compile Include="CustomerAddressSpecification.cs" />
     <Compile Include="Entities\Country.cs" />
+    <Compile Include="ExpressionValidationTests.cs" />
     <Compile Include="InternationalAddressSpecification.cs" />
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />

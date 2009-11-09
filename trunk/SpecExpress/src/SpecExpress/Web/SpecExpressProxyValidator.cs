@@ -180,17 +180,16 @@ namespace SpecExpress.Web
                 
                 //Get the Type of the Property represented by PropertyName
                 var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
-                if (property.PropertyType == typeof(DateTime) || property.PropertyType == typeof(Nullable<DateTime>))
-                {
-                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, DateTime.Parse(controlValue.ToString()), null);
-                }
-                else
-                {
-                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, controlValue.ToString(), null);
-                }
 
+                if (!String.IsNullOrEmpty(controlValue.ToString()))
+                {
+                    var convertedValue = Convert.ChangeType(controlValue.ToString(), property.PropertyType);
 
-                PropertyErrors = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
+                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, convertedValue, null);
+
+                    PropertyErrors = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
+                }
+               
             }
 
             //TODO: Also check in Nested ValidationResults for this PropertyType and PropertyName

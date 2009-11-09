@@ -24,7 +24,8 @@ public partial class _Default : System.Web.UI.Page , IPageSpecification
         provider.FirstName = txtFirstName.Text;
         provider.LastName = txtLastName.Text;
         provider.MiddleInitial = txtMiddle.Text;
-
+        provider.StartDate = Convert.ToDateTime(txtStartDate.Text);
+        provider.Code = Convert.ToInt32(txtCode.Text);
         return provider;
     }
    

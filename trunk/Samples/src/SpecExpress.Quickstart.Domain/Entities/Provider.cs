@@ -25,5 +25,7 @@ namespace SpecExpress.Quickstart.Domain.Entities
         public IList<Location> Locations { get; set; }
         public IList<Specialty> Specialties { get; set; }
         public ProviderType ProviderType { get; set; }
+        public int Code { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

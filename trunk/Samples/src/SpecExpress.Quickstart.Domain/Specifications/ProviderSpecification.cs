@@ -19,6 +19,9 @@ namespace SpecExpress.Quickstart.Domain.Specifications
 
             Check(p => p.MiddleInitial).Optional().And.MaxLength(1).And.IsAlpha();
 
+            Check(p => p.Code).Required().And.LessThan(100);
+            Check(c => c.StartDate).Required().And.IsInFuture();
+
             //Note: no need to validate required for Enums. Because they are value types they have default values E(0)
             
             ////Validate each item in the collection with the default specification 

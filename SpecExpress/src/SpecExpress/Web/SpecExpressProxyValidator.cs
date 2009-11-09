@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SpecExpress.Util;
 
+[assembly: TagPrefix("SpecExpress", "spec")]
+
 namespace SpecExpress.Web
 {
+    [ToolboxData("<{0}:SpecExpressProxyValidator runat='server'></{0}:SpecExpressProxyValidator>")]    
     public class SpecExpressProxyValidator : BaseValidator
     {
         private PropertyValidator _currentPropertyValidator;
@@ -28,6 +32,12 @@ namespace SpecExpress.Web
                 if (_currentPropertyValidator == null)
                 {
                     //TODO: Throw exception if no match found
+                    if (CurrentSpecification == null)
+                    {
+                        //add support for designer
+                        return null;
+                    }
+
                     _currentPropertyValidator =
                         CurrentSpecification.PropertyValidators.Where(x => x.PropertyName == PropertyName).FirstOrDefault();
                 }
@@ -36,7 +46,7 @@ namespace SpecExpress.Web
             }
         }
 
-        protected Specification CurrentSpecification
+        public  Specification CurrentSpecification
         {
             get
             {
@@ -86,6 +96,7 @@ namespace SpecExpress.Web
             }
         }
 
+        [TypeConverter(typeof(ClassPropertyTypeConverter)), Description("Property on Type this validator is bound to."), Category("Behavior"), Themeable(false), DefaultValue("")]
         public string PropertyName { get; set; }
         public string TypeName { get; set; }
         public ValidationNotification ValidationNotification { get; set; }
@@ -183,6 +194,9 @@ namespace SpecExpress.Web
 
                 if (!String.IsNullOrEmpty(controlValue.ToString()))
                 {
+                    var foo = TypeDescriptor.GetConverter(property.PropertyType);
+                    var cVal = foo.ConvertFromInvariantString(controlValue.ToString());
+
                     var convertedValue = Convert.ChangeType(controlValue.ToString(), property.PropertyType);
 
                     CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, convertedValue, null);

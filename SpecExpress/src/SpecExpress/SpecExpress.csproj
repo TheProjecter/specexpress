@@ -106,10 +106,12 @@
     <Compile Include="ValidationResult.cs" />
     <Compile Include="PropertyValidator.cs" />
     <Compile Include="ValidationResultFactory.cs" />
+    <Compile Include="Web\ClassPropertyTypeConverter.cs" />
     <Compile Include="Web\ControlExtensions.cs" />
     <Compile Include="Web\IPageSpecification.cs" />
     <Compile Include="Web\SpecExpressProxyValidator.cs" />
     <Compile Include="Web\SpecExpressProxyValidatorHelper.cs" />
+    <Compile Include="Web\SpecExpressSpecificationManager.cs" />
     <Compile Include="Web\SpecExpressValidationButton.cs" />
   </ItemGroup>
   <ItemGroup>

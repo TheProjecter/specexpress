@@ -9,15 +9,13 @@ using SpecExpress.Quickstart.Domain.Entities;
 using SpecExpress.Web;
 using SpecExpress.Quickstart.Domain.Specifications;
 
-[SpecExpressPageValidation(typeof(Provider), typeof(ProviderSpecification))]
-public partial class _Default : System.Web.UI.Page , IPageSpecification
+public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+       
     }
 
-    #region Validation
     protected object btnValidate_GetObject()
     {
         var provider = new Provider();
@@ -29,20 +27,6 @@ public partial class _Default : System.Web.UI.Page , IPageSpecification
         provider.Code = Convert.ToInt32(txtCode.Text);
         return provider;
     }
-   
-    #region IPageSpecification Members
-
-    public Type PageSpecification
-    {
-        get
-        {
-            return typeof(ProviderSpecification);
-        }
-    }
-
-    #endregion
-
-    #endregion
 
     /// <summary>
     /// Submit Button Clicked

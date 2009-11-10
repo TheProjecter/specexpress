@@ -49,12 +49,8 @@ namespace SpecExpress.Web
         {
             get
             {
-                if (_currentSpecification == null)
-                {
-                    _currentSpecification = ValidationCatalog.GetAllSpecifications().Where(
-                        x => x.GetType() == ((IPageSpecification) Page).PageSpecification).FirstOrDefault();
-                }
-                return _currentSpecification;
+                var manager = Page.Controls.All().OfType<SpecExpressSpecificationManager>().First();
+                return manager.GetSpecification();
             }
         }
 
@@ -134,10 +130,7 @@ namespace SpecExpress.Web
                                                            "SpecExpressProxyValidatorEvaluateIsValid", false);
               
 
-                //var validatedType = BuildManager.GetType(this.TypeName, false, false);
-                //var TProperty = validatedType.GetProperty(this.PropertyName);
-
-                string requiredErrorMessage = CurrentPropertyValidator.RequiredRule.ErrorMessageTemplate;
+               string requiredErrorMessage = CurrentPropertyValidator.RequiredRule.ErrorMessageTemplate;
 
                 //Try and get the label, if not found, default to PropertyName, 
                 var labelControl = Page.Controls.All().OfType<Label>().Where(x => x.AssociatedControlID == ControlToValidate).FirstOrDefault();
@@ -146,6 +139,7 @@ namespace SpecExpress.Web
 
                 if (labelControl == null)
                 {
+                    //TODO: Get UI friendly name from PropertyValidator 
                     //Label control not found, default to type name
                     labelName = PropertyName.SplitPascalCase();
                 }
@@ -181,28 +175,7 @@ namespace SpecExpress.Web
             {
                 //Validate just this property
                 //Create a new object of Type and set the property
-                var obj = Activator.CreateInstance( CurrentSpecification.ForType, true);
-
-                var controlToValidate = Page.Controls.All().First(x => x.ID == ControlToValidate);
-
-                //Search Page and controls on user controls
-                var controlValue = Page.Request.Form[controlToValidate.UniqueID];
-                
-                //Get the Type of the Property represented by PropertyName
-                var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
-
-                if (!String.IsNullOrEmpty(controlValue.ToString()))
-                {
-                    var foo = TypeDescriptor.GetConverter(property.PropertyType);
-                    var cVal = foo.ConvertFromInvariantString(controlValue.ToString());
-
-                    var convertedValue = Convert.ChangeType(controlValue.ToString(), property.PropertyType);
-
-                    CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, convertedValue, null);
-
-                    PropertyErrors = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
-                }
-               
+                PropertyErrors = validateProperty();
             }
 
             //TODO: Also check in Nested ValidationResults for this PropertyType and PropertyName
@@ -217,6 +190,41 @@ namespace SpecExpress.Web
                 IsValid = true;
                 return true;
             }
+        }
+
+        private List<ValidationResult> validateProperty()
+        {
+            string controlValue = GetControlToValidateValue();
+
+            var results = new List<ValidationResult>();
+
+            if (!String.IsNullOrEmpty(controlValue.ToString()))
+            {
+                //Get the Type of the Property represented by PropertyName
+                var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
+
+                //Convert from string value to the type for the Property
+                var foo = TypeDescriptor.GetConverter(property.PropertyType);
+                var convertedValue = foo.ConvertFromInvariantString(controlValue.ToString());
+                
+                //Create a placeholder object for the type we are validating
+                var obj = Activator.CreateInstance(CurrentSpecification.ForType, true);
+                
+                //set the value of the Property we are validating
+                CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, convertedValue, null);
+                
+                //Validate this property, given our placeholder object against the Validation Catalog
+                results = ValidationCatalog.ValidateProperty(obj, this.PropertyName, CurrentSpecification).Errors;
+            }
+
+            return results;
+        }
+
+        private string GetControlToValidateValue()
+        {
+            //Find the Control to validate
+            var controlToValidate = Page.Controls.All().First(x => x.ID == ControlToValidate);
+            return Page.Request.Form[controlToValidate.UniqueID];
         }
 
         protected override void CreateChildControls()

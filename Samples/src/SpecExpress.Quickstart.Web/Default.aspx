@@ -15,16 +15,14 @@
     <div>
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         
-        <spec:SpecExpressSpecificationManager ID="spcManager" runat="server" 
-        SpecificationType="SpecExpress.Quickstart.Domain.Specifications.ProviderSpecification, SpecExpress.Quickstart.Domain" />
+        <spec:SpecExpressSpecificationManager ID="SpcManager" runat="server"        
+            TypeToValidate="SpecExpress.Quickstart.Domain.Entities.Provider, SpecExpress.Quickstart.Domain" />
         
-        <h1>
-            
-            Edit Provider</h1>
+        <h1>Edit Provider</h1>
             
             
-     <%--   <asp:UpdatePanel ID="UpdatePanel1" runat="server">
-            <ContentTemplate>--%>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+            <ContentTemplate>
                 <asp:ValidationSummary ID="ValidationSummary1" runat="server" ShowSummary="true" />
                 <h2><asp:Label ID="lblSuccess" runat="server" Visible="false" Text="Provider submitted successfully." /></h2>                
                   
@@ -57,8 +55,6 @@
                     <asp:Label ID="lblStartDate" runat="server" AssociatedControlID="txtStartDate" Text="Start Date"/>
                     <asp:TextBox ID="txtStartDate" runat="server" />                    
                     <spec:SpecExpressProxyValidator ID="SpecExpressProxyValidator1" runat="server"  PropertyName="StartDate" Display="Dynamic" ControlToValidate="txtStartDate"/>
-                     <cc1:DynamicValidator ID="DynamicValidator1" runat="server">
-                     </cc1:DynamicValidator>
                 </div>
                 
                 
@@ -66,9 +62,9 @@
                     OnValidationNotification="btnValidate_Invalid" 
                   
                     onclick="btnValidate_Click" />
-<%--        
+        
             </ContentTemplate>            
-        </asp:UpdatePanel>    --%>
+        </asp:UpdatePanel>    
     </div>
     </form>
 </body>

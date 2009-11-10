@@ -45,20 +45,18 @@ namespace SpecExpress.Web
                 //Get the object to validate
                 var validatingObject = GetObject();
 
-                //Get the Specification from the Page
-                var spec = ValidationCatalog.GetAllSpecifications().Where(
-                   x => x.GetType() == ((IPageSpecification)Page).PageSpecification).FirstOrDefault();
-
+                //Get the Specification from the Manager
+                var manager = Page.Controls.All().OfType<SpecExpressSpecificationManager>().First();
+                var spec = manager.GetSpecification();
 
                 //Validate the object using the ValidationCatalog
                 var vldNotification = ValidationCatalog.Validate(validatingObject, spec);
                 
-                //Invalid
-                //Raise notificaiton to controls
                 if (!vldNotification.IsValid)
                 {
-                    var helper = new SpecExpressProxyValidatorHelper(Page);
-                    helper.Notify(vldNotification);
+                    //Invalid
+                    //Raise notificaiton to controls
+                    manager.Notify(vldNotification);
 
                     //Raise OnValidationNotification Event
                     if (ValidationNotification != null)

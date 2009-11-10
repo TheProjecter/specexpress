@@ -9,6 +9,7 @@ using SpecExpress.Quickstart.Domain.Entities;
 using SpecExpress.Web;
 using SpecExpress.Quickstart.Domain.Specifications;
 
+[SpecExpressPageValidation(typeof(Provider), typeof(ProviderSpecification))]
 public partial class _Default : System.Web.UI.Page , IPageSpecification
 {
     protected void Page_Load(object sender, EventArgs e)

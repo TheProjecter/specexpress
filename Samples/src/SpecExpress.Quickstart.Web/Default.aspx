@@ -16,7 +16,7 @@
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
         
         <spec:SpecExpressSpecificationManager ID="spcManager" runat="server" 
-        SpecificationType="SpecExpress.Quickstart.Domain.Specifications.ProviderSpecification" />
+        SpecificationType="SpecExpress.Quickstart.Domain.Specifications.ProviderSpecification, SpecExpress.Quickstart.Domain" />
         
         <h1>
             
@@ -37,7 +37,8 @@
                  <div>
                     <asp:Label ID="Label1" runat="server" AssociatedControlID="txtMiddle" Text="Middle"/>
                     <asp:TextBox ID="txtMiddle" runat="server"  />
-                    <spec:SpecExpressProxyValidator ID="vldMiddle" runat="server" Display="Dynamic" ControlToValidate="txtMiddle"/>
+                    <spec:SpecExpressProxyValidator ID="vldMiddle" runat="server" Display="Dynamic" 
+                         ControlToValidate="txtMiddle" PropertyName="MiddleInitial"/>
                 </div>
                 
                  <div>

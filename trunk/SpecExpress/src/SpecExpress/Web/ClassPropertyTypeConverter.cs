@@ -3,39 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Web.UI;
 
 namespace SpecExpress.Web
 {
-    //public class ClassPropertyTypeConverter : TypeConverter 
-    //{
-    //    public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
-    //    {
-    //        return sourceType == typeof (object);
-               
-    //        //return base.CanConvertFrom(context, sourceType);
-    //    }
-
-    //    public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
-    //    {
-    //        var validator = context.Instance as SpecExpressProxyValidator;
-            
-    //        var property =  validator.CurrentSpecification.ForType.GetProperty(value);
-
-    //        return property;
-
-    //        //return base.ConvertFrom(context, culture, value);
-    //    }
-
-
-    //}
-
-
-    public class ClassPropertyTypeConverter : StringConverter
+ public class ClassPropertyTypeConverter : StringConverter
     {
-        // Methods
+       
         protected virtual bool FilterControl(Control control)
         {
             return true;
@@ -47,41 +25,78 @@ namespace SpecExpress.Web
             {
                 return null;
             }
+            //var properties = getValuesFromManager(context);
+            var properties = getValuesFromPageAttribute(context);
 
-            var specManager = context.Container.Components.OfType<SpecExpressSpecificationManager>().FirstOrDefault();
-            var validator = context.Instance as SpecExpressProxyValidator;
+            return new TypeConverter.StandardValuesCollection(properties);
+        }
 
-            if (validator == null || specManager == null)
+        private List<string> getValuesFromPageAttribute(ITypeDescriptorContext context)
+        {
+
+            context.Container.Components.OfType<System.Web.UI.Page>().ToList().ForEach(x =>
+                                                                                           {
+
+              var  a = x.GetType().GetCustomAttributes(false);
+              Debug.Write(a.GetType());
+        }
+
+    );
+
+
+
+            var page = context.Container.Components.OfType<System.Web.UI.Page>().First();
+
+
+            
+            var attribs = page.GetType().GetCustomAttributes(typeof (SpecExpressPageValidationAttribute), false);
+            
+            if (attribs == null)
             {
                 return null;
             }
 
-            //Get Specification
-            //var assembly = specManager.SpecificationType.Split(',')[1];
-            //var classType = specManager.SpecificationType.Split(',')[0];
+            var attrib = attribs.First() as SpecExpressPageValidationAttribute;
+            return attrib.TypeToValidate.GetProperties().Select(p => p.Name).OrderByDescending(x => x).ToList();
 
-            //var spec = (Specification) (Activator.CreateInstance(assembly, classType).Unwrap());
-            var spec = ValidationCatalog.GetAllSpecifications().First(s => specManager.SpecificationType == s.GetType().ToString());
-
-            var properties = spec.ForType.GetProperties().Select(p => p.Name).ToList();
-
-            return new TypeConverter.StandardValuesCollection(properties);
-
-
-            //IDesignerHost service = (IDesignerHost)context.GetService(typeof(IDesignerHost));
-            //if (service == null)
+            //foreach (Attribute attribute in page.GetType().GetCustomAttributes(typeof(SpecExpressPageValidationAttribute), false))
             //{
-            //    return null;
+            //    if (attribute is SpecExpressPageValidationAttribute)
+            //    {
+            //        var specAttrib = attribute as SpecExpressPageValidationAttribute;
+            //        return specAttrib.TypeToValidate.GetProperties().Select(p => p.Name).OrderByDescending(x => x).ToList();
+            //    }
             //}
-            //string[] controls = this.GetControls(service, context.Instance);
-            //if (controls == null)
-            //{
-            //    return null;
-            //}
-            //return new TypeConverter.StandardValuesCollection(controls);
+
+            return null;
         }
 
-        public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
+        private static List<string> getValuesFromManager(ITypeDescriptorContext context)
+         {
+             var specManager = context.Container.Components.OfType<SpecExpressSpecificationManager>().FirstOrDefault();
+             var validator = context.Instance as SpecExpressProxyValidator;
+
+             if (validator == null || specManager == null)
+             {
+                 return null;
+             }
+
+             //Get Specification
+             var assembly = specManager.SpecificationType.Split(',')[1];
+             var classType = specManager.SpecificationType.Split(',')[0];
+
+             var spec = (Specification) (Activator.CreateInstance(assembly, classType).Unwrap());
+
+             if (spec == null)
+             {
+                 return null;
+             }
+             //var spec = ValidationCatalog.GetAllSpecifications().First(s => specManager.SpecificationType == s.GetType().ToString());
+
+            return spec.ForType.GetProperties().Select(p => p.Name).OrderByDescending(x => x).ToList();
+         }
+
+     public override bool GetStandardValuesExclusive(ITypeDescriptorContext context)
         {
             return false;
         }

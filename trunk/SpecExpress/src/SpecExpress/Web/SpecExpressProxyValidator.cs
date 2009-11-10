@@ -21,7 +21,7 @@ namespace SpecExpress.Web
 
         public SpecExpressProxyValidator()
         {
-            //this.ErrorMessage = _defaultErrorMessage;
+
         }
 
 
@@ -31,10 +31,9 @@ namespace SpecExpress.Web
             {
                 if (_currentPropertyValidator == null)
                 {
-                    //TODO: Throw exception if no match found
                     if (CurrentSpecification == null)
                     {
-                        //add support for designer
+                        //added for support for designer
                         return null;
                     }
 
@@ -46,7 +45,7 @@ namespace SpecExpress.Web
             }
         }
 
-        public  Specification CurrentSpecification
+        protected  Specification CurrentSpecification
         {
             get
             {

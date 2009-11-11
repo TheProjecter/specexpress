@@ -34,6 +34,7 @@ namespace SpecExpress
                         }
                     }
 
+                    //not found in this class, so look in the base class
                     _forType = currentType.BaseType.GetGenericArguments().FirstOrDefault();
                     
                 }
@@ -59,6 +60,11 @@ namespace SpecExpress
         {
             return Check(expression, null);
         }
+
+        //public void Using<U, TSpecType>() where TSpecType : Validates<U>, new()
+        //{
+           
+        //}
 
         #endregion
 

@@ -8,7 +8,8 @@ namespace SpecExpressTest
     {
         public CustomerSpecification()
         {
-            ////Check(c => c.Address).Required().With.Specification<AddressSpecification>();
+            //Check(c => c.Address).Required().With.Specification<AddressSpecification>();
+            Check(c => c.Name).Required();
         }
     }
 }

@@ -71,7 +71,7 @@ namespace SpecExpressTest
 
             List<ValidationResult> notification = spec.Validate(customer);
             Assert.IsNotEmpty(notification);
-            Assert.AreEqual(2, notification.Count);
+            Assert.AreEqual(1, notification.Count);
         }
 
         [Test]

@@ -275,30 +275,43 @@ namespace SpecExpress
 
                 if (PropertyValueRequired || (!PropertyValueRequired && !context.PropertyValue.IsNullOrDefault()) )
                 {
-                    List<ValidationResult> list =
-                        _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
+                    List<ValidationResult> list;
 
-                    if (ValidationCatalog.ValidateObjectGraph)
+                    //If Property is Required and the Required Rule fails, short-circuit the remaining rules
+                    if (PropertyValueRequired && context.PropertyValue.IsNullOrDefault())
                     {
-                        //Check if this Property Type has a Registered specification to validate with and the instance of the property
-                        //isn't already invalid. For example if a property is required and the object is null, then 
-                        //don't continue validating the object
-                        ValidateObjectGraph(context, list);
+                        //Required failed, return only a list of broken required rules
+                        list =  
+                            _rules.OfType<Required<T, TProperty>>().Select(rule => rule.Validate(context)).Where(
+                                result => result != null).ToList();
                     }
+                    else
+                    {
+                        list = _rules.Select(rule => rule.Validate(context)).Where(result => result != null).ToList();
 
-                    // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
-                    if (list.Any() && Child != null)
-                    {
-                        List<ValidationResult> orList = Child.Validate(instance);
-                        if (orList.Any())
+                        if (ValidationCatalog.ValidateObjectGraph)
                         {
-                            list.AddRange(orList);
+                            //Check if this Property Type has a Registered specification to validate with and the instance of the property
+                            //isn't already invalid. For example if a property is required and the object is null, then 
+                            //don't continue validating the object
+                            ValidateObjectGraph(context, list);
                         }
-                        else
+
+                        // If there is an "_or" ValidationExpression and if it validates fine, then clear list, else, add notifications to list.
+                        if (list.Any() && Child != null)
                         {
-                            list.Clear();
+                            List<ValidationResult> orList = Child.Validate(instance);
+                            if (orList.Any())
+                            {
+                                list.AddRange(orList);
+                            }
+                            else
+                            {
+                                list.Clear();
+                            }
                         }
                     }
+                    
 
                     return list;
 

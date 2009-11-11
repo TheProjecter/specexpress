@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{78D20181-3C87-4DB2-AD31-1D17A159BC16}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -76,7 +76,10 @@
     <Compile Include="ContactSpecification.cs" />
     <Compile Include="CustomerAddressSpecification.cs" />
     <Compile Include="Entities\Country.cs" />
+    <Compile Include="Entities\ExtendedCustomer.cs" />
     <Compile Include="ExpressionValidationTests.cs" />
+    <Compile Include="ExtendedCustomerSpecification.cs" />
+    <Compile Include="InheritanceTests.cs" />
     <Compile Include="InternationalAddressSpecification.cs" />
     <Compile Include="DSLTests\ActionOptionConditionBuilderTests.cs" />
     <Compile Include="DSLTests\SpecificationBaseTests.cs" />

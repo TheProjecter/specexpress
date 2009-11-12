@@ -61,10 +61,13 @@ namespace SpecExpress
             return Check(expression, null);
         }
 
-        //public void Using<U, TSpecType>() where TSpecType : Validates<U>, new()
-        //{
-           
-        //}
+        public void Using<U, TSpecType>() where TSpecType : Validates<U>, new()
+        {
+            //Get the PropertyValidators from the Using Spec and add it to this specification
+            var usingSpec = ValidationCatalog.GetAllSpecifications().First( x => x.GetType() == typeof(TSpecType));
+
+            PropertyValidators.AddRange(usingSpec.PropertyValidators);
+        }
 
         #endregion
 

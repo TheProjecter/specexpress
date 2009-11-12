@@ -120,6 +120,7 @@
     <Compile Include="RuleValidatorTests\RequiredTests.cs" />
     <Compile Include="RuleValidatorTests\SpecificationRuleTests.cs" />
     <Compile Include="RuleValidatorTests\StringValidatorTests.cs" />
+    <Compile Include="Specifications\CustomerRequiredNameSpecification.cs" />
     <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -6,20 +6,6 @@ using System.Web.UI.WebControls;
 
 namespace SpecExpress.Web
 {
-    public class ValidationNotificationEventArgs
-    {
-        private ValidationNotification _ve;
-        public ValidationNotificationEventArgs(ValidationNotification vn)
-        {
-            _ve = vn;
-        }
-
-        public ValidationNotification ValidationNotification
-        {
-            get { return _ve;}
-        }
-    }
-
     public class ValidationButton : System.Web.UI.WebControls.Button
     {
         //EventHandlers
@@ -29,33 +15,28 @@ namespace SpecExpress.Web
         public event ValidationNotificationHandler ValidationNotification;
         public event GetObjectHandler GetObject;
 
-
-        protected void OnValidationNotification(ValidationNotificationEventArgs e)
-        {
-            if (ValidationNotification != null)
-            {
-                ValidationNotification(this, e);
-            }
-        }
-
         protected override void OnClick(EventArgs e)
         {
-            if (GetObject != null)
+            if (GetObject == null)
+            {
+                base.OnClick(e);
+            }
+            else
             {
                 //Get the object to validate
                 var validatingObject = GetObject();
 
                 //Get the Specification from the Manager
-                var manager = Page.Controls.All().OfType<SpecExpressSpecificationManager>().First();
+                var manager = Page.Controls.All().OfType<SpecificationManager>().First();
                 var spec = manager.GetSpecification();
 
                 //Validate the object using the ValidationCatalog
                 var vldNotification = ValidationCatalog.Validate(validatingObject, spec);
-                
+
                 if (!vldNotification.IsValid)
                 {
                     //Invalid
-                    //Raise notificaiton to controls
+                    //Raise notification to controls
                     manager.Notify(vldNotification);
 
                     //Raise OnValidationNotification Event
@@ -67,8 +48,6 @@ namespace SpecExpress.Web
                     {
                         base.OnClick(e);
                     }
-
-                    OnValidationNotification(new ValidationNotificationEventArgs(vldNotification));
                 }
                 else
                 {

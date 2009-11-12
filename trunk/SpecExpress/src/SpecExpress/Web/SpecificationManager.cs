@@ -12,8 +12,8 @@ using System.Web.UI.WebControls;
 namespace SpecExpress.Web
 {
     [Designer("System.Web.UI.Design.ControlDesigner,System.Design, Version=2.0.0.0"), DefaultProperty("Scripts"), NonVisualControl, ParseChildren(false)]
-    [ToolboxData("<{0}:SpecExpressSpecificationManager runat='server'></{0}:SpecExpressSpecificationManager>")]    
-    public class SpecExpressSpecificationManager : WebControl 
+    [ToolboxData("<{0}:SpecificationManager runat='server'></{0}:SpecificationManager>")]    
+    public class SpecificationManager : WebControl 
     {
         private string _specificationType;
         private string _type;
@@ -79,7 +79,7 @@ namespace SpecExpress.Web
         public void Notify(ValidationNotification notification)
         {
             //Bind the ValidationNotification to each Proxy Validator
-            var specValidators = this.Page.Validators.OfType<SpecExpressProxyValidator>();
+            var specValidators = this.Page.Validators.OfType<Validator>();
             //Explicitly call Validate to trigger any validation messages
             specValidators.ToList().ForEach(x =>
             {

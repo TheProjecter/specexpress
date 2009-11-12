@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -110,9 +110,12 @@
     <Compile Include="Web\ClassPropertyTypeConverter.cs" />
     <Compile Include="Web\ControlExtensions.cs" />
     <Compile Include="Web\IPageSpecification.cs" />
-    <Compile Include="Web\SpecExpressProxyValidator.cs" />
-    <Compile Include="Web\SpecExpressSpecificationManager.cs" />
-    <Compile Include="Web\SpecExpressValidationButton.cs" />
+    <Compile Include="Web\ValidationImageButton.cs" />
+    <Compile Include="Web\ValidationLinkButton.cs" />
+    <Compile Include="Web\ValidationNotificationEventArgs.cs" />
+    <Compile Include="Web\Validator.cs" />
+    <Compile Include="Web\SpecificationManager.cs" />
+    <Compile Include="Web\ValidationButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MessageStore\RuleErrorMessages.resx">

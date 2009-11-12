@@ -33,8 +33,8 @@ namespace SpecExpress.Web
 
         private static List<string> getValuesFromManager(ITypeDescriptorContext context)
         {
-            var specManager = context.Container.Components.OfType<SpecExpressSpecificationManager>().FirstOrDefault();
-            var validator = context.Instance as SpecExpressProxyValidator;
+            var specManager = context.Container.Components.OfType<SpecificationManager>().FirstOrDefault();
+            var validator = context.Instance as Validator;
 
             if (validator == null || specManager == null)
             {

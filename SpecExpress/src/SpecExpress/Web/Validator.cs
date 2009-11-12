@@ -11,15 +11,15 @@ using SpecExpress.Util;
 
 namespace SpecExpress.Web
 {
-    [ToolboxData("<{0}:SpecExpressProxyValidator runat='server'></{0}:SpecExpressProxyValidator>")]    
-    public class SpecExpressProxyValidator : BaseValidator
+    [ToolboxData("<{0}:Validator runat='server'></{0}:Validator>")]    
+    public class Validator : BaseValidator
     {
         private PropertyValidator _currentPropertyValidator;
         private Specification _currentSpecification;
         private ValidationSummaryDisplayMode displayMode;
         private string _defaultErrorMessage = "Default error message";
 
-        public SpecExpressProxyValidator()
+        public Validator()
         {
 
         }
@@ -49,7 +49,7 @@ namespace SpecExpress.Web
         {
             get
             {
-                var manager = Page.Controls.All().OfType<SpecExpressSpecificationManager>().First();
+                var manager = Page.Controls.All().OfType<SpecificationManager>().First();
                 return manager.GetSpecification();
             }
         }
@@ -233,9 +233,9 @@ namespace SpecExpress.Web
 
             if (PropertyIsRequired)
             {
-                if (!Page.ClientScript.IsClientScriptBlockRegistered(typeof (SpecExpressProxyValidator), "Script"))
+                if (!Page.ClientScript.IsClientScriptBlockRegistered(typeof (Validator), "Script"))
                 {
-                    Page.ClientScript.RegisterClientScriptBlock(typeof (SpecExpressProxyValidator), "Script",
+                    Page.ClientScript.RegisterClientScriptBlock(typeof (Validator), "Script",
                                                                 @"<script type=""text/javascript"">function SpecExpressProxyValidatorEvaluateIsValid(val) {var returnval = RequiredFieldValidatorEvaluateIsValid(val); if (!returnval){ val.errormessage == val.requirederrormessage;};return returnval;}</script>");
                 }
             }

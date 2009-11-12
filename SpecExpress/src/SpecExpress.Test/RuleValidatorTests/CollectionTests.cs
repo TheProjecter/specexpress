@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
@@ -35,6 +36,30 @@ namespace SpecExpress.Test.RuleValidatorTests
             return validator.Validate(context) == null;
         }
 
+        [TestCase(PopulateListAction.Null, Result = false, TestName = "CollectionIsNull")]
+        [TestCase(PopulateListAction.Empty, Result = false, TestName = "CollectionIsEmpty")]
+        [TestCase(PopulateListAction.Populate, Result = false, TestName = "CollectionIsPopulated")]
+        public bool IsEmpty_Expression_IsValid(PopulateListAction populateListAction)
+        {
+            //Create Validator
+            var validator = new IsEmpty<Contact, IEnumerable>();
+            RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases();
+
+            switch (populateListAction)
+            {
+                case PopulateListAction.Null:
+                    context.Instance.Aliases = null;
+                    break;
+                case PopulateListAction.Empty:
+                    context.Instance.Aliases = new List<string>();
+                    break;
+                default:
+                    break;
+            }
+
+            //Validate the validator only, return true of no error returned
+            return validator.Validate(context) == null;
+        }
 
         public RuleValidatorContext<Contact, IEnumerable> BuildContextForAliases()
         {
@@ -47,6 +72,13 @@ namespace SpecExpress.Test.RuleValidatorTests
         private List<string> Strings()
         {
             return new List<string>(new string[] {"string1", "string2", "string3"});
+        }
+
+        public enum PopulateListAction
+        {
+            Null,
+            Empty,
+            Populate
         }
     }
 }

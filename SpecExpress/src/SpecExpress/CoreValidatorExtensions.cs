@@ -163,6 +163,13 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, TProperty> IsEmpty<T, TProperty>(this IRuleBuilder<T, TProperty> expression) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.IsEmpty<T, TProperty>());
+            return expression.JoinBuilder;
+        }
+
+
         #endregion
 
         #region IComparable

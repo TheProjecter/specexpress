@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -63,6 +63,7 @@
     <Compile Include="Rules\Boolean\IsTrue.cs" />
     <Compile Include="Rules\Collection\ForEach.cs" />
     <Compile Include="Rules\Collection\Contains.cs" />
+    <Compile Include="Rules\Collection\IsEmpty.cs" />
     <Compile Include="Rules\GeneralValidators\IsInSet.cs" />
     <Compile Include="Rules\CustomRule.cs" />
     <Compile Include="Rules\DateValidators\IsInPast.cs" />

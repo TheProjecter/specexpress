@@ -112,15 +112,6 @@
     <Compile Include="ValidationResult.cs" />
     <Compile Include="PropertyValidator.cs" />
     <Compile Include="ValidationResultFactory.cs" />
-    <Compile Include="Web\ClassPropertyTypeConverter.cs" />
-    <Compile Include="Web\ControlExtensions.cs" />
-    <Compile Include="Web\IPageSpecification.cs" />
-    <Compile Include="Web\ValidationImageButton.cs" />
-    <Compile Include="Web\ValidationLinkButton.cs" />
-    <Compile Include="Web\ValidationNotificationEventArgs.cs" />
-    <Compile Include="Web\Validator.cs" />
-    <Compile Include="Web\SpecificationManager.cs" />
-    <Compile Include="Web\ValidationButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MessageStore\RuleErrorMessages.resx">

@@ -16,10 +16,13 @@ namespace SpecExpress.Rules.Collection
         {
             int count = 0;
 
-            foreach (var value in context.PropertyValue)
+            if (context.PropertyValue != null)
             {
-                count++;
-                break;
+                foreach (var value in context.PropertyValue)
+                {
+                    count++;
+                    break;
+                }
             }
 
             return Evaluate(count == 0, context);

@@ -184,6 +184,20 @@ namespace SpecExpress.Test.DSLTests
             Check(c => from contact in c.Contacts where contact.Active select new {BirthDate = contact.DateOfBirth})
                 .Optional().And
                 .ForEach(generic => /* what to cast generic to since its generic? */ true, "Some Error");
+
+            // Count Rules
+            Check(c => c.Contacts).Required().And.CountEqualTo(0);
+            Check(c => c.Contacts).Required().And.CountGreaterThan(0);
+            Check(c => c.Contacts).Required().And.CountGreaterThanEqualTo(0);
+            Check(c => c.Contacts).Required().And.CountLessThan(0);
+            Check(c => c.Contacts).Required().And.CountLessThanEqualTo(0);
+            Check(c => c.Contacts).Required().And.IsEmpty();
+            Check(c => c.Contacts).Required().And.Not.CountEqualTo(0);
+            Check(c => c.Contacts).Required().And.Not.CountGreaterThan(0);
+            Check(c => c.Contacts).Required().And.Not.CountGreaterThanEqualTo(0);
+            Check(c => c.Contacts).Required().And.Not.CountLessThan(0);
+            Check(c => c.Contacts).Required().And.Not.CountLessThanEqualTo(0);
+            Check(c => c.Contacts).Required().And.Not.IsEmpty();
         }
 
         /// <summary>

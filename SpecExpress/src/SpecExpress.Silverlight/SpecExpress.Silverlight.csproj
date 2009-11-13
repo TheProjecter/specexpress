@@ -107,6 +107,21 @@
     <Compile Include="..\SpecExpress\Rules\Collection\Contains.cs">
       <Link>Rules\Collection\Contains.cs</Link>
     </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CountEqualTo.cs">
+      <Link>Rules\Collection\CountEqualTo.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CountGreaterThan.cs">
+      <Link>Rules\Collection\CountGreaterThan.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CountGreaterThanEqualTo.cs">
+      <Link>Rules\Collection\CountGreaterThanEqualTo.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CountLessThan.cs">
+      <Link>Rules\Collection\CountLessThan.cs</Link>
+    </Compile>
+    <Compile Include="..\SpecExpress\Rules\Collection\CountLessThanEqualTo.cs">
+      <Link>Rules\Collection\CountLessThanEqualTo.cs</Link>
+    </Compile>
     <Compile Include="..\SpecExpress\Rules\Collection\ForEach.cs">
       <Link>Rules\Collection\ForEach.cs</Link>
     </Compile>

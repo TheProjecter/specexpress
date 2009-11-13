@@ -170,12 +170,14 @@ namespace SpecExpress.Web
 
         protected override bool EvaluateIsValid()
         {
-            //if (ValidationNotification == null)
-            //{
-            //    //Validate just this property
-            //    //Create a new object of Type and set the property
-            //    PropertyErrors = validateProperty();
-            //}
+            //TODO: BEGIN REMOVE - when SpecManager takes over all validation responsibilties
+            if (ValidationNotification == null)
+            {
+                //Validate just this property
+                //Create a new object of Type and set the property
+                PropertyErrors = validateProperty();
+            }
+            //TODO:END REMOVE
 
             //TODO: Also check in Nested ValidationResults for this PropertyType and PropertyName
             if (PropertyErrors.Any())

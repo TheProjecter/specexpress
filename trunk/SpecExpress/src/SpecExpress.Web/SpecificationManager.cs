@@ -81,6 +81,7 @@ namespace SpecExpress.Web
 
             return _resolvedSpecification;
         }
+
         protected override bool OnServerValidate(string value)
         {
             object objectToValidate;
@@ -115,10 +116,16 @@ namespace SpecExpress.Web
             return vldNotification.IsValid;
         }
 
+        //public void ValidateFromClient(SpecManagerServerValidationResult request)
+        //{
+            
+        //}
+
+
         public void Notify(ValidationNotification notification)
         {
             //Bind the ValidationNotification to each Proxy Validator
-            var specValidators = this.Page.Validators.OfType<Validator>();
+            var specValidators = NamingContainer.Controls.All().OfType<Validator>();
             //Explicitly call Validate to trigger any validation messages
             specValidators.ToList().ForEach(x =>
             {
@@ -148,6 +155,33 @@ namespace SpecExpress.Web
                 }
             }
         }
+
+        public List<Validator> RelatedValidationControls
+        {
+            get { return NamingContainer.Controls.All().OfType<Validator>().ToList(); }
+        }
+
+        //private object BuildObjectToValidateFromClientRequest(List<SpecManagerServerValidationResult> requests)
+        //{
+        //    //Create a placeholder object for the type we are validating
+        //    var objectToValidate = Activator.CreateInstance(GetSpecification().ForType, true);
+
+        //    //Bind the ValidationNotification to each Proxy Validator
+        //    var specValidators = NamingContainer.Controls.All().OfType<Validator>();
+        //    //Explicitly call Validate to trigger any validation messages
+        //    specValidators.ToList().ForEach(x =>
+        //    {
+        //        var controlValue = GetControlValidationValue(x.ControlToValidate);
+        //        var convertedControlVal = TryConvertControlValue(controlValue, x.PropertyName);
+        //        if (convertedControlVal != null)
+        //        {
+        //            _resolvedSpecification.ForType.GetProperty(x.PropertyName).SetValue(objectToValidate, convertedControlVal, null);
+        //        }
+        //    });
+
+        //    return objectToValidate;
+
+        //}
 
 
         private object BuildObjectToValidateFromControls()

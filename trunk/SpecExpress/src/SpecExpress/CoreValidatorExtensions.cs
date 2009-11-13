@@ -169,6 +169,65 @@ namespace SpecExpress
             return expression.JoinBuilder;
         }
 
+        public static ActionJoinBuilder<T, TProperty> CountGreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, int greaterThan) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountGreaterThan<T, TProperty>(greaterThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountGreaterThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, int>> greaterThan) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountGreaterThan<T, TProperty>(greaterThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountGreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, int greaterThanEqualTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountGreaterThanEqualTo<T, TProperty>(greaterThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountGreaterThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, int>> greaterThanEqualTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountGreaterThanEqualTo<T, TProperty>(greaterThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountLessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, int lessThan) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountLessThan<T, TProperty>(lessThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountLessThan<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, int>> lessThan) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountLessThan<T, TProperty>(lessThan));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountLessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, int lessThanEqualTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountLessThanEqualTo<T, TProperty>(lessThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountLessThanEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, int>> lessThanEqualTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountLessThanEqualTo<T, TProperty>(lessThanEqualTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, int equalTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountEqualTo<T, TProperty>(equalTo));
+            return expression.JoinBuilder;
+        }
+
+        public static ActionJoinBuilder<T, TProperty> CountEqualTo<T, TProperty>(this IRuleBuilder<T, TProperty> expression, Expression<Func<T, int>> equalTo) where TProperty : IEnumerable
+        {
+            expression.RegisterValidator(new Rules.Collection.CountEqualTo<T, TProperty>(equalTo));
+            return expression.JoinBuilder;
+        }
 
         #endregion
 

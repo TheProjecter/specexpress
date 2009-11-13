@@ -88,6 +88,51 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should contain {0} items..
+        /// </summary>
+        internal static string CountEqualTo {
+            get {
+                return ResourceManager.GetString("CountEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should contain greater than {0} items..
+        /// </summary>
+        internal static string CountGreaterThan {
+            get {
+                return ResourceManager.GetString("CountGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should contain greater than or equal to  {0} items..
+        /// </summary>
+        internal static string CountGreaterThanEqualTo {
+            get {
+                return ResourceManager.GetString("CountGreaterThanEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should contain less than {0} items..
+        /// </summary>
+        internal static string CountLessThan {
+            get {
+                return ResourceManager.GetString("CountLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should contain less or equal to {0} items..
+        /// </summary>
+        internal static string CountLessThanEqualTo {
+            get {
+                return ResourceManager.GetString("CountLessThanEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {PropertyName} must equal {0}.  You entered {PropertyValue}..
         /// </summary>
         internal static string EqualTo {
@@ -255,6 +300,51 @@ namespace SpecExpress.MessageStore {
         internal static string Not_Contains {
             get {
                 return ResourceManager.GetString("Not_Contains", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should not contain {0} items..
+        /// </summary>
+        internal static string Not_CountEqualTo {
+            get {
+                return ResourceManager.GetString("Not_CountEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should not contain greater than {0} items..
+        /// </summary>
+        internal static string Not_CountGreaterThan {
+            get {
+                return ResourceManager.GetString("Not_CountGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should not contain greater than or equal to {0} items..
+        /// </summary>
+        internal static string Not_CountGreaterThanEqualTo {
+            get {
+                return ResourceManager.GetString("Not_CountGreaterThanEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should not contain less than {0} items..
+        /// </summary>
+        internal static string Not_CountLessThan {
+            get {
+                return ResourceManager.GetString("Not_CountLessThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} should not contain less or equal to {0} items..
+        /// </summary>
+        internal static string Not_CountLessThanEqualTo {
+            get {
+                return ResourceManager.GetString("Not_CountLessThanEqualTo", resourceCulture);
             }
         }
         

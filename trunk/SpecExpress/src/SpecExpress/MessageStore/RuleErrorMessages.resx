@@ -126,6 +126,21 @@
   <data name="Contains" xml:space="preserve">
     <value>{PropertyName} does not contain {PropertyValue}.</value>
   </data>
+  <data name="CountEqualTo" xml:space="preserve">
+    <value>{PropertyName} should contain {0} items.</value>
+  </data>
+  <data name="CountGreaterThan" xml:space="preserve">
+    <value>{PropertyName} should contain greater than {0} items.</value>
+  </data>
+  <data name="CountGreaterThanEqualTo" xml:space="preserve">
+    <value>{PropertyName} should contain greater than or equal to  {0} items.</value>
+  </data>
+  <data name="CountLessThan" xml:space="preserve">
+    <value>{PropertyName} should contain less than {0} items.</value>
+  </data>
+  <data name="CountLessThanEqualTo" xml:space="preserve">
+    <value>{PropertyName} should contain less or equal to {0} items.</value>
+  </data>
   <data name="EqualTo" xml:space="preserve">
     <value>{PropertyName} must equal {0}.  You entered {PropertyValue}.</value>
   </data>
@@ -182,6 +197,21 @@
   </data>
   <data name="Not_Contains" xml:space="preserve">
     <value>{PropertyName} contains {PropertyValue}.</value>
+  </data>
+  <data name="Not_CountEqualTo" xml:space="preserve">
+    <value>{PropertyName} should not contain {0} items.</value>
+  </data>
+  <data name="Not_CountGreaterThan" xml:space="preserve">
+    <value>{PropertyName} should not contain greater than {0} items.</value>
+  </data>
+  <data name="Not_CountGreaterThanEqualTo" xml:space="preserve">
+    <value>{PropertyName} should not contain greater than or equal to {0} items.</value>
+  </data>
+  <data name="Not_CountLessThan" xml:space="preserve">
+    <value>{PropertyName} should not contain less than {0} items.</value>
+  </data>
+  <data name="Not_CountLessThanEqualTo" xml:space="preserve">
+    <value>{PropertyName} should not contain less or equal to {0} items.</value>
   </data>
   <data name="Not_EqualTo" xml:space="preserve">
     <value>{PropertyName} must not equal {0}.  You entered {PropertyValue}.</value>

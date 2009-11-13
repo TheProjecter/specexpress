@@ -1,11 +1,203 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
+using System.Web.Script.Serialization;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using AjaxControlToolkit;
+using AjaxControlToolkit.WCSFExtensions.Utility;
+using System.Globalization;
+using System.Runtime.Serialization.Json;
+using System.IO;
 using System.Text;
+using SpecExpress.Web;
 
+[assembly: WebResource("SpecExpress.Web.SpecExpress.Web.SpecificationManager.SpecificationManagerExtender.SpecManagerValidation.js", "text/javascript")]
 namespace SpecExpress.Web
 {
-    class SpecManagerExtender
+    /// <summary>
+    /// An extender that provides validation capabilities accessing server resources from the client side
+    /// </summary>
+    [ClientScriptResource("SpecExpress.Web.SpecExpress.Web.SpecificationManager.SpecificationManagerExtender.SpecManagerValidation", "SpecExpress.Web.SpecExpress.Web.SpecificationManager.SpecificationManagerExtender.SpecManagerValidation.js")]
+    [RequiredScript(typeof(AjaxControlToolkit.CommonToolkitScripts))]
+    [RequiredScript(typeof(CommonToolkitScripts))]
+    [TargetControlType(typeof(SpecificationManager))]
+    public class SpecificationManagerExtender : ExtenderControlBase, ICallbackEventHandler, IPostBackDataHandler, IPostBackEventHandler
     {
+        BaseValidator validator;
+        private string valueToValidate;
+        private Exception callbackEventException;
+
+        /// <summary>
+        /// Gets or sets a Boolean value indicating whether empty text should be validated on the client.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if empty text should be validated on the client; otherwise, <see langword="false"/>.
+        /// </returns>
+        [ExtenderControlProperty]
+        [ClientPropertyName("validateEmptyText")]
+        [DefaultValue(false)]
+        public bool ValidateEmptyText
+        {
+            get { return GetPropertyValue<bool>("ValidateEmptyText", false); }
+            set { SetPropertyValue<bool>("ValidateEmptyText", value); }
+        }
+
+        #region ICallbackEventHandler Members
+        /// <summary>
+        /// Obtains the serialized result message that will be used in the client side
+        /// </summary>
+        /// <returns> A JSON object</returns>
+        public string GetCallbackResult()
+        {
+            if (callbackEventException == null)
+            {
+                //TODO: 
+                validator.Validate();
+                //SpecManagerServerValidationResult result = new SpecManagerServerValidationResult(this.valueToValidate, validator.IsValid, validator.ErrorMessage);
+                var result = new SpecManagerServerValidationResult("test", "test" , false, "Error with Test");
+
+                var ser = new DataContractJsonSerializer(typeof(SpecManagerServerValidationResult));
+                var ms = new MemoryStream();
+                ser.WriteObject(ms, result);
+                string serialized = Encoding.Default.GetString(ms.ToArray());
+                ms.Close();
+                return serialized;
+            }
+            else
+            {
+                throw callbackEventException;
+            }
+        }
+
+        /// <summary>
+        /// Implementation of a Callback event.
+        /// </summary>
+        /// <param name="eventArgument"> The argument of the event</param>
+        public void RaiseCallbackEvent(string eventArgument)
+        {
+            try
+            {
+                var ser = new DataContractJsonSerializer(typeof(SpecManagerServerValidationResult));
+                var ms = new MemoryStream(Encoding.Unicode.GetBytes(eventArgument));
+
+                var arguments = ser.ReadObject(ms) as SpecManagerServerValidationResult;
+                //this.valueToValidate = arguments.Value;
+
+                //this.validator = GetExtendedValidator();
+                //SetControlValidationValue(validator, validator.ControlToValidate, this.valueToValidate);
+            }
+            catch (Exception ex)
+            {
+                callbackEventException = ex;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Implementation of OnPreRender that links the Validator in the page with javascript code
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+            ClientScriptManager cm = Page.ClientScript;
+            var specificationManager = this.GetExtendedValidator() as SpecificationManager;
+
+            if (specificationManager != null)
+            {
+               specificationManager.RelatedValidationControls.ForEach( x=>
+                                                                                    {
+                                                                                        cm.RegisterExpandoAttribute(
+                                                                                            x.ClientID,
+                                                                                            "evaluationfunction",
+                                                                                            "GenericServerSideValidationEvaluateIsValid",
+                                                                                            false);
+                                                                                       
+                                                                                    });
+               cm.GetCallbackEventReference(this, "arg", "ServerSideValidationValidate", "context");
+               Page.RegisterRequiresPostBack(this);
+
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="descriptor"></param>
+        protected override void RenderScriptAttributes(ScriptBehaviorDescriptor descriptor)
+        {
+            base.RenderScriptAttributes(descriptor);
+
+            descriptor.AddProperty("callbackControl", this.UniqueID);
+        }
+
+        //private static void SetControlValidationValue(Control validator, string controlName, string value)
+        //{
+        //    Guard.ArgumentNotNull(validator, "validator");
+
+        //    Control component = validator.NamingContainer.FindControl(controlName);
+        //    if (component == null)
+        //    {
+        //        string message = string.Format("Cannot find control {0}", controlName);
+        //        throw new InvalidOperationException(message);
+        //    }
+        //    PropertyDescriptor validationProperty = BaseValidator.GetValidationProperty(component);
+        //    if (validationProperty == null)
+        //    {
+        //        string message = string.Format("No Property {0}", controlName);
+        //        throw new InvalidOperationException(message);
+        //    }
+        //    validationProperty.SetValue(component, value);
+        //}
+
+        private BaseValidator GetExtendedValidator()
+        {
+            return (BaseValidator)this.NamingContainer.FindControl(this.TargetControlID);
+        }
+
+
+        #region Required methods to prevent full page validation when handling a callback triggered by this control
+
+        /// <summary>
+        /// Required method to prevent full page validation when handling a callback triggered by this control
+        /// </summary>
+        /// <param name="postDataKey"></param>
+        /// <param name="postCollection"></param>
+        /// <returns></returns>
+        public bool LoadPostData(string postDataKey, System.Collections.Specialized.NameValueCollection postCollection)
+        {
+            if (postCollection != null)
+            {
+                // If this control is the control that triggered the postback (which is a callback),
+                // register this control to raise a postback event, preventing automatic full page validation (which
+                // happens everytime there is a postback but there is no postback handler for that postback)
+                if (postCollection["__CALLBACKID"] == this.UniqueID)
+                {
+                    this.Page.RegisterRequiresRaiseEvent(this);
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RaisePostDataChangedEvent()
+        {
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="eventArgument"></param>
+        public void RaisePostBackEvent(string eventArgument)
+        {
+        }
+
+        #endregion
     }
 }

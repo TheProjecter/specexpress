@@ -21,6 +21,7 @@ namespace SpecExpress.DSL
             //set error message for last rule added
             RuleValidator rule = _propertyValidator.Rules.Last();
             rule.Message = message;
+
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
 
@@ -29,6 +30,7 @@ namespace SpecExpress.DSL
             //set error message for last rule added
             RuleValidator rule = _propertyValidator.Rules.Last();
             rule.MessageKey = messageKey;
+
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
 
@@ -39,8 +41,9 @@ namespace SpecExpress.DSL
         public IAndOr<T, TProperty> Specification()
         {  
             var specRule = new SpecificationRule<T, TProperty>();
-            _propertyValidator.AddRule(specRule);
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            return  AddRuleAndReturnActionJoin(specRule);
+
+           
         }
 
         /// <summary>
@@ -49,14 +52,12 @@ namespace SpecExpress.DSL
         /// <returns></returns>
         public IAndOr<T, TProperty> Specification<TSpecType>() where TSpecType:Validates<TProperty>, new()
         {
-            TSpecType specification = new TSpecType();
+            var specification = new TSpecType();
             var specRule = new SpecificationRule<T, TProperty>(specification);
-            _propertyValidator.AddRule(specRule);
-            
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            return AddRuleAndReturnActionJoin(specRule);
         }
 
-        
+       
 
         /// <summary>
         /// Sets Specification used to validate this Property to the Default
@@ -66,13 +67,8 @@ namespace SpecExpress.DSL
         {   
             var specification = new SpecificationExpression<TProperty>();
             rules(specification);
-
-            var specRule = new SpecificationRule<T, TProperty>(specification);           
-        
-
-            _propertyValidator.AddRule(specRule);
-
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            var specRule = new SpecificationRule<T, TProperty>(specification);
+            return AddRuleAndReturnActionJoin(specRule);
         }
 
 
@@ -82,17 +78,17 @@ namespace SpecExpress.DSL
         /// <typeparam name="TCollectionType"></typeparam>
         /// <param name="rules"></param>
         /// <returns></returns>
-        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<Validates<TCollectionType>> rules)
+        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<Validates<TCollectionType>> rules, string itemName)
         {
             var specification = new SpecificationExpression<TCollectionType>();
             rules(specification);
+            var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>(specification, itemName);
+            return AddRuleAndReturnActionJoin(specRule);
+        }
 
-            var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>(specification);
-
-
-            _propertyValidator.AddRule(specRule);
-
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>(Action<Validates<TCollectionType>> rules)
+        {
+            return ForEachSpecification<TCollectionType>(rules, string.Empty);
         }
 
         /// <summary>
@@ -101,14 +97,18 @@ namespace SpecExpress.DSL
         /// <typeparam name="TCollectionType"></typeparam>
         /// <typeparam name="TCollectionSpecType"></typeparam>
         /// <returns></returns>
-        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType, TCollectionSpecType>()
+        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType, TCollectionSpecType>(string itemName)
             where TCollectionSpecType : Validates<TCollectionType>, new()
         {
             var specification = new TCollectionSpecType();
-            var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>(specification);
-            _propertyValidator.AddRule(specRule);
+            var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>(specification, itemName);
+            return AddRuleAndReturnActionJoin(specRule);
+        }
 
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        public IAndOr<T, TProperty> ForEachSpecification<TCollectionType, TCollectionSpecType>()
+           where TCollectionSpecType : Validates<TCollectionType>, new()
+        {
+            return ForEachSpecification<TCollectionType, TCollectionSpecType>(string.Empty);
         }
 
         /// <summary>
@@ -120,6 +120,11 @@ namespace SpecExpress.DSL
         public IAndOr<T, TProperty> ForEachSpecification<TCollectionType>()
         {
             var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>();
+            return AddRuleAndReturnActionJoin(specRule);
+        }
+
+        private ActionJoinBuilder<T, TProperty> AddRuleAndReturnActionJoin(RuleValidator<T, TProperty> specRule)
+        {
             _propertyValidator.AddRule(specRule);
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
@@ -159,6 +164,7 @@ namespace SpecExpress.DSL
         public IAndOrForCollections<T, TProperty> Specification()
         {
             var specRule = new SpecificationRule<T, TProperty>();
+
             _propertyValidator.AddRule(specRule);
             return new ActionJoinBuilderForCollections<T, TProperty>(_propertyValidator);
         }
@@ -171,8 +177,8 @@ namespace SpecExpress.DSL
         {
             TSpecType specification = new TSpecType();
             var specRule = new SpecificationRule<T, TProperty>(specification);
-            _propertyValidator.AddRule(specRule);
 
+            _propertyValidator.AddRule(specRule);
             return new ActionJoinBuilderForCollections<T, TProperty>(_propertyValidator);
         }
 
@@ -186,12 +192,9 @@ namespace SpecExpress.DSL
         {
             var specification = new SpecificationExpression<TProperty>();
             rules(specification);
-
             var specRule = new SpecificationRule<T, TProperty>(specification);
 
-
             _propertyValidator.AddRule(specRule);
-
             return new ActionJoinBuilderForCollections<T, TProperty>(_propertyValidator);
         }
 
@@ -225,14 +228,14 @@ namespace SpecExpress.DSL
         {
             var specification = new SpecificationExpression<TCollectionType>();
             rules(specification);
-
             var specRule = new ForEachSpecificationRule<T, TProperty, TCollectionType>();
 
 
             _propertyValidator.AddRule(specRule);
-
             return new ActionJoinBuilderForCollections<T, TProperty>(_propertyValidator);
         }
+
+       
 
 
     }

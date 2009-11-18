@@ -11,6 +11,8 @@ namespace SpecExpress.Rules.GeneralValidators
 {
     public class ForEachSpecificationRule<T, TProperty, TCollectionType> : RuleValidator<T, TProperty> 
     {
+        private string _itemName;
+
         private Validates<TCollectionType> _specification;
         public override object[] Parameters
         {
@@ -26,12 +28,22 @@ namespace SpecExpress.Rules.GeneralValidators
             _specification = specification;
         }
 
+        public ForEachSpecificationRule(Validates<TCollectionType> specification, string itemName) : this(specification)
+        {
+            _itemName = itemName;
+        }
+
         /// <summary>
         /// Validation Property with default Specification from Registry
         /// </summary>
         public ForEachSpecificationRule()
         {
             _specification = ValidationCatalog.GetSpecification<TCollectionType>();
+        }
+
+        public ForEachSpecificationRule(string itemName): this()
+        {
+            _itemName = itemName;
         }
 
         //public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
@@ -69,15 +81,22 @@ namespace SpecExpress.Rules.GeneralValidators
                 throw new ArgumentException("Property must be IEnumerable");
             }
 
-
             int index = 1;
             foreach (var item in propertyEnumerable)
             {  
                 var itemErrors = _specification.Validate(item);
                 if (itemErrors.Any())
                 {
-                    Message = item.GetType().Name + " " + index + " in {PropertyName} is invalid.";
-                    var itemError = ValidationResultFactory.Create(this, context, Parameters, MessageKey);
+                    var propertyName = String.IsNullOrEmpty(_itemName) ? item.GetType().Name : _itemName;
+
+                    Message = String.Format("{0} {1} in {2} is invalid.", propertyName, index, context.PropertyName);
+
+                    var childContext = new RuleValidatorContext(item, propertyName, item,
+                                                                item.GetType() as MemberInfo, context);
+
+                    var itemError = ValidationResultFactory.Create(this, childContext, Parameters, MessageKey);
+
+                    //var itemError = ValidationResultFactory.Create(this, context, Parameters, MessageKey);
                     itemError.NestedValdiationResults = itemErrors;
                     itemsNestedValidationResult.Add(itemError);
                 }

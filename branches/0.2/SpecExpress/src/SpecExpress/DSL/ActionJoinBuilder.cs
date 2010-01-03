@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using SpecExpress.Rules;
+using SpecExpress.Rules.GeneralValidators;
 
 namespace SpecExpress.DSL
 {
@@ -65,6 +68,7 @@ namespace SpecExpress.DSL
         }
 
         #endregion
+
     }
 
     public class ActionJoinBuilderForCollections<T, TProperty> : IWithForCollections<T, TProperty>, IAndOrForCollections<T, TProperty> where TProperty :IEnumerable

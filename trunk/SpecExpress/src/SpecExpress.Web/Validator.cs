@@ -171,6 +171,9 @@ namespace SpecExpress.Web
         protected override bool EvaluateIsValid()
         {
             //TODO: BEGIN REMOVE - when SpecManager takes over all validation responsibilties
+            //UPDATE: Because the SpecificationManager is a Custom Validator, it will only be run on the server
+            //          If SpecExpress Web is used in conjunction with a standard ASP.NET Validator, and a Validator fails,
+            //          SpecificationManager will not execute, so each Validator will need to continue to support validating a property
             if (ValidationNotification == null)
             {
                 //Validate just this property
@@ -196,30 +199,23 @@ namespace SpecExpress.Web
         private List<ValidationResult> validateProperty()
         {
             var controlValue = GetControlValidationValue(ControlToValidate);
-            var results = new List<ValidationResult>();
-
-            //TODO: Handle bad formatted value
-            //if (!String.IsNullOrEmpty(controlValue.ToString()))
-            //{
-                var convertedVal = TryConvertControlValue(controlValue);
-
-                if (convertedVal != null)
-                {
-                    var objToValidate = setPropertyOnProxyObject(convertedVal);
-                    results = ValidationCatalog.ValidateProperty(objToValidate, PropertyName, CurrentSpecification).Errors;
-                }
-            //}
-
+            var objToValidate = setPropertyOnProxyObject(controlValue);
+            var results = ValidationCatalog.ValidateProperty(objToValidate, PropertyName, CurrentSpecification).Errors;
             return results;
         }
         
+        /// <summary>
+        /// Attempt to convert from a string to the Property Type. Return null if it fails.
+        /// </summary>
+        /// <param name="controlValue"></param>
+        /// <returns></returns>
         private object TryConvertControlValue(string controlValue)
         {
             //Get the Type of the Property represented by PropertyName
-            var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
+            var propertyType = getTypeForProperty();
 
             //Convert from string value to the type for the Property
-            var foo = TypeDescriptor.GetConverter(property.PropertyType);
+            var foo = TypeDescriptor.GetConverter(propertyType);
             try
             {
                 var convertedValue = foo.ConvertFromInvariantString(controlValue.ToString());
@@ -227,7 +223,6 @@ namespace SpecExpress.Web
             }
             catch (Exception)
             {
-
                 return null;
             }
         }
@@ -237,12 +232,23 @@ namespace SpecExpress.Web
             //Create a placeholder object for the type we are validating
             var obj = Activator.CreateInstance(CurrentSpecification.ForType, true);
 
-            //set the value of the Property we are validating
-            CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, value, null);
+            //Only set the property value if it's not null, otherwise the value will be the types default
+            //for example, if the type is Double and the value is passed in, the resulting value will be 0.0, 
+            //the default for the type
+            if (value != null)
+            {
+                //set the value of the Property we are validating
+                CurrentSpecification.ForType.GetProperty(this.PropertyName).SetValue(obj, value, null);
+            }
 
             return obj;
         }
 
+        private Type getTypeForProperty()
+        {
+            var property = CurrentSpecification.ForType.GetProperty(this.PropertyName);
+            return property.PropertyType;
+        }
 
         protected override void CreateChildControls()
         {

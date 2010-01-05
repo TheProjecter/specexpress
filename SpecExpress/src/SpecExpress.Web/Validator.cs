@@ -199,7 +199,8 @@ namespace SpecExpress.Web
         private List<ValidationResult> validateProperty()
         {
             var controlValue = GetControlValidationValue(ControlToValidate);
-            var objToValidate = setPropertyOnProxyObject(controlValue);
+            var value = TryConvertControlValue(controlValue);
+            var objToValidate = setPropertyOnProxyObject(value);
             var results = ValidationCatalog.ValidateProperty(objToValidate, PropertyName, CurrentSpecification).Errors;
             return results;
         }

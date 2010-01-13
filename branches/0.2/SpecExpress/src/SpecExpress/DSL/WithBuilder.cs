@@ -16,43 +16,36 @@ namespace SpecExpress.DSL
             _propertyValidator = propertyValidator;
         }
 
-        public IAndOr<T, TProperty> Message(string message)
+        public string Message
         {
-            //set error message for last rule added
-            RuleValidator rule = _propertyValidator.Rules.Last();
-            rule.Message = message;
-
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            get
+            {
+                //get message for last rule added
+                RuleValidator rule = _propertyValidator.Rules.Last();
+                return rule.Message;
+            }
+            set
+            {
+                //set message for last rule added
+                RuleValidator rule = _propertyValidator.Rules.Last();
+                rule.Message = value;
+            }
         }
 
-        public IAndOr<T, TProperty> MessageKey<TMessage>(TMessage messageKey)
+        public object MessageKey
         {
-            //set error message for last rule added
-            RuleValidator rule = _propertyValidator.Rules.Last();
-            rule.MessageKey = messageKey;
-
-            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+            get
+            {
+                //get error message for last rule added
+                RuleValidator rule = _propertyValidator.Rules.Last();
+                return rule.MessageKey;
+            }
+            set
+            {
+                //set error message for last rule added
+                RuleValidator rule = _propertyValidator.Rules.Last();
+                rule.MessageKey = value;
+            }
         }
     }
-
-
-
-    public class WithBuilderForCollections<T, TProperty>  where TProperty : IEnumerable
-    {
-        private readonly PropertyValidator<T, TProperty> _propertyValidator;
-
-        public WithBuilderForCollections(PropertyValidator<T, TProperty> propertyValidator)
-        {
-            _propertyValidator = propertyValidator;
-        }
-
-        public IAndOrForCollections<T, TProperty> Message(string message)
-        {
-            //set error message for last rule added
-            RuleValidator rule = _propertyValidator.Rules.Last();
-            rule.Message = message;
-            return new ActionJoinBuilderForCollections<T, TProperty>(_propertyValidator);
-        }    
-    }
-
 }

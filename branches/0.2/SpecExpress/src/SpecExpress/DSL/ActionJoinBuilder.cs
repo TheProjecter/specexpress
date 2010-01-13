@@ -12,12 +12,7 @@ namespace SpecExpress.DSL
     /// <typeparam name="TProperty"></typeparam>
     public interface IWith<T, TProperty>
     {
-        WithBuilder<T, TProperty> With { get; }
-    }
-
-    public interface IWithForCollections<T, TProperty> where TProperty : IEnumerable
-    {
-        WithBuilderForCollections<T, TProperty> With { get; }
+        IAndOr<T, TProperty> With(Action<WithBuilder<T, TProperty>> w);
     }
 
     public interface IAndOr<T, TProperty>
@@ -62,16 +57,16 @@ namespace SpecExpress.DSL
 
         #region IWith<T,TProperty> Members
 
-        public WithBuilder<T, TProperty> With
+        public IAndOr<T,TProperty> With(Action<WithBuilder<T,TProperty>> w)
         {
-            get { return new WithBuilder<T, TProperty>(_propertyValidator); }
+            w(new WithBuilder<T, TProperty>(_propertyValidator));
+            return this;
         }
-
         #endregion
 
     }
 
-    public class ActionJoinBuilderForCollections<T, TProperty> : IWithForCollections<T, TProperty>, IAndOrForCollections<T, TProperty> where TProperty :IEnumerable
+    public class ActionJoinBuilderForCollections<T, TProperty> : IAndOrForCollections<T, TProperty> where TProperty :IEnumerable
     {
         private readonly PropertyValidator<T, TProperty> _propertyValidator;
 
@@ -96,17 +91,7 @@ namespace SpecExpress.DSL
                 return new RuleBuilderForCollections<T, TProperty>(_propertyValidator.Child);
             }
         }
-
         #endregion
 
-        #region IWithForCollections<T,TProperty> Members
-
-        public WithBuilderForCollections<T, TProperty> With
-        {
-            get { return new WithBuilderForCollections<T, TProperty>(_propertyValidator); }
-        }
-
-        #endregion
     }
-
 }

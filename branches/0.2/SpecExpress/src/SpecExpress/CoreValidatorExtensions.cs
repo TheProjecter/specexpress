@@ -337,7 +337,7 @@ namespace SpecExpress
         {
             expression.RegisterValidator(new CustomRule<T, TProperty>(rule));
             //Custom messages can't derive what the Error Message is because each case is so generic
-            expression.JoinBuilder.With.Message(message);
+            expression.JoinBuilder.With(m => m.Message = message);
             return expression.JoinBuilder;
         }
         #endregion

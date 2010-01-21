@@ -96,6 +96,11 @@
     <Compile Include="Entities\EntityFactories\CustomerFactory.cs" />
     <Compile Include="Factories\MockFactory.cs" />
     <Compile Include="Factories\PropertyValidatorFactory.cs" />
+    <Compile Include="MessageStore\TestRuleErrorMessages.de-DE.Designer.cs">
+      <DependentUpon>TestRuleErrorMessages.de-DE.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="MessageStore\MessageServiceTests.cs" />
     <Compile Include="MessageStore\MessageStoreFactoryTests.cs" />
     <Compile Include="MessageStore\MessageTests.cs" />
@@ -134,6 +139,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="MessageStore\TestRuleErrorMessages.de-DE.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestRuleErrorMessages.de-DE.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageStore\TestRuleErrorMessages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TestRuleErrorMessages.Designer.cs</LastGenOutput>

@@ -51,6 +51,16 @@ namespace SpecExpress
             CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
         }
 
+        /// <summary>
+        /// Scans AppDomain For Specifications
+        /// </summary>
+        public static void Scan()
+        {
+            var specificationRegistry = new SpecificationScanner();
+            specificationRegistry.AddAssembliesFromAppDomain();
+            CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
+        }
+
         public static void Configure(Action<ValidationCatalogConfiguration> action)
         {
                 //Should these rules be "disposable"? ie, not added to registry?

@@ -51,6 +51,16 @@ namespace SpecExpress
             CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
         }
 
+        /// <summary>
+        /// Scans AppDomain For Specifications
+        /// </summary>
+        public static void Scan()
+        {
+            var specificationRegistry = new SpecificationScanner();
+            specificationRegistry.AddAssembliesFromAppDomain();
+            CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
+        }
+
         public static void Configure(Action<ValidationCatalogConfiguration> action)
         {
                 //Should these rules be "disposable"? ie, not added to registry?
@@ -367,15 +377,21 @@ namespace SpecExpress
                     {
                         if (counter > max)
                         {
-                            throw;
+                            throw new SpecExpressConfigurationException(
+                                string.Format("Exception thrown while trying to register {0}.", spec.FullName), te);
                         }
                         else
                         {
                             //Can't create the object because it has a specification that hasn't been loaded yet
                             //save it for the next pass
                             delayedSpecs.Add(spec);
-                            
+
                         }
+                    }
+                    catch (Exception err)
+                    {
+                        throw new SpecExpressConfigurationException(
+                          string.Format("Exception thrown while trying to register {0}.", spec.FullName), err);
                     }
                 }
             });

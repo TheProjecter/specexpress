@@ -13,5 +13,8 @@ namespace SpecExpress
 
         }
 
+        public SpecExpressConfigurationException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 }

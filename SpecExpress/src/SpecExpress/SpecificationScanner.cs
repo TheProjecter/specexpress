@@ -52,6 +52,11 @@ namespace SpecExpress
             scanAssembliesForSpecifications(assemblies);
         }
 
+        public void AddAssembliesFromAppDomain()
+        {
+            scanAssembliesForSpecifications(AppDomain.CurrentDomain.GetAssemblies().ToList());
+        }
+
         private Assembly findTheCallingAssembly()
         {
             var trace = new StackTrace(false);

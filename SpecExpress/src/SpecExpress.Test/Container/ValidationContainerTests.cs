@@ -193,7 +193,7 @@ namespace SpecExpress.Test
             ValidationCatalog.AddSpecification<Contact>(x =>
                                                             {
                                                                 x.Check(c => c.Addresses).Required()
-                                                                    .With.ForEachSpecification<Address>();
+                                                                    .And.ForEachSpecification<Address>();
                                                                 x.Check(c => c.FirstName).Required().And.MaxLength(100);
                                                             });
 

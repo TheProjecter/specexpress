@@ -68,7 +68,6 @@
     <Compile Include="ClassPropertyTypeConverter.cs" />
     <Compile Include="ControlExtensions.cs" />
     <Compile Include="ServerControl1.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpecificationManager.cs" />
     <Compile Include="SpecManagerExtender.cs" />
     <Compile Include="SpecManagerValidationResult.cs" />
@@ -83,6 +82,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SpecExpress.Web.SpecificationManager.SpecificationManagerExtender.SpecManagerValidation.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

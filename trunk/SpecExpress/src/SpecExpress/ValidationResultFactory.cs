@@ -14,6 +14,7 @@ namespace SpecExpress
             string message = string.Empty;
             var messageService = new MessageService();
 
+            
             if (String.IsNullOrEmpty(validator.Message))
             {
                 var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, validator.MessageStoreName, messageKey);

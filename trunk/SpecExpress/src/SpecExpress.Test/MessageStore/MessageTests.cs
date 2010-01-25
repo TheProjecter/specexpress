@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using SpecExpress.Test.Domain.Entities;
 using System.Linq;
@@ -58,6 +59,26 @@ namespace SpecExpress.Test
             Assert.That(valNot.Errors, Is.Not.Empty);
             Assert.That(valNot.Errors.First().Message, Is.EqualTo("Last Name must be between 1 and 3 characters. You entered 5 characters."));
         }
+
+        //[Test]
+        //public void When_WithMessageIsSuppliedWithCustomPropetyValueFormat()
+        //{
+        //    var customMessage = "Dope! It's required!";
+        //    //Add a rule
+        //    ValidationCatalog.AddSpecification<Contact>(
+        //        spec => spec.Check(c => c.DateOfBirth).Required()
+        //            .And.IsInPast().With.Message( m => String.Format("{0} must be less than {1}", m.PropertyName, m.PropertyValue.ToString("mm/dd/yyyy"))));
+
+        //    //dummy data 
+        //    var contact = new Contact() { FirstName = "Joesph", LastName = "Smith", DateOfBirth = System.DateTime.Now.AddYears(1)};
+
+        //    //Validate
+        //    var valNot = ValidationCatalog.Validate(contact);
+
+        //    Assert.That(valNot.Errors, Is.Not.Empty);
+        //    Assert.That(valNot.Errors.First().Message, Is.EqualTo("Too long 5"));
+        //}
+
 
     }
 }

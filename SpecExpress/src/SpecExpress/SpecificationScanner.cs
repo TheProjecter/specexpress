@@ -32,6 +32,10 @@ namespace SpecExpress
             scanAssembliesForSpecifications(new List<Assembly>() { assembly });            
         }
 
+        public void AddAssemblies(List<Assembly> assemblies)
+        {
+            scanAssembliesForSpecifications(assemblies);
+        }
 
         public void AddAssembliesFromPath(string path)
         {
@@ -50,11 +54,6 @@ namespace SpecExpress
                 .ToList<Assembly>();
 
             scanAssembliesForSpecifications(assemblies);
-        }
-
-        public void AddAssembliesFromAppDomain()
-        {
-            scanAssembliesForSpecifications(AppDomain.CurrentDomain.GetAssemblies().ToList());
         }
 
         private Assembly findTheCallingAssembly()

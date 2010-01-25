@@ -38,7 +38,7 @@ namespace SpecExpress.Web
                     }
 
                     _currentPropertyValidator =
-                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyName == PropertyName).FirstOrDefault();
+                        CurrentSpecification.PropertyValidators.Where(x => x.PropertyInfo.Name == PropertyName).FirstOrDefault();
                 }
 
                 return _currentPropertyValidator;
@@ -126,27 +126,15 @@ namespace SpecExpress.Web
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "initialvalue", InitialValue);
 
                 //Client Scripts adding scripts mocking a  Required Field Validator
-                //Page.ClientScript.RegisterExpandoAttribute(ClientID, "evaluationfunction",
-                //                                           "SpecExpressProxyValidatorEvaluateIsValid", false);
+                Page.ClientScript.RegisterExpandoAttribute(ClientID, "evaluationfunction",
+                                                           "SpecExpressProxyValidatorEvaluateIsValid", false);
               
 
                string requiredErrorMessage = CurrentPropertyValidator.RequiredRule.ErrorMessageTemplate;
 
-               string labelName;
 
-                //Try and get the label, if not found, default to PropertyName, 
-                var labelControl = Page.Controls.All().OfType<Label>().Where(x => x.AssociatedControlID == ControlToValidate).FirstOrDefault();
-                if (labelControl == null)
-                {
-                    //TODO: Get UI friendly name from PropertyValidator 
-                    //Label control not found, default to type name
-                    labelName = PropertyName.SplitPascalCase();
-                }
-                else
-                {
-                    labelName = labelControl.Text.Replace(":", "");
-                }
-                              
+                var labelName = GetLabelName();
+
 
                 string formattedRequiredErrorMessage = requiredErrorMessage.Replace("{PropertyName}", labelName);
 
@@ -168,9 +156,29 @@ namespace SpecExpress.Web
             base.AddAttributesToRender(writer);
         }
 
+        /// <summary>
+        ///Try and get the Property Name from label, if not found, default to PropertyName 
+        /// </summary>
+        /// <returns></returns>
+        private string GetLabelName()
+        {
+            string labelName;
+            var labelControl = Page.Controls.All().OfType<Label>().Where(x => x.AssociatedControlID == ControlToValidate).FirstOrDefault();
+            if (labelControl == null)
+            {
+                //TODO: Get UI friendly name from PropertyValidator 
+                //Label control not found, default to type name
+                labelName = PropertyName.SplitPascalCase();
+            }
+            else
+            {
+                labelName = labelControl.Text.Replace(":", "");
+            }
+            return labelName;
+        }
+
         protected override bool EvaluateIsValid()
         {
-            //TODO: BEGIN REMOVE - when SpecManager takes over all validation responsibilties
             //UPDATE: Because the SpecificationManager is a Custom Validator, it will only be run on the server
             //          If SpecExpress Web is used in conjunction with a standard ASP.NET Validator, and a Validator fails,
             //          SpecificationManager will not execute, so each Validator will need to continue to support validating a property
@@ -180,12 +188,13 @@ namespace SpecExpress.Web
                 //Create a new object of Type and set the property
                 PropertyErrors = validateProperty();
             }
-            //TODO:END REMOVE
-
+          
             //TODO: Also check in Nested ValidationResults for this PropertyType and PropertyName
             if (PropertyErrors.Any())
             {
-                ErrorMessage = FormatErrorMessage(PropertyErrors, DisplayMode);
+                //Update error message to change Property Name to label
+                var pageLocalizedPropertyErrors = PropertyErrors.Select(x => x.Message.Replace(x.Property.Name.SplitPascalCase(), GetLabelName())).ToList();
+                ErrorMessage = FormatErrorMessage(pageLocalizedPropertyErrors, DisplayMode);
                 IsValid = false;
                 return false;
             }
@@ -265,7 +274,7 @@ namespace SpecExpress.Web
             }
         }
 
-        internal string FormatErrorMessage(List<ValidationResult> results, ValidationSummaryDisplayMode displayMode)
+        internal string FormatErrorMessage(List<string> messages, ValidationSummaryDisplayMode displayMode)
         {
             var stringBuilder = new StringBuilder();
             string errorsListStart;
@@ -301,12 +310,12 @@ namespace SpecExpress.Web
             stringBuilder.Append(errorsListStart);
 
 
-            PropertyErrors.Select(x => x.Message).ToList().ForEach(x =>
-                                                                       {
-                                                                           stringBuilder.Append(errorStart);
-                                                                           stringBuilder.Append(x);
-                                                                           stringBuilder.Append(errorEnd);
-                                                                       });
+            messages.ForEach(x =>
+                               {
+                                   stringBuilder.Append(errorStart);
+                                   stringBuilder.Append(x);
+                                   stringBuilder.Append(errorEnd);
+                               });
 
 
             stringBuilder.Append(errorListEnd);

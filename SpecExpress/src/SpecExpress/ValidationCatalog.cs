@@ -50,17 +50,7 @@ namespace SpecExpress
 
             CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
         }
-
-        /// <summary>
-        /// Scans AppDomain For Specifications
-        /// </summary>
-        public static void Scan()
-        {
-            var specificationRegistry = new SpecificationScanner();
-            specificationRegistry.AddAssembliesFromAppDomain();
-            CreateAndRegisterSpecificationsWithRegistry(specificationRegistry.FoundSpecifications);
-        }
-
+        
         public static void Configure(Action<ValidationCatalogConfiguration> action)
         {
                 //Should these rules be "disposable"? ie, not added to registry?
@@ -229,12 +219,12 @@ namespace SpecExpress
                                                               Specification specification)
         {
             var validators = from validator in specification.PropertyValidators
-                             where validator.PropertyName == propertyName
+                             where validator.PropertyInfo.Name == propertyName
                              select validator;
 
             if (!validators.Any())
             {
-                throw new ArgumentException(string.Format("There are not any validation rules defined for {0}.{1}.", instance.GetType().FullName, propertyName));
+                throw new ArgumentException(string.Format("There are no validation rules defined for {0}.{1}.", instance.GetType().FullName, propertyName));
             }
 
             var results =
@@ -258,7 +248,7 @@ namespace SpecExpress
         {
             var prop = new PropertyValidator<T, object>(property);
 
-            return ValidateProperty(instance, prop.PropertyName, specification);
+            return ValidateProperty(instance, prop.PropertyInfo.Name, specification);
            
         }
 

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{0A8DF7B2-EAFC-457B-93EF-EE3030ABAF46}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -48,6 +48,7 @@
     <Compile Include="DSL\ActionOptionConditionBuilder.cs" />
     <Compile Include="DSL\ActionOptionConditionSatisfiedBuilder.cs" />
     <Compile Include="DSL\ActionOptionBuilder.cs" />
+    <Compile Include="DSL\MessageCriteria.cs" />
     <Compile Include="MessageStore\IMessageStore.cs" />
     <Compile Include="MessageStore\MessageContext.cs" />
     <Compile Include="MessageStore\MessageService.cs" />

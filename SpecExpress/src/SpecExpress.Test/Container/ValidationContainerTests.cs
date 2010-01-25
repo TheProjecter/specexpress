@@ -158,7 +158,30 @@ namespace SpecExpress.Test
         }
 
         [Test]
-        public void ValidateProperty_NoValidationForProperyt_ThrowsArgumentException()
+        public void ValidateProperty_SimpleProperty_OverridePropertyNameReturnsValidationNotification()
+        {
+            //Create Rules Adhoc
+            ValidationCatalog.AddSpecification<Contact>(x =>
+            {
+                x.Check(c => c.LastName, "Contact Last Name").Required();
+                x.Check(c => c.FirstName).Required();
+            });
+
+            var contact = new Contact();
+
+            // Validating contact as a whole should result in two errors.
+            var objectNotification = ValidationCatalog.Validate(contact);
+            Assert.IsFalse(objectNotification.IsValid);
+            Assert.AreNotEqual(2, objectNotification.Errors);
+
+            // Validation contact.LastName should result with only one error.
+            var propertyNotification = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
+            Assert.IsFalse(propertyNotification.IsValid);
+            Assert.AreNotEqual(1, propertyNotification.Errors);
+        }
+
+        [Test]
+        public void ValidateProperty_NoValidationForProperty_ThrowsArgumentException()
         {
             //Create Rules Adhoc
             ValidationCatalog.AddSpecification<Contact>(x =>

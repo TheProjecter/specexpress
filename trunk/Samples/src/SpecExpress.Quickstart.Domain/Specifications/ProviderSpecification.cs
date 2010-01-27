@@ -20,22 +20,21 @@ namespace SpecExpress.Quickstart.Domain.Specifications
             Check(p => p.MiddleInitial).Optional().And.MaxLength(1).And.IsAlpha();
 
             Check(p => p.Code).Required().And.LessThan(100);
-            Check(c => c.StartDate).Required().And.IsInFuture();
+            Check(c => c.StartDate).Required().And.IsInPast();
 
             //Note: no need to validate required for Enums. Because they are value types they have default values E(0)
-            
-            ////Validate each item in the collection with the default specification 
-            ////specifying type item in the collection
-            //Check(p => p.Locations).Required().With.ForEachSpecification<Location>();
 
-            ////Validate collection of lookup types
-            ////If ProviderType is Doctor then validate each specialty is valid.
-          
-            //Check(p => p.Specialties)
-            //    .If(p => p.ProviderType == ProviderType.Doctor).Then.Required()
-            //    .With.ForEachSpecification<Specialty>(
-            //        spec => spec.Check(s => s, "Specialties").Required() //At least 1 Location is required
-            //            .And.IsInSet(SpecialtyFactory.GetSpecialties()));
+            //Validate each item in the collection with the default specification 
+            //specifying type item in the collection
+            Check(p => p.Locations).Required().And.ForEachSpecification<Location>();
+
+            //Validate collection of lookup types
+            //If ProviderType is Doctor then validate each specialty is valid.
+            Check(p => p.Specialties)
+                .If(p => p.ProviderType == ProviderType.Doctor).Required()
+                .And.ForEachSpecification<Specialty>(
+                    spec => spec.Check(s => s, "Specialties").Required() //At least 1 Location is required
+                        .And.IsInSet(SpecialtyFactory.GetSpecialties()));
 
             /*
              * The above can also be expressed like this:

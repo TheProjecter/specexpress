@@ -25,7 +25,9 @@ namespace SpecExpress.Quickstart.Tests
                                    Gender = Gender.Male,
                                    ProviderType = ProviderType.Doctor,
                                    Locations = new List<Location>() {GetValidLocation()},
-                                   Specialties = GetValidSpecialities()
+                                   Specialties = GetValidSpecialities(),
+                                   Code = 50,
+                                   StartDate = new DateTime(2001, 1,1)
                                };
         }
 

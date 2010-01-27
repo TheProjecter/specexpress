@@ -305,7 +305,7 @@ namespace SpecExpress
             AddRule(ruleValidator);
         }
 
-        public override List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
+        public List<ValidationResult> Validate(T instance, RuleValidatorContext parentRuleContext)
         {
             if (_rules == null || !_rules.Any())
             {

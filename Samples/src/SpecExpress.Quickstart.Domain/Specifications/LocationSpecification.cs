@@ -26,23 +26,23 @@ namespace SpecExpress.Quickstart.Domain.Specifications
             //Validate each item in the collection against the spec
             //And check for multiple daily schedules for the same day
             Check(addr => addr.Schedule).Required()
-                .With.ForEachSpecification<LocationSchedule>()
+                .And.ForEachSpecification<LocationSchedule>()
                 .And.Expect(
                     (a, b) => !(b.GroupBy(i => i.Day).Where(g => g.Count() > 1).Select(g => g.Key).Any()), "Duplicate schedules for a Day");
 
-            Check(a => a.ZipCodePlus).Required().And.Expect((a, z) =>
-            {
-                const int MAGIC_NUMBER = 42;
-                return z.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
-            }, "Not a valid Doohickey");
+            //Check(a => a.ZipCodePlus).Required().And.Expect((a, z) =>
+            //{
+            //    const int MAGIC_NUMBER = 42;
+            //    return z.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
+            //}, "Not a valid Doohickey");
 
         }
 
-        public bool IsValidDoohickey(Address address, string val)
-        {
-            const int MAGIC_NUMBER = 42;
-            return val.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
-        }
+        //public bool IsValidDoohickey(Address address, string val)
+        //{
+        //    const int MAGIC_NUMBER = 42;
+        //    return val.ToList().ConvertAll(i => int.Parse(i.ToString())).Sum() == MAGIC_NUMBER;
+        //}
 
     }
 }

@@ -59,7 +59,7 @@ namespace SpecExpress.Test.DSLTests
         ///     ActionJoins
         ///     With.Message
         /// </summary>
-      public void EssentialCompileWarnDSLStatements()
+        public void EssentialCompileWarnDSLStatements()
         {
             Warn(c => c.Name).If(c => c.CustomerDate > DateTime.Now)
                 .Required().With(m => m.Message = "You broke a rule!")
@@ -84,6 +84,18 @@ namespace SpecExpress.Test.DSLTests
                 .Or.IsInSet(new List<string>(new[] { "Msg", "Another" })).With(m => m.Message = "Message");
 
             Warn(c => c.Name).Optional().And.LengthBetween(0, 10);
+        }
+
+        /// <summary>
+        /// Ensures that Group statements
+        /// </summary>
+        public void GroupStatements()
+        {
+            // Date (greater than 1/1/2000 and  less than 1/1/2001) or (greater than 1/1/2005 and less than 1/1/2006)
+            Check(c => c.CustomerDate).Required().And
+                .Group(d => d.GreaterThan(new DateTime(2000, 1, 1)).And.LessThan(new DateTime(2001, 1, 1)))
+                .Or
+                .Group(d => d.GreaterThan(new DateTime(2005, 1, 1)).And.LessThan(new DateTime(2006, 1, 1)));
         }
 
         /// <summary>
@@ -138,7 +150,7 @@ namespace SpecExpress.Test.DSLTests
 
             // IsInSet
             Check(c => c.Name).Required().And.IsInSet(new string[] { "Option1", "Option2" });
-            Check(c => c.Name).Required().And.IsInSet(new List<string>(new string[]{ "Option1", "Option2" }));
+            Check(c => c.Name).Required().And.IsInSet(new List<string>(new string[] { "Option1", "Option2" }));
             Check(c => c.Address.Country.Id).Required().And.IsInSet(c => c.Address.CountryList);
 
             // LengthBetween
@@ -178,10 +190,10 @@ namespace SpecExpress.Test.DSLTests
                                                                "Contact {FirstName} {LastName} should be active.");
 
             Check(c => c.Contacts).Required().And.ForEach(c => ((Contact)c).Active, MessageStoreFactory.GetMessageStore().GetMessageTemplate("AllContactActive"));
-            
+
 
             // CheckForEach with Linq
-            Check(c => from contact in c.Contacts where contact.Active select new {BirthDate = contact.DateOfBirth})
+            Check(c => from contact in c.Contacts where contact.Active select new { BirthDate = contact.DateOfBirth })
                 .Optional().And
                 .ForEach(generic => /* what to cast generic to since its generic? */ true, "Some Error");
 
@@ -205,7 +217,7 @@ namespace SpecExpress.Test.DSLTests
         /// </summary>
         public void CustomRules()
         {
-            Check(c => c.Name).Required().And.Expect((c, name) => name == "A valid name.","You entered an invalid name.");
+            Check(c => c.Name).Required().And.Expect((c, name) => name == "A valid name.", "You entered an invalid name.");
             Check(c => c.Name).Required().And.Expect(ValidName, "You entered an invalid name.");
         }
 

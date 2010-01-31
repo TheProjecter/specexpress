@@ -151,6 +151,16 @@ namespace SpecExpress.DSL
             return AddRuleAndReturnActionJoin(specRule);
         }
 
+        public IAndOr<T, TProperty> Group(Action<RuleBuilder<T, TProperty>> action)
+        {
+            var groupValidator = new PropertyValidator<T, TProperty>(_propertyValidator);
+            var groupRuleBuilder = new RuleBuilder<T, TProperty>(groupValidator);
+            action(groupRuleBuilder);
+            // TODO: Enroll groupValidator in _propertyValidator
+
+            return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
+        }
+
         private ActionJoinBuilder<T, TProperty> AddRuleAndReturnActionJoin(RuleValidator<T, TProperty> specRule)
         {
             _propertyValidator.AddRule(specRule);

@@ -22,33 +22,33 @@ namespace SpecExpress.Test.DSLTests
         }
 
         [Test]
-        public void Optional_SetsPropertyValidatorRequieredToFalse_ReturnsActionJoinBuilder()
+        public void Optional_SetsPropertyValidatorRequieredToFalse_ReturnsRuleBuilder()
         {
             // Create Dependancies
             PropertyValidator<Customer, string> validator = PropertyValidatorFactory.DefaultCustomerNameValidator();
 
             // Test
             var actionOptionBuilder = new ActionOptionBuilder<Customer, string>(validator);
-            ActionJoinBuilder<Customer, string> optionalResult = actionOptionBuilder.Optional();
+            RuleBuilder<Customer, string> optionalResult = actionOptionBuilder.Optional();
 
             // Assert
             Assert.That(validator.PropertyValueRequired, Is.False);
-            Assert.That(optionalResult, Is.InstanceOf<ActionJoinBuilder<Customer, string>>());
+            Assert.That(optionalResult, Is.InstanceOf<RuleBuilder<Customer, string>>());
         }
 
         [Test]
-        public void Required_SetsPropertyValidatorRequiredToTrue_ReturnsActionJoinBuilder()
+        public void Required_SetsPropertyValidatorRequiredToTrue_ReturnsRuleBuilder()
         {
             // Create Dependancies
             PropertyValidator<Customer, string> validator = PropertyValidatorFactory.DefaultCustomerNameValidator();
 
             // Test
             var actionOptionBuilder = new ActionOptionBuilder<Customer, string>(validator);
-            ActionJoinBuilder<Customer, string> requiredResult = actionOptionBuilder.Required();
+            RuleBuilder<Customer, string> requiredResult = actionOptionBuilder.Required();
 
             // Assert
             Assert.That(validator.PropertyValueRequired, Is.True);
-            Assert.That(requiredResult, Is.InstanceOf<ActionJoinBuilder<Customer, string>>());
+            Assert.That(requiredResult, Is.InstanceOf<RuleBuilder<Customer, string>>());
         }
     }
 }

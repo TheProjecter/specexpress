@@ -10,7 +10,7 @@ namespace SpecExpress.Test.Domain.Specifications
     {
         public WidgetSpecificationBase()
         {
-            Check(w => w.Name).Required().And.MaxLength(5);
+            Check(w => w.Name).Required().MaxLength(5);
         }
     }
 }

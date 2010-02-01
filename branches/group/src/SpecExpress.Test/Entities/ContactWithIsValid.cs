@@ -20,8 +20,8 @@ namespace SpecExpress.Test.Entities
                                                               {
                                                                   x.Check(contact => contact.LastName).Required();
                                                                   x.Check(contact => contact.FirstName).Required();
-                                                                  x.Check(contact => contact.DateOfBirth).Optional().And
-                                                                      .GreaterThan(new DateTime(1950, 1, 1));
+                                                                  x.Check(contact => contact.DateOfBirth).Optional().
+                                                                      GreaterThan(new DateTime(1950, 1, 1));
                                                               });
 
             //Validate

@@ -38,7 +38,7 @@ namespace SpecExpress.Test
                                                               {
                                                                   x.Check(contact => contact.LastName).Required();
                                                                   x.Check(contact => contact.FirstName).Required();
-                                                                  x.Check(contact => contact.DateOfBirth).Optional().And
+                                                                  x.Check(contact => contact.DateOfBirth).Optional()
                                                                       .GreaterThan(
                                                                       new DateTime(1950, 1, 1));
                                                               });
@@ -209,15 +209,15 @@ namespace SpecExpress.Test
             ValidationCatalog.AddSpecification<Address>(x =>
                                                             {
                                                                 x.Check(a => a.Street)
-                                                                    .Required().And
+                                                                    .Required()
                                                                     .MaxLength(50);
                                                             });
 
             ValidationCatalog.AddSpecification<Contact>(x =>
                                                             {
                                                                 x.Check(c => c.Addresses).Required()
-                                                                    .And.ForEachSpecification<Address>();
-                                                                x.Check(c => c.FirstName).Required().And.MaxLength(100);
+                                                                    .ForEachSpecification<Address>();
+                                                                x.Check(c => c.FirstName).Required().MaxLength(100);
                                                             });
 
             var contact = new Contact();

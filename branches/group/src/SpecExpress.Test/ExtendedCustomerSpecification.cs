@@ -12,7 +12,7 @@ namespace SpecExpressTest
     {
         public ExtendedCustomerSpecification()
         {
-            Check(c => (Customer)c, "Customer").Required().And.Specification<CustomerSpecification>();
+            Check(c => (Customer)c, "Customer").Required().Specification<CustomerSpecification>();
             Check(c => c.SpecialGreeting).Required();
         }
     }

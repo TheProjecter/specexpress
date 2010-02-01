@@ -10,11 +10,11 @@ namespace SpecExpress.Test
     {
         public InternationalAddressSpecification()
         {
-            Check(a => a.City).Required().And.MaxLength(50).And.IsAlpha();
-            Check(a => a.Street).Required().And.MaxLength(100);
-            Check(a => a.Country.Id).Required().And.IsInSet(new List<string>() {"CA", "GB", "DE"});
-            Check(a => a.Province).Optional().And.IsAlpha();
-            Check(a => a.PostalCode).Optional().And.MaxLength(50);
+            Check(a => a.City).Required().MaxLength(50).And.IsAlpha();
+            Check(a => a.Street).Required().MaxLength(100);
+            Check(a => a.Country.Id).Required().IsInSet(new List<string>() {"CA", "GB", "DE"});
+            Check(a => a.Province).Optional().IsAlpha();
+            Check(a => a.PostalCode).Optional().MaxLength(50);
 
         }
     }

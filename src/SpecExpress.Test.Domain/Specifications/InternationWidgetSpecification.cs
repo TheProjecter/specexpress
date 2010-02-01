@@ -10,7 +10,7 @@ namespace SpecExpress.Test.Domain.Specifications
         public InternationalWidgetSpecification()
             : base()
         {
-            Check(w => w.Name).Required().And.IsNumeric();
+            Check(w => w.Name).Required().IsNumeric();
         }
     }
 }

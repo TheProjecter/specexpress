@@ -10,10 +10,10 @@ namespace SpecExpress.Test
     {
         public AddressSpecification()
         {
-            Check(a => a.City).Required().And.MaxLength(50).And.IsAlpha();
-            Check(a => a.Street).Required().And.MaxLength(100);
+            Check(a => a.City).Required().MaxLength(50).And.IsAlpha();
+            Check(a => a.Street).Required().MaxLength(100);
             Check(a => a.Province).Required();
-            Check(a => a.PostalCode).Required().And.IsNumeric();
+            Check(a => a.PostalCode).Required().IsNumeric();
         }
     }
 }

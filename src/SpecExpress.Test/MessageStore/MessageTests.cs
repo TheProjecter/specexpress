@@ -30,7 +30,7 @@ namespace SpecExpress.Test
         {
             var customMessage = "Dope! It's required!";
             //Add a rule
-            ValidationCatalog.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required().And.
+            ValidationCatalog.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required().
                                                                       LengthBetween(1, 3).With(m => m.Message = "Too long {PropertyValue}"));
 
             //dummy data 
@@ -47,7 +47,7 @@ namespace SpecExpress.Test
         public void When_WithMessageKeyIsSupplied_DefaultMessageIsOverridden()
         {   
             //Add a rule
-            ValidationCatalog.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required().And.
+            ValidationCatalog.AddSpecification<Contact>(spec => spec.Check(c => c.LastName).Required().
                                                                       LengthBetween(1, 3).With(m => m.MessageKey = "LengthBetween"));
 
             //dummy data 

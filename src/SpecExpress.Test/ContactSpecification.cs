@@ -14,7 +14,7 @@ namespace SpecExpressTest
             Check(c => c.FirstName).Required();
             Check(c => c.LastName).Required();
 
-            Check(c => c.DateOfBirth).Required().And.IsInPast();
+            Check(c => c.DateOfBirth).Required().IsInPast();
 
             //Check(c => c, "Contact").Required()
             //    .And.Expect((x, y) => String.IsNullOrEmpty(x.LastName), "Last Name must be empty")
@@ -23,14 +23,14 @@ namespace SpecExpressTest
             //;
 
             
-            Check(c => c, "Contact").Required().And.Expect((c, x) =>
+            Check(c => c, "Contact").Required().Expect((c, x) =>
                                                                {
                                                                    return (String.IsNullOrEmpty(c.FirstName) ||
                                                                            String.IsNullOrEmpty(c.LastName));
                                                                }, "Either First or Last Name must be empty");
 
             //This will throw an exception
-            Check(x => x.LastName).Required().And.Expect((y, z) => new BadWolf().IsTrue, "Error");
+            Check(x => x.LastName).Required().Expect((y, z) => new BadWolf().IsTrue, "Error");
                 
         }
     }

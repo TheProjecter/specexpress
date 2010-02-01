@@ -9,7 +9,7 @@ namespace SpecExpress.Test.Domain.Specifications
     {
         public USWidgetSpecification() : base()
         {
-            Check(w => w.Name).Required().And.IsAlpha();
+            Check(w => w.Name).Required().IsAlpha();
             IsDefaultForType();
           
         }

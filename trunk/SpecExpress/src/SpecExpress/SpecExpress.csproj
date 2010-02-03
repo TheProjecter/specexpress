@@ -49,6 +49,7 @@
     <Compile Include="DSL\ActionOptionConditionSatisfiedBuilder.cs" />
     <Compile Include="DSL\ActionOptionBuilder.cs" />
     <Compile Include="DSL\MessageCriteria.cs" />
+    <Compile Include="DSL\WithRuleBuilder.cs" />
     <Compile Include="MessageStore\IMessageStore.cs" />
     <Compile Include="MessageStore\MessageContext.cs" />
     <Compile Include="MessageStore\MessageService.cs" />

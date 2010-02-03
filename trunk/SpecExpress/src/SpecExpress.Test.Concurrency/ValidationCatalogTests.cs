@@ -76,7 +76,7 @@ namespace SpecExpress.Test.Concurrency
         [HostType("Chess")]
         public void ValidateConcurrently()
         {
-            ValidationCatalog.AddSpecification<Customer>(s => s.Check(c => c.Name).Required().And.MaxLength(50) );
+            ValidationCatalog.AddSpecification<Customer>(s => s.Check(c => c.Name).Required().MaxLength(50) );
             Customer customer1 = new Customer() { Name = string.Empty.PadLeft(55, 'X') };
             Customer customer2 = new Customer() { Name = string.Empty.PadLeft(45, 'X') };
 

@@ -12,7 +12,7 @@ namespace SpecExpress.Test.Domain.Specifications
             Check(c => c.LastName).Required();
             Check(c => c.Addresses).Required();
             Check(c => c.PrimaryAddress).Required();
-            Check(c => c.DefaultProject).Required().And.Specification();
+            Check(c => c.DefaultProject).Required().Specification();
         }
     }
 }

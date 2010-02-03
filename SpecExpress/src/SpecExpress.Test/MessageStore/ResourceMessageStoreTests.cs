@@ -1,8 +1,10 @@
+using System.Linq;
 using NUnit.Framework;
 using SpecExpress.MessageStore;
 using SpecExpress.Rules;
 using SpecExpress.Rules.StringValidators;
 using SpecExpressTest.Entities;
+using SpecExpressTest.MessageStore;
 
 namespace SpecExpress.Test
 {
@@ -41,5 +43,32 @@ namespace SpecExpress.Test
             Assert.That(errorMessage, Is.StringContaining("5"));
             //TODO: Search for Actual value but it's empty b/c the value is null
         }
+
+        [Test]
+        public void GetMessageForRuleWithMessageOverrride()
+        {
+            ValidationCatalog.Configure( x=>x.AddMessageStore(new ResourceMessageStore(TestRuleErrorMessages.ResourceManager), "OverrideMessages"));
+
+            ValidationCatalog.AddSpecification<Contact>(c =>
+                                                            {
+                                                                c.Check(x => x.LastName).Required().And.IsAlpha();
+                                                            }
+                );
+
+            //Create an Entity
+            var contact = new Contact();
+            contact.FirstName = null;
+            contact.LastName = "1111";
+
+            var results = ValidationCatalog.ValidateProperty(contact, c => c.LastName);
+
+            Assert.That(results.Errors.ToList().First().Message == "Last Name should only contain letters, big boy!");
+
+
+            
+        }
     }
+
+    
+
 }

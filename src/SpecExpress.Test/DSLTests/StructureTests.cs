@@ -177,7 +177,8 @@ namespace SpecExpress.Test.DSLTests
             Check(c => c.Contacts).Required().ForEach(c => ((Contact)c).Active,
                                                                "Contact {FirstName} {LastName} should be active.");
 
-            Check(c => c.Contacts).Required().ForEach(c => ((Contact)c).Active, MessageStoreFactory.GetMessageStore().GetMessageTemplate("AllContactActive"));
+            Check(c => c.Contacts).Required().ForEach(c => ((Contact)c).Active, ValidationCatalog.Configuration.DefaultMessageStore.GetMessageTemplate("AllContactActive"));
+            
 
 
             // CheckForEach with Linq

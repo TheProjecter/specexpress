@@ -87,18 +87,6 @@ namespace SpecExpress.Test.DSLTests
         }
 
         /// <summary>
-        /// Ensures that Group statements
-        /// </summary>
-        public void GroupStatements()
-        {
-            // Date (greater than 1/1/2000 and  less than 1/1/2001) or (greater than 1/1/2005 and less than 1/1/2006)
-            Check(c => c.CustomerDate).Required()
-                .Group(d => d.GreaterThan(new DateTime(2000, 1, 1)).And.LessThan(new DateTime(2001, 1, 1)))
-                .Or
-                .Group(d => d.GreaterThan(new DateTime(2005, 1, 1)).And.LessThan(new DateTime(2006, 1, 1)));
-        }
-
-        /// <summary>
         /// Ensures that various IComparable statements compile:
         ///     GreaterThan
         ///     GreaterThanEqualTo

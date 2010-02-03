@@ -31,7 +31,7 @@ namespace SpecExpressTest
         [Test]
         public void InvalidExpression_IsInvalid()
         {
-            ValidationCatalog.AddSpecification<Contact>(x => x.Check(c => c.NumberOfDependents).Required().And.
+            ValidationCatalog.AddSpecification<Contact>(x => x.Check(c => c.NumberOfDependents).Required().   
                                                                  GreaterThan( z=> new BadWolf().Max(z.NumberOfDependents)));
 
             var contact = new Contact() {LastName = "Bill"};

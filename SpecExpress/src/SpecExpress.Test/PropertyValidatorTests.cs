@@ -53,8 +53,8 @@ namespace SpecExpress.Test
         {
             var customer = new Customer();
 
-            ValidationCatalog.AddSpecification<Customer>( spec => spec.Check(cust => cust.Address.Street).Optional().And
-                                                                        .MaxLength(255));
+            ValidationCatalog.AddSpecification<Customer>( spec => spec.Check(cust => cust.Address.Street).Optional()
+                .MaxLength(255));
 
             var results = ValidationCatalog.Validate(customer);
 

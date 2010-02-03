@@ -51,7 +51,7 @@ namespace SpecExpress.Test
 
             ValidationCatalog.AddSpecification<Contact>(c =>
                                                             {
-                                                                c.Check(x => x.LastName).Required().And.IsAlpha();
+                                                                c.Check(x => x.LastName).Required().IsAlpha();
                                                             }
                 );
 

@@ -47,7 +47,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             //Add Specification for Customer and Address
             ValidationCatalog.AddSpecification<Customer>(spec =>
                {
-                   spec.Check(c => c.Contacts).Required().And.ForEachSpecification<Contact>(
+                   spec.Check(c => c.Contacts).Required().ForEachSpecification<Contact>(
                        cspec =>
                            {
                                cspec.Check(c => c.LastName).Required();

@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 using SpecExpress.MessageStore;
 using SpecExpressTest.MessageStore;
@@ -16,7 +17,7 @@ namespace SpecExpress.Test
         [Test]
         public void GetMessageStore_ReturnsDefaultMessageStore()
         {
-            Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(ResourceMessageStore)));
+            Assert.That(MessageStoreFactory.GetAllMessageStores().First(), Is.InstanceOf(typeof(ResourceMessageStore)));
         }
 
         [Test]
@@ -32,7 +33,7 @@ namespace SpecExpress.Test
         {
             ValidationCatalog.Configure(x => x.DefaultMessageStore = new SimpleMessageStore());
 
-            Assert.That(MessageStoreFactory.GetMessageStore(), Is.InstanceOf(typeof(SimpleMessageStore)));
+            Assert.That(MessageStoreFactory.GetAllMessageStores().First(), Is.InstanceOf(typeof(SimpleMessageStore)));
 
         }
     }
@@ -40,15 +41,18 @@ namespace SpecExpress.Test
 
     public class SimpleMessageStore : IMessageStore
     {
-        public string GetMessageTemplate(MessageContext context)
+        
+        public string GetMessageTemplate(string key)
         {
             return "A rule is broken!";
         }
 
-        public string GetMessageTemplate(object key)
+        public bool IsMessageInStore(string key)
         {
-            return "A rule is broken!";
+            return true;
         }
+
+     
     }
 }
     

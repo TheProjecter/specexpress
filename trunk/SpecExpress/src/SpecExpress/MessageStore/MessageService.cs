@@ -19,15 +19,26 @@ namespace SpecExpress.MessageStore
 
         public string GetMessageTemplate(MessageContext context)
         {
-            IMessageStore messageStore = String.IsNullOrEmpty(context.MessageStoreName)
-                                             ? MessageStoreFactory.GetMessageStore()
-                                             : MessageStoreFactory.GetMessageStore(context.MessageStoreName);
+            var ruleKey = BuildRuleKeyFromContext(context);
 
-            string messageTemplate = context.Key == null ? messageStore.GetMessageTemplate(context) : messageStore.GetMessageTemplate(context.Key);
+            IMessageStore messageStore;
 
-             return messageTemplate;
+            if (!String.IsNullOrEmpty(context.MessageStoreName))
+            {
+                //Explicit request for this Message Store
+                messageStore = MessageStoreFactory.GetMessageStore(context.MessageStoreName);
+            }
+            else
+            {
+                //Message Store not defined. Look for overrides first, then fall back to default if not found
+                //Select the last message store found
+                messageStore = MessageStoreFactory.GetAllMessageStores().ToList().Last(
+                    x => x.IsMessageInStore(ruleKey));
+            }
+
+            var messageTemplate = messageStore.GetMessageTemplate(ruleKey);
+            return messageTemplate;
         }
-
 
         
         public string FormatMessage(string message, RuleValidatorContext context, object[] parameters)
@@ -52,6 +63,27 @@ namespace SpecExpress.MessageStore
             }
 
             return System.String.Format(formattedMessage, errorMessageParams.ToArray());
+        }
+
+        public string BuildRuleKeyFromContext(MessageContext context)
+        {
+            //Use Name of the Rule Validator as the Key to get the error message format string
+            //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
+            string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
+
+            // Remove "Nullable" from end of type name
+            if (key.EndsWith("Nullable"))
+            {
+                key = key.Remove(key.Length - 8);
+            }
+
+            // Prefix key with "Not_" for negated rule messages
+            if (context.Negate)
+            {
+                key = "Not_" + key;
+            }
+
+            return key;
         }
 
         private string buildPropertyName(RuleValidatorContext context)

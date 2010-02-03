@@ -5,7 +5,8 @@ namespace SpecExpress.MessageStore
 {
     public interface IMessageStore
     {
-        string GetMessageTemplate(MessageContext context);
-        string GetMessageTemplate(object key);
+        //string GetMessageTemplate(MessageContext context);
+        string GetMessageTemplate(string key);
+        bool IsMessageInStore(string key);
     }
 }

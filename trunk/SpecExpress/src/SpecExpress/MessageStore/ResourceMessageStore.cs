@@ -30,45 +30,48 @@ namespace SpecExpress.MessageStore
 
         #region IMessageStore Members
 
-        public string GetMessageTemplate(MessageContext context)
-        {
-            //Use Name of the Rule Validator as the Key to get the error message format string
-            //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
-            string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
+        //public string GetMessageTemplate(MessageContext context)
+        //{
+        //    //Use Name of the Rule Validator as the Key to get the error message format string
+        //    //RuleValidator types have Generics which return Type Name as LengthValidator`1 and we need to remove that
+        //    string key = context.ValidatorType.Name.Split('`').FirstOrDefault();
 
-            // Remove "Nullable" from end of type name
-            if (key.EndsWith("Nullable"))
-            {
-                key = key.Remove(key.Length - 8);
-            }
+        //    // Remove "Nullable" from end of type name
+        //    if (key.EndsWith("Nullable"))
+        //    {
+        //        key = key.Remove(key.Length - 8);
+        //    }
 
-            // Prefix key with "Not_" for negated rule messages
-            if (context.Negate)
-            {
-                key = "Not_" + key;
-            }
+        //    // Prefix key with "Not_" for negated rule messages
+        //    if (context.Negate)
+        //    {
+        //        key = "Not_" + key;
+        //    }
 
-            return GetMessageTemplate(key);
-        }
+        //    return GetMessageTemplate(key);
+        //}
 
-        public string GetMessageTemplate(object key)
+        public string GetMessageTemplate(string key)
         {   
-            string keyName = key as string; 
-
-            if (keyName == null)
+            if (String.IsNullOrEmpty(key))
             {
-                throw new ArgumentException("key must be a string.", "key");
+                throw new ArgumentException("key is required", "key");
             }
 
-            string errorString = _resource.GetString(keyName);
+            string messageTemplate = _resource.GetString(key);
 
-            if (System.String.IsNullOrEmpty(errorString))
+            if (System.String.IsNullOrEmpty(messageTemplate))
             {
                 throw new InvalidOperationException(
                     System.String.Format("Unable to find error message for {0} in resources file.", key));
             }
 
-            return errorString;
+            return messageTemplate;
+        }
+
+        public bool IsMessageInStore(string key)
+        {
+            return !String.IsNullOrEmpty(_resource.GetString(key));
         }
 
         #endregion

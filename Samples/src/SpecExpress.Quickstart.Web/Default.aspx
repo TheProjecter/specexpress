@@ -3,7 +3,6 @@
 <%@ Register Namespace="SpecExpress.Web" Assembly="SpecExpress.Web" TagPrefix="spec" %>
 
 <%@ Register assembly="System.Web.DynamicData, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" namespace="System.Web.DynamicData" tagprefix="cc1" %>
-<%@ Register Assembly="AjaxControlToolkit.WCSFExtensions" Namespace="AjaxControlToolkit.WCSFExtensions" TagPrefix="ajaxtoolkitwcsfextensions" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -47,6 +46,7 @@
                  <div>
                     <asp:Label ID="lblCode" runat="server" AssociatedControlID="txtCode" Text="Code"/>
                     <asp:TextBox ID="txtCode" runat="server" />
+                    <spec:Validator ID="vldCode" runat="server"  PropertyName="Code" Display="Dynamic" ControlToValidate="txtCode"/>
                 </div>
                 
                  <div>

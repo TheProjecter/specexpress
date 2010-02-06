@@ -21,7 +21,7 @@ namespace SpecExpress.Web
 
         public Validator()
         {
-
+            //Check for required fields
         }
 
 
@@ -272,6 +272,25 @@ namespace SpecExpress.Web
                                                                 @"<script type=""text/javascript"">function SpecExpressProxyValidatorEvaluateIsValid(val) {var returnval = RequiredFieldValidatorEvaluateIsValid(val); if (!returnval){ val.errormessage == val.requirederrormessage;};return returnval;}</script>");
                 }
             }
+
+            if (this.ID == "vldCode")
+            {
+                var ctl = new RangeValidator()
+                {
+                    ID = "abba",
+                    MaximumValue = "100",
+                    MinimumValue = "1",
+                    ControlToValidate = ControlToValidate,
+                    ErrorMessage = "TOO BIG BASTARD"
+                    
+                };
+
+
+                Controls.Add(ctl);
+
+            }
+            // Prevent child controls from being created again.
+            ChildControlsCreated = true;
         }
 
         internal string FormatErrorMessage(List<string> messages, ValidationSummaryDisplayMode displayMode)
@@ -323,5 +342,30 @@ namespace SpecExpress.Web
 
             return stringBuilder.ToString();
         }
+
+        
+
+      
+        //protected override ControlCollection CreateControlCollection()
+        //{
+        //    if (this.ID == "vldCode")
+        //    {
+        //        var ctl = new RangeValidator()
+        //                      {
+        //                          ID = "abba",
+        //                          MaximumValue = "100",
+        //                          MinimumValue = "1",
+        //                          ControlToValidate = ControlToValidate,
+        //                          ErrorMessage = "TOO BIG BASTARD"
+        //                      };
+
+
+        //        Controls.Add(ctl);
+                
+        //    }
+
+        //    return base.CreateControlCollection();
+            
+        //}
     }
 }

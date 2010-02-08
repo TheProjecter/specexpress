@@ -17,13 +17,13 @@ namespace SpecExpress
             
             if (String.IsNullOrEmpty(validator.Message))
             {
-                var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, validator.MessageStoreName, messageKey);
+                var messageContext = new MessageContext(context, validator.GetType(), validator.Negate, validator.MessageStoreName, messageKey, validator.MessageFormatter);
                 message = messageService.GetDefaultMessageAndFormat(messageContext, parameters);
             }
             else
             {
                 //Since the message was supplied, don't get the default message from the store, just format it
-                message = messageService.FormatMessage(validator.Message, context, parameters);
+                message = messageService.FormatMessage(validator.Message, context, parameters, validator.MessageFormatter);
             }
            
             return new ValidationResult(context.PropertyInfo, message, context.PropertyValue);

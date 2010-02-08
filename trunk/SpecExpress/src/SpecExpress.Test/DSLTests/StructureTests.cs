@@ -5,6 +5,7 @@ using System.Linq;
 using SpecExpress.MessageStore;
 using SpecExpress.Rules.Collection;
 using SpecExpress.Test.Entities;
+using SpecExpressTest;
 using SpecExpressTest.Entities;
 
 namespace SpecExpress.Test.DSLTests
@@ -178,8 +179,9 @@ namespace SpecExpress.Test.DSLTests
                                                                "Contact {FirstName} {LastName} should be active.");
 
             Check(c => c.Contacts).Required().ForEach(c => ((Contact)c).Active, ValidationCatalog.Configuration.DefaultMessageStore.GetMessageTemplate("AllContactActive"));
-            
 
+            Check(c => c.Contacts).Required().ForEachSpecification<Contact>();
+            Check(c => c.Contacts).Required().ForEachSpecification<Contact, ContactSpecification>();
 
             // CheckForEach with Linq
             Check(c => from contact in c.Contacts where contact.Active select new { BirthDate = contact.DateOfBirth })

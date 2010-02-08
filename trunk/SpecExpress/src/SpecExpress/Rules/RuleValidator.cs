@@ -10,7 +10,7 @@ namespace SpecExpress.Rules
     public abstract class RuleValidator
     {
         public string Message { get; set; }
-        //Func<MessageCriteria<object>, string> MessageFormatter { get; set; }
+        public Func<object, string> MessageFormatter { get; set; }
         public object MessageKey { get; set; }
         public string MessageStoreName { get; set; }
         public bool Negate { get; set; }
@@ -82,10 +82,6 @@ namespace SpecExpress.Rules
 
     public abstract class RuleValidator<T, TProperty> : RuleValidator
     {
-
-
-       //Func<MessageCriteria<TProperty>,string> MessageFormatter { get; set; }
-
         /// <summary>
         /// Executes a Delegate and casts to the return value to the appropriate type
         /// </summary>

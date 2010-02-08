@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="ClassPropertyTypeConverter.cs" />
     <Compile Include="ControlExtensions.cs" />
+    <Compile Include="RuleWebValidators\BaseRuleWebValidator.cs" />
+    <Compile Include="RuleWebValidators\IRuleWebValidator.cs" />
     <Compile Include="SpecificationManager.cs" />
     <Compile Include="ValidationNotificationEventArgs.cs" />
     <Compile Include="Validator.cs" />

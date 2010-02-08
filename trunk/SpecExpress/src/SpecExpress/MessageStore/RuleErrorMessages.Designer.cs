@@ -223,7 +223,7 @@ namespace SpecExpress.MessageStore {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {PropertyName} shoud be {0} characters..
+        ///   Looks up a localized string similar to {PropertyName} must be {0} character(s)..
         /// </summary>
         internal static string LengthEqualTo {
             get {

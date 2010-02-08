@@ -125,7 +125,8 @@ namespace SpecExpress.Web
             {
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "initialvalue", InitialValue);
 
-                //Client Scripts adding scripts mocking a  Required Field Validator
+                //The script below causes a "Duplicate Key" exception when combined with the Server side extender
+                ////Client Scripts adding scripts mocking a  Required Field Validator
                 Page.ClientScript.RegisterExpandoAttribute(ClientID, "evaluationfunction",
                                                            "SpecExpressProxyValidatorEvaluateIsValid", false);
               

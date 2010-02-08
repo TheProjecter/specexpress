@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SpecExpress.DSL;
 using SpecExpress.Rules;
 using SpecExpress.Util;
 
@@ -14,7 +15,7 @@ namespace SpecExpress.MessageStore
         {
             string messageTemplate = GetMessageTemplate(context);
           
-            return FormatMessage(messageTemplate, context.RuleContext, parameters);
+            return FormatMessage(messageTemplate, context.RuleContext, parameters, context.PropertyValueFormatter);
         }
 
         public string GetMessageTemplate(MessageContext context)
@@ -40,8 +41,13 @@ namespace SpecExpress.MessageStore
             return messageTemplate;
         }
 
-        
+
         public string FormatMessage(string message, RuleValidatorContext context, object[] parameters)
+        {
+            return FormatMessage(message, context, parameters, null);
+        }
+
+        public string FormatMessage(string message, RuleValidatorContext context, object[] parameters, Func<object, string> propertyValueFormatter)
         {
             //Replace known keywords with actual values
             var formattedMessage = message.Replace("{PropertyName}", buildPropertyName(context));
@@ -52,7 +58,17 @@ namespace SpecExpress.MessageStore
             }
             else
             {
-                formattedMessage = formattedMessage.Replace("{PropertyValue}", context.PropertyValue.ToString());
+                string formattedPropertyValue;
+
+                if (propertyValueFormatter == null)
+                {
+                    formattedPropertyValue = context.PropertyValue.ToString();
+                }
+                else
+                {
+                    formattedPropertyValue = propertyValueFormatter(context.PropertyValue);
+                }
+                formattedMessage = formattedMessage.Replace("{PropertyValue}", formattedPropertyValue);
             }
 
             //create param list for String.Format

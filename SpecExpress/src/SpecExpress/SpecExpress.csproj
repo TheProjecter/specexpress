@@ -102,6 +102,7 @@
     <Compile Include="Util\ObjectExtensions.cs" />
     <Compile Include="ValidationCatalog.cs" />
     <Compile Include="ValidationCatalogConfiguration.cs" />
+    <Compile Include="ValidationException.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="DSL\WithBuilder.cs" />
     <Compile Include="Enums\ValidationLevelType.cs" />

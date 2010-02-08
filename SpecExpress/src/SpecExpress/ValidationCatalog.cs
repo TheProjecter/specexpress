@@ -300,7 +300,15 @@ namespace SpecExpress
 
         public static Specification GetSpecification(Type type)
         {
+            //Check if type is a specification. This is to provide a nice exception in the case that within a ForEachSpecification 
+            //ForEachSpecification<TypeSpecification>() the Type wasn't specified, but the Specification was
+            //if (type is typeof(Specification))
+            //{
+                
+            //}
+
             var spec = TryGetSpecification(type);
+            
             if (spec == null)
             {
                 throw new SpecExpressConfigurationException("No Specification for type " + type + " was found.");

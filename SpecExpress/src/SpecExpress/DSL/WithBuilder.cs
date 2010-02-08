@@ -47,5 +47,24 @@ namespace SpecExpress.DSL
                 rule.MessageKey = value;
             }
         }
+
+        public Func<TProperty, string> FormatProperty 
+        {
+            get
+            {
+                RuleValidator rule = _propertyValidator.Rules.Last();
+                return rule.MessageFormatter as Func<TProperty, string>;
+            }
+            set
+            {
+                //RuleValidator rule = _propertyValidator.Rules.Last();
+               
+                // Func<TProperty, string> func = value;
+                //var s = func() ;
+
+                ////var translatedPredicate = x => func( OtherTypeFromSomeType(x))
+                //rule.MessageFormatter = value as Func<object, string>;
+            }
+        }
     }
 }

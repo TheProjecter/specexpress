@@ -20,7 +20,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(PopulateListAction.Populate);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("string1", Result = true, TestName = "CollectionContainsExpression")]
@@ -33,7 +33,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.FirstName = lookingFor;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(PopulateListAction.Null, Result = true, TestName = "CollectionIsNull")]
@@ -46,7 +46,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(PopulateListAction.Null, 3, Result = false, TestName = "Expect3WhenCollectionNull")]
@@ -62,7 +62,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
 
@@ -80,7 +80,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(PopulateListAction.Null, 3, Result = true, TestName = "ExpectLessThanEqualTo3WhenCollectionNull")]
@@ -97,7 +97,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(PopulateListAction.Null, 3, Result = false, TestName = "ExpectGreaterThan3WhenCollectionNull")]
@@ -114,7 +114,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(PopulateListAction.Null, 3, Result = false, TestName = "ExpectGreaterThanEqualTo3WhenCollectionNull")]
@@ -131,7 +131,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, IEnumerable> context = BuildContextForAliases(populateListAction);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         public RuleValidatorContext<Contact, IEnumerable> BuildContextForAliases(PopulateListAction action)

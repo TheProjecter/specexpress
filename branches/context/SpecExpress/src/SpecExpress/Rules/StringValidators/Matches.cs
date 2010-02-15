@@ -24,7 +24,7 @@ namespace SpecExpress.Rules.StringValidators
             get { return new string[] {_regexPattern}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, string> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, string> context, SpecificationContainer specificationContainer)
         {
             if (PropertyExpressions.Any())
             {

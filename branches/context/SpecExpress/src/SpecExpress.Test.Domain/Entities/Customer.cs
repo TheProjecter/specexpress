@@ -12,5 +12,6 @@ namespace SpecExpress.Test.Domain.Entities
         public Address MailingAddress { get; set; }
         public DateTime CreatedDate { get; private set; }
         public List<Contact> Employees { get; set; }
+        public bool Active { get; set; }
     }
 }

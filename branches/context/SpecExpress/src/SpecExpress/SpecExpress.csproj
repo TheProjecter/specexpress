@@ -97,11 +97,13 @@
     <Compile Include="Rules\StringValidators\MinLength.cs" />
     <Compile Include="SpecExpressConfigurationException.cs" />
     <Compile Include="Specification.cs" />
+    <Compile Include="SpecificationContainer.cs" />
     <Compile Include="SpecificationExpression.cs" />
     <Compile Include="SpecificationScanner.cs" />
     <Compile Include="Util\ObjectExtensions.cs" />
     <Compile Include="ValidationCatalog.cs" />
     <Compile Include="ValidationCatalogConfiguration.cs" />
+    <Compile Include="ValidationContext.cs" />
     <Compile Include="ValidationException.cs" />
     <Compile Include="ValidationNotification.cs" />
     <Compile Include="DSL\WithBuilder.cs" />

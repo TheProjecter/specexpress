@@ -43,9 +43,9 @@ namespace SpecExpress.Test.Concurrency
 
             childThread.Join();
 
-            int specCount = ValidationCatalog.GetAllSpecifications().Count;
+            int specCount = ValidationCatalog.SpecificationContainer.GetAllSpecifications().Count;
 
-            Assert.AreEqual(18, specCount);
+            Assert.AreEqual(21, specCount);
         }
 
         [TestMethod]
@@ -63,7 +63,7 @@ namespace SpecExpress.Test.Concurrency
             Assembly assembly2 = Assembly.LoadFrom("SpecExpress.Test.dll");
             ValidationCatalog.Scan(x => x.AddAssembly(assembly2));
 
-            foreach (var specification in ValidationCatalog.GetAllSpecifications())
+            foreach (var specification in ValidationCatalog.SpecificationContainer.GetAllSpecifications())
             {
                 Assert.IsNotNull(specification);
             }

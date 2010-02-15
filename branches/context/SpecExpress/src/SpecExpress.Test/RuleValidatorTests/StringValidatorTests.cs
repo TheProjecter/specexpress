@@ -27,7 +27,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new MinLength<Contact>(minLength);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("Joe", "Smith", Result = false, TestName = "First name less then lastname length")]
@@ -39,7 +39,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new MinLength<Contact>(c => (int)(c.LastName.Length));
             RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName, lastName);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("", 1, Result = true, TestName = "Empty")]
@@ -54,7 +54,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new MaxLength<Contact>(maxLength);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("Joesph", "Smith", Result = false, TestName = "First name greater then lastname length")]
@@ -66,7 +66,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new MaxLength<Contact>(c => (int)(c.LastName.Length));
             RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName, lastName);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("King Kong",".*",Result = true,TestName = "MatchAnyNumberOfCharacters")]
@@ -78,7 +78,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, string> context = BuildContextForLength(firstName);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("King Kong", ".*", Result = true, TestName = "MatchAnyNumberOfCharacters")]
@@ -91,7 +91,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NamePattern = regexPattern;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
 
@@ -108,7 +108,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new Numeric<Contact>();
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("", 5, 10, Result = false, TestName = "Empty")]
@@ -125,7 +125,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new LengthBetween<Contact>(low, high);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
 
@@ -142,7 +142,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new Rules.GeneralValidators.IsInSet<Contact,string>(list);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
 
         }
 
@@ -159,7 +159,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new Rules.GeneralValidators.IsInSet<Contact,string>(c => list);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase("", Result = false, TestName = "Empty")]
@@ -174,7 +174,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new Alpha<Contact>();
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
 
@@ -189,7 +189,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var validator = new LengthEqualTo<Contact>(length);
             RuleValidatorContext<Contact, string> context = BuildContextForLength(propertyValue);
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
       

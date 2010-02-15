@@ -12,9 +12,9 @@ namespace SpecExpress.Rules.GeneralValidators
             get { return new object[] {}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
-          return Evaluate(!context.PropertyValue.IsNullOrDefault(), context);
+            return Evaluate(!context.PropertyValue.IsNullOrDefault(), context);      
         }
     }
 

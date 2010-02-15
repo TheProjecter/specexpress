@@ -10,7 +10,7 @@ namespace SpecExpress.Rules.StringValidators
             get { return new object[] {}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, string> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, string> context, SpecificationContainer specificationContainer)
         {   
             //Guard against null in Regex Match
             if (context.PropertyValue == null)

@@ -9,7 +9,7 @@ namespace SpecExpress.Rules.DateValidators
             get { return new object[]{}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, DateTime> context, SpecificationContainer specificationContainer)
         {
             return Evaluate(context.PropertyValue < DateTime.Now, context);
         }
@@ -22,7 +22,7 @@ namespace SpecExpress.Rules.DateValidators
             get { return new object[] { }; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, System.Nullable<DateTime>> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, DateTime?> context, SpecificationContainer specificationContainer)
         {
             return Evaluate(!context.PropertyValue.HasValue || context.PropertyValue < DateTime.Now, context);
         }

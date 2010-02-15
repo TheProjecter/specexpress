@@ -28,21 +28,18 @@ namespace SpecExpress.Rules.GeneralValidators
         /// </summary>
         public SpecificationRule()
         {
-            //When a Specificiation class is being instantiated during the registration process,
-            //The specification for this rule may not be in the registry yet
-            //var specification = ValidationCatalog.Registry[typeof(TProperty)];
-            if (_specification == null)
-            {
-                _specification = ValidationCatalog.GetSpecification<TProperty>();   
-            }
-             
-            //_specification = specification as SpecificationBase<TProperty>;
-            
+           
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
-            var list =  _specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList();
+
+            if (_specification == null)
+            {
+                _specification = specificationContainer.GetSpecification<TProperty>();
+            }
+
+            var list =  _specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context, specificationContainer)).ToList();
             ValidationResult result = null;
 
             if (list.Any())

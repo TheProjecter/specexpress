@@ -43,7 +43,7 @@ namespace SpecExpress.Test
             propertyValidator.AddRule(lengthValidator); //.Rules.Add(lengthValidator);
 
             //Validate
-            List<ValidationResult> result = propertyValidator.Validate(emptyContact);
+            List<ValidationResult> result = propertyValidator.Validate(emptyContact, null);
 
             Assert.That(result, Is.Empty);
         }

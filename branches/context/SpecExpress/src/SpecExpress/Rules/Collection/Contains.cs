@@ -24,7 +24,7 @@ namespace SpecExpress.Rules.Collection
             get { return new object[] {_contains}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
             bool contains = false;
 

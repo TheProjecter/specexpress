@@ -31,7 +31,6 @@ namespace SpecExpressTest
         [Test]
         public void Validate_ContextUsesDefinedSpecifications()
         {
-
             //Scan all 
             ValidationCatalog.Scan(x => x.TheCallingAssembly());
 
@@ -43,12 +42,12 @@ namespace SpecExpressTest
                                };
 
             //Validate
-            var results = ValidationCatalog.ValidateContext<DeleteValidationContext>(customer);
+            var results = ValidationCatalog<DeleteValidationContext>.Validate(customer);
             
             Assert.That(results.Errors.First().Message, Is.EqualTo("Active must be false."));
             Assert.That(results.Errors[1].NestedValdiationResults.First().Message, Is.EqualTo("Contact 1 in Employees is invalid."));
             Assert.That(results.Errors[1].NestedValdiationResults.First().NestedValdiationResults.First().Message, Is.EqualTo("Active must be false."));
         }
-        
+
     }
 }

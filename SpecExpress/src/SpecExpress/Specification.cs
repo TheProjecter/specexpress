@@ -25,11 +25,11 @@ namespace SpecExpress
             }
         }
 
-        public List<ValidationResult> Validate(object instance)
+        public List<ValidationResult> Validate(object instance, SpecificationContainer specificationContainer)
         {
             lock (this)
             {
-                return PropertyValidators.SelectMany(x => x.Validate(instance)).ToList();
+                return PropertyValidators.SelectMany(x => x.Validate(instance, specificationContainer)).ToList();
             }
         }
 

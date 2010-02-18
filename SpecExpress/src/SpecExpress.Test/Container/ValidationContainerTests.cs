@@ -61,7 +61,7 @@ namespace SpecExpress.Test
             //Set Assemblies to scan for Specifications
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
-            Assert.That(ValidationCatalog.GetAllSpecifications(), Is.Not.Empty);
+            Assert.That(ValidationCatalog.SpecificationContainer.GetAllSpecifications(), Is.Not.Empty);
 
             Assert.Throws<SpecExpressConfigurationException>(
                 () =>
@@ -76,7 +76,7 @@ namespace SpecExpress.Test
             Assembly assembly = Assembly.LoadFrom("SpecExpress.Test.Domain.dll");
             ValidationCatalog.Scan(x => x.AddAssembly(assembly));
 
-            var spec = ValidationCatalog.GetSpecification<SpecExpress.Test.Domain.Entities.Contact>();
+            var spec = ValidationCatalog.SpecificationContainer.GetSpecification<SpecExpress.Test.Domain.Entities.Contact>();
             Assert.That(spec.GetType(), Is.EqualTo(typeof(ContactSpecification)));
         }
 

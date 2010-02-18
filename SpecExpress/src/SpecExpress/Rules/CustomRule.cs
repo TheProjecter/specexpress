@@ -16,7 +16,7 @@ namespace SpecExpress.Rules
             _expression = rule;
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
             var result = (bool)(_expression.DynamicInvoke(new object[] {context.Instance, context.PropertyValue }));
 

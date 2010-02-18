@@ -30,7 +30,7 @@ namespace SpecExpress.Rules.StringValidators
             get { return new object[] { _max}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, string> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, string> context, SpecificationContainer specificationContainer)
         {
             int length = String.IsNullOrEmpty(context.PropertyValue) ? 0 : context.PropertyValue.Trim().Length;
 

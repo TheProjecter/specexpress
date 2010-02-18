@@ -21,7 +21,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
@@ -35,7 +35,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = greaterThanEqualTo;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
@@ -48,7 +48,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
@@ -62,7 +62,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = greaterThan;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
@@ -75,7 +75,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
@@ -89,7 +89,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = lessThanEqualTo;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
@@ -102,7 +102,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = false, TestName = "PropertyEqual")]
@@ -116,7 +116,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = lessThan;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
@@ -129,7 +129,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, Result = true, TestName = "PropertyEqual")]
@@ -143,7 +143,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = equalTo;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
 
@@ -159,7 +159,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             RuleValidatorContext<Contact, int> context = BuildContextForNumberOfDependents(propertyValue);
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
@@ -175,7 +175,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = floor;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
@@ -191,7 +191,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfDependents = ceiling;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         [TestCase(1, 1, 10, Result = true, TestName = "PropertyEqualFloor")]
@@ -208,7 +208,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             context.Instance.NumberOfChildren = floor;
 
             //Validate the validator only, return true of no error returned
-            return validator.Validate(context) == null;
+            return validator.Validate(context, null) == null;
         }
 
         public RuleValidatorContext<Contact, int> BuildContextForNumberOfDependents(int value)

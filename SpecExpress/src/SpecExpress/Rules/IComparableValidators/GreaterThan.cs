@@ -19,7 +19,7 @@ namespace SpecExpress.Rules.IComparableValidators
             SetPropertyExpression(expression);
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
             if (PropertyExpressions.Any())
             {

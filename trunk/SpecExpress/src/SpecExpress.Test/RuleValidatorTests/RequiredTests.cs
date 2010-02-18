@@ -21,7 +21,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var context = new RuleValidatorContext<Customer, string>(customer, "Name", customer.Name, null, null);
 
             //Validate the validator only, return true of no error returned
-            var result = validator.Validate(context);
+            var result = validator.Validate(context, null);
 
             Assert.IsNotEmpty(result.Message);
         }
@@ -35,7 +35,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var context = new RuleValidatorContext<Customer, IEnumerable>(customer, "Contacts", customer.Contacts, null, null);
 
             //Validate the validator only, return true of no error returned
-            var result = validator.Validate(context);
+            var result = validator.Validate(context, null);
 
             Assert.IsNotEmpty(result.Message);
         }
@@ -49,7 +49,7 @@ namespace SpecExpress.Test.RuleValidatorTests
             var context = new RuleValidatorContext<Customer, IEnumerable>(customer, "Contacts", customer.Contacts, null, null);
 
             //Validate the validator only, return true of no error returned
-            var result = validator.Validate(context);
+            var result = validator.Validate(context, null);
 
             Assert.IsNotEmpty(result.Message);
         }

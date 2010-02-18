@@ -12,6 +12,7 @@ namespace SpecExpressTest
     [TestFixture]
     public class CustomerSpecTest
     {
+
         [Test]
         public void CustomerName_Optional_IsValid()
         {

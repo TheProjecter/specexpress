@@ -151,11 +151,13 @@ namespace SpecExpress.DSL
             return AddRuleAndReturnActionJoin(specRule);
         }
 
-        private ActionJoinBuilder<T, TProperty> AddRuleAndReturnActionJoin(RuleValidator<T, TProperty> specRule)
+        private ActionJoinBuilder<T, TProperty> AddRuleAndReturnActionJoin(RuleValidator specRule)
         {
             _propertyValidator.AddRule(specRule);
             return new ActionJoinBuilder<T, TProperty>(_propertyValidator);
         }
+
+        
     }
 
     /// <summary>

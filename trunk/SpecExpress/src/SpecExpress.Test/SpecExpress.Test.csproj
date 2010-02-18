@@ -75,6 +75,9 @@
     <Compile Include="Container\ComplexTypesTests.cs" />
     <Compile Include="ContactSpecification.cs" />
     <Compile Include="CustomerAddressSpecification.cs" />
+    <Compile Include="Specifications\DeleteContactSpecification.cs" />
+    <Compile Include="Specifications\DeleteCustomerSpecification.cs" />
+    <Compile Include="ValidationContexts\DeleteValidationContext.cs" />
     <Compile Include="Entities\Country.cs" />
     <Compile Include="Entities\ExtendedCustomer.cs" />
     <Compile Include="ExpressionValidationTests.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="RuleValidatorTests\StringValidatorTests.cs" />
     <Compile Include="Specifications\CustomerRequiredNameSpecification.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="Container\ValidationContextTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecExpress.Test.Domain\SpecExpress.Test.Domain.csproj">

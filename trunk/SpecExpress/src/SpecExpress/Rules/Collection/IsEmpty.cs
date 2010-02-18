@@ -12,7 +12,7 @@ namespace SpecExpress.Rules.Collection
             get { return new object[] {}; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
             int count = 0;
 

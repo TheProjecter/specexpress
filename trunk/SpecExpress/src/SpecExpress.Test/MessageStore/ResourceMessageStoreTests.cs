@@ -41,7 +41,7 @@ namespace SpecExpress.Test
             Assert.That(errorMessage, Is.StringContaining("Last Name"));
             Assert.That(errorMessage, Is.StringContaining("1"));
             Assert.That(errorMessage, Is.StringContaining("5"));
-            //TODO: Search for Actual value but it's empty b/c the value is null
+            //null: Search for Actual value but it's empty b/c the value is null
         }
 
         [Test]

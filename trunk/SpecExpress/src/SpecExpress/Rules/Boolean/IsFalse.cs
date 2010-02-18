@@ -9,7 +9,7 @@ namespace SpecExpress.Rules.Boolean
             get { return new object[] { }; }
         }
 
-        public override ValidationResult Validate(RuleValidatorContext<T, bool> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, bool> context, SpecificationContainer specificationContainer)
         {
             return Evaluate(!context.PropertyValue, context);
         }

@@ -38,7 +38,6 @@ namespace SpecExpress.Rules.GeneralValidators
         /// </summary>
         public ForEachSpecificationRule()
         {
-            _specification = ValidationCatalog.GetSpecification<TCollectionType>();
         }
 
         public ForEachSpecificationRule(string itemName): this()
@@ -46,23 +45,15 @@ namespace SpecExpress.Rules.GeneralValidators
             _itemName = itemName;
         }
 
-        //public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
-        //{
-        //    var list =  _specification.PropertyValidators.SelectMany(x => x.Validate(context.PropertyValue, context)).ToList();
-            
-        //    ValidationResult result = null;
+       
 
-        //    if (list.Any())
-        //    {
-        //        result = ValidationResultFactory.Create(this, context, Parameters, "{PropertyName} is invalid.", MessageStoreName, MessageKey);
-        //        result.NestedValdiationResults = list;
-        //    }
-
-        //    return result;
-        //}
-
-        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context)
+        public override ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer)
         {
+            if (_specification == null)
+            {
+                _specification = specificationContainer.GetSpecification<TCollectionType>();
+            }
+
             ValidationResult collectionValidationResult = null;
 
             //Check if the Collection is null/default
@@ -84,7 +75,7 @@ namespace SpecExpress.Rules.GeneralValidators
             int index = 1;
             foreach (var item in propertyEnumerable)
             {  
-                var itemErrors = _specification.Validate(item);
+                var itemErrors = _specification.Validate(item, specificationContainer);
                 if (itemErrors.Any())
                 {
                     var propertyName = String.IsNullOrEmpty(_itemName) ? item.GetType().Name : _itemName;

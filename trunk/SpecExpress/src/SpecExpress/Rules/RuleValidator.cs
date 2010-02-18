@@ -118,6 +118,6 @@ namespace SpecExpress.Rules
         }
 
         //protected List<CompiledFunctionExpression<T, TProperty>> PropertyExpressions = new List<CompiledFunctionExpression<T, TProperty>>();
-        public abstract ValidationResult Validate(RuleValidatorContext<T, TProperty> context);
+        public abstract ValidationResult Validate(RuleValidatorContext<T, TProperty> context, SpecificationContainer specificationContainer);
     }
 }

@@ -46,6 +46,12 @@
 			</properties>
 		</nant>
 		
+		<nant buildfile="build-project-common.xml">
+			<properties>
+				<property name="proj.name" value="SpecExpress.Web" />				
+			</properties>
+		</nant>
+		
 	</target>
 
     <!--Deploy-->
@@ -63,7 +69,9 @@
 		<copy todir="${deploy.dir}">
 			<fileset basedir="${build.dir}">
 				<include name="SpecExpress.dll"/>				
-				<include name="SpecExpress.pdb"/>				
+				<include name="SpecExpress.pdb"/>
+				<include name="SpecExpress.Web.dll"/>				
+				<include name="SpecExpress.Web.pdb"/>						
 			</fileset>			
 		</copy>
 		

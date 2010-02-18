@@ -122,6 +122,7 @@
 				<attribute type="AssemblyDelaySignAttribute" value="false" />
 				<attribute type="AssemblyCopyrightAttribute" value="Copyright, Alan Baker 2009" />
 				<!--Fix this later: <attribute type="AssemblyKeyFileAttribute" value="..\SR.snk" />-->
+				<attribute type="AllowPartiallyTrustedCallers" value="true" />
 			</attributes>
 			<references>
 				<include name="System.EnterpriseServices.dll" />
